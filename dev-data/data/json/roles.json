@@ -1,0 +1,26 @@
+[
+  {
+    "description": "Admin"
+  },
+  {
+    "description": "Portfolio Manager"
+  },
+  {
+    "description": "Program Manager"
+  },
+  {
+    "description": "Project Manager"
+  },
+  {
+    "description": "Test Lead"
+  },
+  {
+    "description": "Team Lead"
+  },
+  {
+    "description": "Team Member"
+  },
+  {
+    "description": "Guest"
+  }
+]
