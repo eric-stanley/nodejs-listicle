@@ -16,6 +16,18 @@ const applicationSchema = new mongoose.Schema(
       unique: true,
       trim: true,
     },
+    project_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Project',
+    },
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+    is_active: {
+      type: Boolean,
+      default: true,
+    },
   },
   {
     timestamps: {
@@ -24,6 +36,18 @@ const applicationSchema = new mongoose.Schema(
     },
   }
 );
+
+applicationSchema.virtual('users', {
+  ref: 'User',
+  foreignField: '_id',
+  localField: 'owner',
+});
+
+applicationSchema.virtual('users', {
+  ref: 'Project',
+  foreignField: '_id',
+  localField: 'project_id',
+});
 
 applicationSchema.pre(/^find/, function (next) {
   this.start = Date.now();

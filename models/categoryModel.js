@@ -16,6 +16,18 @@ const categorySchema = new mongoose.Schema(
       unique: true,
       trim: true,
     },
+    project_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Project',
+    },
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+    is_active: {
+      type: Boolean,
+      default: true,
+    },
   },
   {
     timestamps: {
@@ -24,6 +36,18 @@ const categorySchema = new mongoose.Schema(
     },
   }
 );
+
+categorySchema.virtual('users', {
+  ref: 'User',
+  foreignField: '_id',
+  localField: 'owner',
+});
+
+categorySchema.virtual('users', {
+  ref: 'Project',
+  foreignField: '_id',
+  localField: 'project_id',
+});
 
 categorySchema.pre(/^find/, function (next) {
   this.start = Date.now();
