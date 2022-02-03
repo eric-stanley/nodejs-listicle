@@ -2,6 +2,7 @@ const Run = require('../models/runModel');
 const APIFeatures = require('../utils/apiFeatures');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
+const { autoDecrementModelID } = require('../models/counterModel');
 
 exports.getAllRuns = catchAsync(async (req, res) => {
   const defaultField = 'name';
@@ -48,9 +49,17 @@ exports.getRun = catchAsync(async (req, res, next) => {
 });
 
 exports.createRun = catchAsync(async (req, res, next) => {
-  const run = await Run.create({
-    name: req.body.fields.input.name,
-  });
+  let run;
+
+  try {
+    run = await Run.create({
+      name: req.body.fields.input.name,
+    });
+  } catch (err) {
+    autoDecrementModelID(Model.collection.collectionName, Model, next);
+    return next(new AppError('Error while creating new document', 400));
+  }
+
   res.status(201).json({
     status: 'success',
     data: {

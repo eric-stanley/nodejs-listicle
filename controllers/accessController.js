@@ -7,6 +7,7 @@ const APIFeatures = require('../utils/apiFeatures');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const filterObj = require('../utils/filterObj');
+const { autoDecrementModelID } = require('../models/counterModel');
 const eligibleAccesses = [
   'admin',
   'portfolio manager',
@@ -193,7 +194,16 @@ exports.createAccess = catchAsync(async (req, res, next) => {
     'project_id',
     'is_active'
   );
-  const access = await Access.create(filteredBody);
+
+  let access;
+
+  try {
+    access = await Access.create(filteredBody);
+  } catch (err) {
+    autoDecrementModelID(Model.collection.collectionName, Model, next);
+    return next(new AppError('Error while creating new document', 400));
+  }
+
   res.status(201).json({
     status: 'success',
     data: {

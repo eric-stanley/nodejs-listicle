@@ -7,6 +7,10 @@ if (process.env.NODE_ENV === 'development') {
 
 const runSchema = new mongoose.Schema(
   {
+    id: {
+      type: Number,
+      unique: true,
+    },
     name: {
       type: String,
       required: [true, 'A run must have a name'],
@@ -33,6 +37,14 @@ runSchema.virtual('duration').get(function () {
 runSchema.pre(/^find/, function (next) {
   this.start = Date.now();
   next();
+});
+
+runSchema.pre('save', function (next) {
+  if (!this.isNew) {
+    next();
+    return;
+  }
+  autoIncrementModelID('runs', this, next);
 });
 
 runSchema.post(/^find/, function (docs, next) {

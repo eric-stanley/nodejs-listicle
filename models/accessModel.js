@@ -6,6 +6,10 @@ if (process.env.NODE_ENV === 'development') {
 
 const accessSchema = new mongoose.Schema(
   {
+    id: {
+      type: Number,
+      unique: true,
+    },
     user_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
@@ -56,6 +60,14 @@ accessSchema.virtual('projects', {
   ref: 'Project',
   foreignField: '_id',
   localField: 'project_id',
+});
+
+accessSchema.pre('save', function (next) {
+  if (!this.isNew) {
+    next();
+    return;
+  }
+  autoIncrementModelID('accesses', this, next);
 });
 
 accessSchema.post(/^find/, function (docs, next) {

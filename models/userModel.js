@@ -10,6 +10,10 @@ if (process.env.NODE_ENV === 'development') {
 
 const userSchema = new mongoose.Schema(
   {
+    id: {
+      type: Number,
+      unique: true,
+    },
     username: {
       type: String,
       required: [true, 'A user must have a name'],
@@ -101,6 +105,14 @@ userSchema.pre('save', function (next) {
 userSchema.pre('save', function (next) {
   this.slug = slugify(this.username, { lower: true });
   next();
+});
+
+userSchema.pre('save', function (next) {
+  if (!this.isNew) {
+    next();
+    return;
+  }
+  autoIncrementModelID('users', this, next);
 });
 
 userSchema.pre(/^find/, function (next) {

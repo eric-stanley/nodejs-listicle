@@ -5,6 +5,7 @@ const catchAsync = require('../utils/catchAsync');
 const Role = require('../models/roleModel');
 const User = require('../models/userModel');
 const filterObj = require('../utils/filterObj');
+const { autoDecrementModelID } = require('../models/counterModel');
 
 exports.getAllUserRoles = catchAsync(async (req, res) => {
   const defaultField = 'role_id';
@@ -76,7 +77,12 @@ exports.createUserRole = catchAsync(async (req, res, next) => {
   const filteredBody = filterObj(req.body.fields.input, 'role_id', 'user_id');
 
   if (!userRole) {
-    userRole = await UserRole.create(filteredBody);
+    try {
+      userRole = await UserRole.create(filteredBody);
+    } catch (err) {
+      autoDecrementModelID(Model.collection.collectionName, Model, next);
+      return next(new AppError('Error while creating new document', 400));
+    }
 
     return res.status(201).json({
       status: 'success',

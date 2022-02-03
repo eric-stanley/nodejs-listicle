@@ -6,6 +6,10 @@ if (process.env.NODE_ENV === 'development') {
 
 const categorySchema = new mongoose.Schema(
   {
+    id: {
+      type: Number,
+      unique: true,
+    },
     name: {
       type: String,
       required: [true, 'A category must have a name'],
@@ -24,6 +28,14 @@ const categorySchema = new mongoose.Schema(
 categorySchema.pre(/^find/, function (next) {
   this.start = Date.now();
   next();
+});
+
+categorySchema.pre('save', function (next) {
+  if (!this.isNew) {
+    next();
+    return;
+  }
+  autoIncrementModelID('categories', this, next);
 });
 
 categorySchema.post(/^find/, function (docs, next) {

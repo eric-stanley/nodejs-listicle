@@ -6,6 +6,10 @@ if (process.env.NODE_ENV === 'development') {
 
 const projectSchema = new mongoose.Schema(
   {
+    id: {
+      type: Number,
+      unique: true,
+    },
     name: {
       type: String,
       required: [true, 'A project must have a name'],
@@ -32,6 +36,14 @@ const projectSchema = new mongoose.Schema(
 projectSchema.pre(/^find/, function (next) {
   this.start = Date.now();
   next();
+});
+
+projectSchema.pre('save', function (next) {
+  if (!this.isNew) {
+    next();
+    return;
+  }
+  autoIncrementModelID('projects', this, next);
 });
 
 projectSchema.post(/^find/, function (docs, next) {

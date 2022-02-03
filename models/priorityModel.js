@@ -5,6 +5,10 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const prioritySchema = new mongoose.Schema({
+  id: {
+    type: Number,
+    unique: true,
+  },
   description: {
     type: String,
     required: [true, 'A priority must have a description'],
@@ -16,6 +20,14 @@ const prioritySchema = new mongoose.Schema({
 prioritySchema.pre(/^find/, function (next) {
   this.start = Date.now();
   next();
+});
+
+prioritySchema.pre('save', function (next) {
+  if (!this.isNew) {
+    next();
+    return;
+  }
+  autoIncrementModelID('priorities', this, next);
 });
 
 prioritySchema.post(/^find/, function (docs, next) {

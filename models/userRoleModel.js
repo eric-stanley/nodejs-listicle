@@ -6,6 +6,10 @@ if (process.env.NODE_ENV === 'development') {
 
 const userRoleSchema = new mongoose.Schema(
   {
+    id: {
+      type: Number,
+      unique: true,
+    },
     role_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Role',
@@ -32,6 +36,14 @@ const userRoleSchema = new mongoose.Schema(
 userRoleSchema.pre(/^find/, function (next) {
   this.start = Date.now();
   next();
+});
+
+userRoleSchema.pre('save', function (next) {
+  if (!this.isNew) {
+    next();
+    return;
+  }
+  autoIncrementModelID('userroles', this, next);
 });
 
 userRoleSchema.post(/^find/, function (docs, next) {
