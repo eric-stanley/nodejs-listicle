@@ -6,13 +6,33 @@ const router = express.Router();
 
 router
   .route('/')
-  .get(authController.protect, runController.getAllRuns)
-  .post(authController.protect, runController.createRun);
+  .get(
+    authController.protect,
+    authController.restrictTo('admin'),
+    runController.getAllRuns
+  )
+  .post(
+    authController.protect,
+    authController.restrictTo('admin'),
+    runController.createRun
+  );
 
 router
   .route('/:id')
-  .get(authController.protect, runController.getRun)
-  .patch(authController.protect, runController.updateRun)
-  .delete(authController.protect, runController.deleteRun);
+  .get(
+    authController.protect,
+    authController.restrictTo('admin'),
+    runController.getRun
+  )
+  .patch(
+    authController.protect,
+    authController.restrictTo('admin'),
+    runController.updateRun
+  )
+  .delete(
+    authController.protect,
+    authController.restrictTo('admin'),
+    runController.deleteRun
+  );
 
 module.exports = router;
