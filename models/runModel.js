@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const timeDistance = require('../utils/timeDistance');
+const { autoIncrementModelID } = require('./counterModel');
 
 if (process.env.NODE_ENV === 'development') {
   mongoose.set('debug', true);
@@ -7,7 +8,7 @@ if (process.env.NODE_ENV === 'development') {
 
 const runSchema = new mongoose.Schema(
   {
-    id: {
+    run_id: {
       type: Number,
       unique: true,
     },
@@ -44,7 +45,7 @@ runSchema.pre('save', function (next) {
     next();
     return;
   }
-  autoIncrementModelID('runs', this, next);
+  autoIncrementModelID('runs', this, 'run_id', next);
 });
 
 runSchema.post(/^find/, function (docs, next) {

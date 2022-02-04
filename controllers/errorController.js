@@ -1,4 +1,7 @@
 const AppError = require('../utils/appError');
+const { autoDecrementModelID } = require('../models/counterModel');
+const modelIds = require('../constants/modelIds');
+const getModel = require('../utils/getModel');
 
 const handleCastErrorDB = (err) => {
   const message = `Invalid ${err.path}: ${err.value}`;
@@ -54,6 +57,19 @@ const sendErrorProd = (err, res) => {
 module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
+
+  if (err.code === 11000) {
+    // Auto decrement the model
+    const collectionName = err.message
+      .split(':')[1]
+      .split('.')[1]
+      .split(' ')[0];
+    const keys = Object.keys(modelIds);
+    keys.forEach((key, index) => {
+      if (key === collectionName)
+        autoDecrementModelID(key, getModel(key), collectionName, next);
+    });
+  }
 
   if (process.env.NODE_ENV === 'development') {
     sendErrorDev(err, res);

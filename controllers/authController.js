@@ -10,7 +10,6 @@ const createAndSendToken = require('../utils/createAndSendToken');
 const sendEmail = require('../utils/email');
 const filterObj = require('../utils/filterObj');
 const getUserRole = require('../utils/getUserRole');
-const { autoDecrementModelID } = require('../models/counterModel');
 
 exports.signup = catchAsync(async (req, res, next) => {
   const filteredBody = filterObj(
@@ -21,14 +20,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     'email'
   );
 
-  let user;
-
-  try {
-    user = await User.create(filteredBody);
-  } catch (err) {
-    autoDecrementModelID(Model.collection.collectionName, Model, next);
-    return next(new AppError('Error while creating new document', 400));
-  }
+  const user = await User.create(filteredBody);
 
   createAndSendToken(user, 201, res);
 });

@@ -1,7 +1,6 @@
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const APIFeatures = require('../utils/apiFeatures');
-const { autoDecrementModelID } = require('../models/counterModel');
 
 exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
@@ -44,16 +43,9 @@ exports.updateOne = (Model) =>
 
 exports.createOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    let doc;
-
-    try {
-      doc = await Model.create({
-        description: req.body.fields.input.description,
-      });
-    } catch (err) {
-      autoDecrementModelID(Model.collection.collectionName, Model, next);
-      return next(new AppError('Error while creating new document', 400));
-    }
+    const doc = await Model.create({
+      description: req.body.fields.input.description,
+    });
 
     res.status(201).json({
       status: 'success',

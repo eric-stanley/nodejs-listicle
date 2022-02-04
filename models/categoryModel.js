@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { autoIncrementModelID } = require('./counterModel');
 
 if (process.env.NODE_ENV === 'development') {
   mongoose.set('debug', true);
@@ -6,7 +7,7 @@ if (process.env.NODE_ENV === 'development') {
 
 const categorySchema = new mongoose.Schema(
   {
-    id: {
+    category_id: {
       type: Number,
       unique: true,
     },
@@ -59,7 +60,7 @@ categorySchema.pre('save', function (next) {
     next();
     return;
   }
-  autoIncrementModelID('categories', this, next);
+  autoIncrementModelID('categories', this, 'category_id', next);
 });
 
 categorySchema.post(/^find/, function (docs, next) {

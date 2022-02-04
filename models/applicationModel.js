@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { autoIncrementModelID } = require('./counterModel');
 
 if (process.env.NODE_ENV === 'development') {
   mongoose.set('debug', true);
@@ -6,7 +7,7 @@ if (process.env.NODE_ENV === 'development') {
 
 const applicationSchema = new mongoose.Schema(
   {
-    id: {
+    app_id: {
       type: Number,
       unique: true,
     },
@@ -59,7 +60,7 @@ applicationSchema.pre('save', function (next) {
     next();
     return;
   }
-  autoIncrementModelID('applications', this, next);
+  autoIncrementModelID('applications', this, 'app_id', next);
 });
 
 applicationSchema.post(/^find/, function (docs, next) {

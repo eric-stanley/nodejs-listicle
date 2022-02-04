@@ -2,7 +2,6 @@ const Category = require('../models/categoryModel');
 const APIFeatures = require('../utils/apiFeatures');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
-const { autoDecrementModelID } = require('../models/counterModel');
 
 exports.getAllCategories = catchAsync(async (req, res) => {
   const defaultField = 'name';
@@ -49,16 +48,9 @@ exports.getCategory = catchAsync(async (req, res, next) => {
 });
 
 exports.createCategory = catchAsync(async (req, res, next) => {
-  let category;
-
-  try {
-    access = await Category.create({
-      name: req.body.fields.input.name,
-    });
-  } catch (err) {
-    autoDecrementModelID(Model.collection.collectionName, Model, next);
-    return next(new AppError('Error while creating new document', 400));
-  }
+  const category = await Category.create({
+    name: req.body.fields.input.name,
+  });
 
   res.status(201).json({
     status: 'success',

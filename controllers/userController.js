@@ -5,7 +5,6 @@ const AppError = require('../utils/appError');
 const filterObj = require('../utils/filterObj');
 const catchAsync = require('../utils/catchAsync');
 const createAndSendToken = require('../utils/createAndSendToken');
-const { autoDecrementModelID } = require('../models/counterModel');
 
 exports.getAllUsers = catchAsync(async (req, res) => {
   const defaultField = 'name';
@@ -101,14 +100,7 @@ exports.createUser = catchAsync(async (req, res, next) => {
     'email'
   );
 
-  let user;
-
-  try {
-    user = await User.create(filteredBody);
-  } catch (err) {
-    autoDecrementModelID(Model.collection.collectionName, Model, next);
-    return next(new AppError('Error while creating new document', 400));
-  }
+  const user = await User.create(filteredBody);
 
   createAndSendToken(user, 201, res);
 });

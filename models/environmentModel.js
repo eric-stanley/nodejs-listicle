@@ -6,7 +6,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const environmentSchema = new mongoose.Schema({
-  id: {
+  env_id: {
     type: Number,
     unique: true,
   },
@@ -28,7 +28,7 @@ environmentSchema.pre('save', function (next) {
     next();
     return;
   }
-  autoIncrementModelID('environments', this, next);
+  autoIncrementModelID('environments', this, 'env_id', next);
 });
 
 environmentSchema.post(/^find/, function (docs, next) {

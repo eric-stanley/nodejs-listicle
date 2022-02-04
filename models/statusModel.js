@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
+const { autoIncrementModelID } = require('./counterModel');
 
 if (process.env.NODE_ENV === 'development') {
   mongoose.set('debug', true);
 }
 
 const statusSchema = new mongoose.Schema({
-  id: {
+  status_id: {
     type: Number,
     unique: true,
   },
@@ -27,7 +28,7 @@ statusSchema.pre('save', function (next) {
     next();
     return;
   }
-  autoIncrementModelID('status', this, next);
+  autoIncrementModelID('status', this, 'status_id', next);
 });
 
 statusSchema.post(/^find/, function (docs, next) {

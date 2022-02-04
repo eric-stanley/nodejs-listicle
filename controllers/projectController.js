@@ -4,7 +4,6 @@ const APIFeatures = require('../utils/apiFeatures');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const filterObj = require('../utils/filterObj');
-const { autoDecrementModelID } = require('../models/counterModel');
 
 exports.isAuthorized = catchAsync(async (req, res, next) => {
   const project = await Project.findById(req.params.id);
@@ -86,18 +85,11 @@ exports.getProject = catchAsync(async (req, res, next) => {
 });
 
 exports.createProject = catchAsync(async (req, res, next) => {
-  let project;
-
-  try {
-    project = await Project.create({
-      name: req.body.fields.input.name,
-      owner: req.user.id,
-      is_active: req.body.fields.input.is_active,
-    });
-  } catch (err) {
-    autoDecrementModelID(Model.collection.collectionName, Model, next);
-    return next(new AppError('Error while creating new document', 400));
-  }
+  const project = await Project.create({
+    name: req.body.fields.input.name,
+    owner: req.user.id,
+    is_active: req.body.fields.input.is_active,
+  });
 
   res.status(201).json({
     status: 'success',

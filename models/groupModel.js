@@ -6,7 +6,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const groupSchema = new mongoose.Schema({
-  id: {
+  group_id: {
     type: Number,
     unique: true,
   },
@@ -28,7 +28,7 @@ groupSchema.pre('save', function (next) {
     next();
     return;
   }
-  autoIncrementModelID('groups', this, next);
+  autoIncrementModelID('groups', this, 'group_id', next);
 });
 
 groupSchema.post(/^find/, function (docs, next) {

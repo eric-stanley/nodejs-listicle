@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const slugify = require('slugify');
 const bcrypt = require('bcryptjs');
+const { autoIncrementModelID } = require('./counterModel');
 
 if (process.env.NODE_ENV === 'development') {
   mongoose.set('debug', true);
@@ -10,7 +11,7 @@ if (process.env.NODE_ENV === 'development') {
 
 const userSchema = new mongoose.Schema(
   {
-    id: {
+    user_id: {
       type: Number,
       unique: true,
     },
@@ -112,7 +113,7 @@ userSchema.pre('save', function (next) {
     next();
     return;
   }
-  autoIncrementModelID('users', this, next);
+  autoIncrementModelID('users', this, 'user_id', next);
 });
 
 userSchema.pre(/^find/, function (next) {

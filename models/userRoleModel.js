@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { autoIncrementModelID } = require('./counterModel');
 
 if (process.env.NODE_ENV === 'development') {
   mongoose.set('debug', true);
@@ -6,7 +7,7 @@ if (process.env.NODE_ENV === 'development') {
 
 const userRoleSchema = new mongoose.Schema(
   {
-    id: {
+    user_role_id: {
       type: Number,
       unique: true,
     },
@@ -55,7 +56,7 @@ userRoleSchema.pre('save', function (next) {
     next();
     return;
   }
-  autoIncrementModelID('userroles', this, next);
+  autoIncrementModelID('userroles', this, 'user_role_id', next);
 });
 
 userRoleSchema.post(/^find/, function (docs, next) {

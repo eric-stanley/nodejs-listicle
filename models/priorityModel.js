@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
+const { autoIncrementModelID } = require('./counterModel');
 
 if (process.env.NODE_ENV === 'development') {
   mongoose.set('debug', true);
 }
 
 const prioritySchema = new mongoose.Schema({
-  id: {
+  priority_id: {
     type: Number,
     unique: true,
   },
@@ -27,7 +28,7 @@ prioritySchema.pre('save', function (next) {
     next();
     return;
   }
-  autoIncrementModelID('priorities', this, next);
+  autoIncrementModelID('priorities', this, 'priority_id', next);
 });
 
 prioritySchema.post(/^find/, function (docs, next) {

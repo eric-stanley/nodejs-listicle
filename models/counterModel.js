@@ -10,7 +10,7 @@ counterSchema.index({ _id: 1, seq: 1 }, { unique: true });
 
 const counterModel = mongoose.model('counter', counterSchema);
 
-const autoIncrementModelID = function (modelName, doc, next) {
+const autoIncrementModelID = function (modelName, doc, idFieldName, next) {
   counterModel.findByIdAndUpdate(
     // ** Method call begins **
     modelName, // The ID to find for in counters model
@@ -19,14 +19,13 @@ const autoIncrementModelID = function (modelName, doc, next) {
     function (error, counter) {
       // The callback
       if (error) return next(error);
-
-      doc.id = counter.seq;
+      doc[idFieldName] = counter.seq;
       next();
     }
   ); // ** Method call ends **
 };
 
-const autoDecrementModelID = function (modelName, doc, next) {
+const autoDecrementModelID = function (modelName, doc, idFieldName, next) {
   counterModel.findByIdAndUpdate(
     // ** Method call begins **
     modelName, // The ID to find for in counters model
@@ -35,8 +34,7 @@ const autoDecrementModelID = function (modelName, doc, next) {
     function (error, counter) {
       // The callback
       if (error) return next(error);
-
-      doc.id = counter.seq;
+      doc[idFieldName] = counter.seq;
       next();
     }
   ); // ** Method call ends **
