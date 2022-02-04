@@ -44,7 +44,7 @@ applicationSchema.virtual('users', {
   localField: 'owner',
 });
 
-applicationSchema.virtual('users', {
+applicationSchema.virtual('projects', {
   ref: 'Project',
   foreignField: '_id',
   localField: 'project_id',
