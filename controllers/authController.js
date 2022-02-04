@@ -241,23 +241,3 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   // 4) Log user in, send JWT
   createAndSendToken(user, 200, res);
 });
-//
-// async function getUserRole(user_id, next) {
-//   const userRole = await UserRole.findOne({
-//     user_id,
-//   });
-//
-//   if (!userRole || !userRole.is_active) {
-//     return next(
-//       new AppError('No role assigned to the user or user role is inactive', 403)
-//     );
-//   }
-//
-//   const currentUserRole = await Role.findById(userRole.role_id);
-//
-//   if (!currentUserRole) {
-//     return next(new AppError('Invalid role specified', 403));
-//   }
-//
-//   return currentUserRole;
-// }
