@@ -33,6 +33,12 @@ const projectSchema = new mongoose.Schema(
   }
 );
 
+projectSchema.virtual('users', {
+  ref: 'User',
+  foreignField: '_id',
+  localField: 'owner',
+});
+
 projectSchema.pre(/^find/, function (next) {
   this.start = Date.now();
   next();

@@ -33,6 +33,18 @@ const userRoleSchema = new mongoose.Schema(
   }
 );
 
+userRoleSchema.virtual('roles', {
+  ref: 'Role',
+  foreignField: '_id',
+  localField: 'role_id',
+});
+
+userRoleSchema.virtual('users', {
+  ref: 'User',
+  foreignField: '_id',
+  localField: 'user_id',
+});
+
 userRoleSchema.pre(/^find/, function (next) {
   this.start = Date.now();
   next();
