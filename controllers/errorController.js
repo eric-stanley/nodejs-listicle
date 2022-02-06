@@ -65,9 +65,11 @@ module.exports = (err, req, res, next) => {
       .split('.')[1]
       .split(' ')[0];
     const keys = Object.keys(modelIds);
+    const values = Object.values(modelIds);
     keys.forEach((key, index) => {
-      if (key === collectionName)
-        autoDecrementModelID(key, getModel(key), collectionName, next);
+      if (key === collectionName) {
+        autoDecrementModelID(key, getModel(key), values[index]);
+      }
     });
   }
 

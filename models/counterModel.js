@@ -25,7 +25,7 @@ const autoIncrementModelID = function (modelName, doc, idFieldName, next) {
   ); // ** Method call ends **
 };
 
-const autoDecrementModelID = function (modelName, doc, idFieldName, next) {
+const autoDecrementModelID = function (modelName, doc, idFieldName) {
   counterModel.findByIdAndUpdate(
     // ** Method call begins **
     modelName, // The ID to find for in counters model
@@ -35,7 +35,6 @@ const autoDecrementModelID = function (modelName, doc, idFieldName, next) {
       // The callback
       if (error) return next(error);
       doc[idFieldName] = counter.seq;
-      next();
     }
   ); // ** Method call ends **
 };

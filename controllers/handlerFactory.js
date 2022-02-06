@@ -2,6 +2,8 @@ const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const APIFeatures = require('../utils/apiFeatures');
 const filterObj = require('../utils/filterObj');
+const modelIds = require('../constants/modelIds');
+const { autoDecrementModelID } = require('../models/counterModel');
 
 exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
@@ -10,6 +12,20 @@ exports.deleteOne = (Model) =>
     if (!doc) {
       return next(new AppError('No document found with that ID', 404));
     }
+
+    const keys = Object.keys(modelIds);
+    const values = Object.values(modelIds);
+    console.log(Model.collection.collectionName);
+    keys.forEach((key, index) => {
+      if (key === Model.collection.collectionName) {
+        console.log(Model.collection.collectionName, Model, values[index]);
+        autoDecrementModelID(
+          Model.collection.collectionName,
+          Model,
+          values[index]
+        );
+      }
+    });
 
     res.status(204).json({
       status: 'success',

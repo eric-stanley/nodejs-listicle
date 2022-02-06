@@ -17,46 +17,20 @@ exports.getAllUsers = factory.getAll(
 );
 
 exports.getUser = factory.getOne(User);
+exports.createUser = factory.createOne(
+  User,
+  'username',
+  'password',
+  'password_confirm',
+  'email'
+);
+exports.updateUser = factory.updateOne(User, [
+  'username',
+  'password',
+  'password_confirm',
+  'email',
+]);
 exports.deleteUser = factory.deleteOne(User);
-
-exports.createUser = catchAsync(async (req, res, next) => {
-  const filteredBody = filterObj(
-    req.body.fields.input,
-    'username',
-    'password',
-    'password_confirm',
-    'email'
-  );
-
-  const user = await User.create(filteredBody);
-
-  createAndSendToken(user, 201, res);
-});
-
-exports.updateUser = catchAsync(async (req, res, next) => {
-  const filteredBody = filterObj(
-    req.body.fields.input,
-    'username',
-    'password',
-    'password_confirm',
-    'email'
-  );
-  const user = await User.findByIdAndUpdate(req.params.id, filteredBody, {
-    new: true,
-    runValidators: true,
-  });
-
-  if (!user) {
-    return next(new AppError('No user found with that ID', 404));
-  }
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      user,
-    },
-  });
-});
 
 exports.updateMe = catchAsync(async (req, res, next) => {
   // 1) Create error if user tries to update password

@@ -12,13 +12,12 @@ const filterObj = require('../utils/filterObj');
 const getUserRole = require('../utils/getUserRole');
 
 exports.signup = catchAsync(async (req, res, next) => {
-  const filteredBody = filterObj(
-    req.body.fields.input,
+  const filteredBody = filterObj(req.body.fields.input, [
     'username',
     'password',
     'password_confirm',
-    'email'
-  );
+    'email',
+  ]);
 
   const user = await User.create(filteredBody);
 

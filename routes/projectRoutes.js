@@ -1,12 +1,17 @@
 const express = require('express');
 const projectController = require('../controllers/projectController');
+const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
 
 const router = express.Router();
 
 router
   .route('/')
-  .get(authController.protect, projectController.getAllProjects)
+  .get(
+    authController.protect,
+    projectController.updateFilter,
+    projectController.getAllProjects
+  )
   .post(
     authController.protect,
     authController.restrictTo(
@@ -15,6 +20,7 @@ router
       'program manager',
       'project manager'
     ),
+    projectController.updateOwner,
     projectController.createProject
   );
 
@@ -23,6 +29,7 @@ router
   .get(
     authController.protect,
     projectController.isAuthorized,
+    projectController.updateFilter,
     projectController.getProject
   )
   .patch(

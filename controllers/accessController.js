@@ -167,7 +167,6 @@ exports.updateFilter = (req, res, next) => {
 
   req.body.filter = filter;
 
-  console.log(req.body.filter);
   next();
 };
 

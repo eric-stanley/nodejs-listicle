@@ -4,6 +4,11 @@ const APIFeatures = require('../utils/apiFeatures');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const filterObj = require('../utils/filterObj');
+const factory = require('./handlerFactory');
+
+const defaultField = 'name';
+const defaultPage = 1;
+const defaultLimit = 10;
 
 exports.isAuthorized = catchAsync(async (req, res, next) => {
   const project = await Project.findById(req.params.id);
@@ -13,7 +18,7 @@ exports.isAuthorized = catchAsync(async (req, res, next) => {
   }
 
   // Check if owner is active
-  const projectOwner = await User.findById(project.owner);
+  const projectOwner = await User.findById(project.owner).select('+is_active');
 
   if (!projectOwner || !projectOwner.is_active) {
     return next(new AppError('Owner not active for this project', 403));
@@ -32,12 +37,13 @@ exports.isAuthorized = catchAsync(async (req, res, next) => {
   next();
 });
 
-exports.getAllProjects = catchAsync(async (req, res) => {
-  const defaultField = 'name';
-  const defaultPage = 1;
-  const defaultLimit = 10;
-  let filter = {};
+exports.updateOwner = (req, res, next) => {
+  req.body.fields.input.owner = req.user.id;
+  next();
+};
 
+exports.updateFilter = (req, res, next) => {
+  let filter = {};
   // Retrieve all projects if admin
   if (!req.user.is_admin) {
     filter = {
@@ -45,88 +51,23 @@ exports.getAllProjects = catchAsync(async (req, res) => {
     };
   }
 
-  // Execute query
-  const features = new APIFeatures(
-    Project.find(filter),
-    req.body,
-    defaultField,
-    defaultPage,
-    defaultLimit
-  )
-    .filter()
-    .sort()
-    .select()
-    .paginate();
-  const projects = await features.query;
-
-  // Send response
-  res.status(200).json({
-    status: 'success',
-    results: projects.length,
-    data: {
-      projects,
-    },
-  });
-});
-
-exports.getProject = catchAsync(async (req, res, next) => {
-  const project = await Project.findById(req.params.id);
-
-  if (!project) {
-    return next(new AppError('No project found with that ID', 404));
+  // Apply id filter
+  if (req.params.id) {
+    filter._id = req.params.id;
   }
 
-  res.status(200).json({
-    status: 'success',
-    data: {
-      project,
-    },
-  });
-});
+  req.body.filter = filter;
 
-exports.createProject = catchAsync(async (req, res, next) => {
-  const project = await Project.create({
-    name: req.body.fields.input.name,
-    owner: req.user.id,
-    is_active: req.body.fields.input.is_active,
-  });
+  next();
+};
 
-  res.status(201).json({
-    status: 'success',
-    data: {
-      project,
-    },
-  });
-});
-
-exports.updateProject = catchAsync(async (req, res, next) => {
-  const filteredBody = filterObj(req.body.fields.input, 'name', 'is_active');
-  const project = await Project.findByIdAndUpdate(req.params.id, filteredBody, {
-    new: true,
-    runValidators: true,
-  });
-
-  if (!project) {
-    return next(new AppError('No project found with that ID', 404));
-  }
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      project,
-    },
-  });
-});
-
-exports.deleteProject = catchAsync(async (req, res, next) => {
-  const project = await Project.findByIdAndDelete(req.params.id);
-
-  if (!project) {
-    return next(new AppError('No project found with that ID', 404));
-  }
-
-  res.status(204).json({
-    status: 'success',
-    data: null,
-  });
-});
+exports.getAllProjects = factory.getAll(
+  Project,
+  defaultField,
+  defaultPage,
+  defaultLimit
+);
+exports.getProject = factory.getOne(Project, ['users']);
+exports.createProject = factory.createOne(Project, 'name', 'owner');
+exports.updateProject = factory.updateOne(Project, 'name', 'is_active');
+exports.deleteProject = factory.deleteOne(Project);

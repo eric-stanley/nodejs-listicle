@@ -14,6 +14,7 @@ router
   .post(
     authController.protect,
     authController.restrictTo('admin'),
+    userRoleController.checkUserRole,
     userRoleController.createUserRole
   );
 
