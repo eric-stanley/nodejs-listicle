@@ -48,7 +48,7 @@ categorySchema.virtual('users', {
   localField: 'owner',
 });
 
-categorySchema.virtual('users', {
+categorySchema.virtual('projects', {
   ref: 'Project',
   foreignField: '_id',
   localField: 'project_id',
