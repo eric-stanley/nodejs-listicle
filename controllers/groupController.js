@@ -13,6 +13,6 @@ exports.getAllGroups = factory.getAll(
 );
 
 exports.getGroup = factory.getOne(Group);
-exports.createGroup = factory.createOne(Group);
-exports.updateGroup = factory.updateOne(Group);
+exports.createGroup = factory.createOne(Group, defaultField);
+exports.updateGroup = factory.updateOne(Group, defaultField);
 exports.deleteGroup = factory.deleteOne(Group);

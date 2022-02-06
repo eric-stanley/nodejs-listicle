@@ -13,6 +13,6 @@ exports.getAllEnvironments = factory.getAll(
 );
 
 exports.getEnvironment = factory.getOne(Environment);
-exports.createEnvironment = factory.createOne(Environment);
-exports.updateEnvironment = factory.updateOne(Environment);
+exports.createEnvironment = factory.createOne(Environment, defaultField);
+exports.updateEnvironment = factory.updateOne(Environment, defaultField);
 exports.deleteEnvironment = factory.deleteOne(Environment);

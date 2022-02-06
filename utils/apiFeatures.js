@@ -11,7 +11,6 @@ class APIFeatures {
   }
 
   filter() {
-    console.log(this.filters);
     this.query = this.query.find(this.filters);
     return this;
   }

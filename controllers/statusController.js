@@ -13,6 +13,6 @@ exports.getAllStatuses = factory.getAll(
 );
 
 exports.getStatus = factory.getOne(Status);
-exports.createStatus = factory.createOne(Status);
-exports.updateStatus = factory.updateOne(Status);
+exports.createStatus = factory.createOne(Status, defaultField);
+exports.updateStatus = factory.updateOne(Status, defaultField);
 exports.deleteStatus = factory.deleteOne(Status);

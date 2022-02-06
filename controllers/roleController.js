@@ -13,6 +13,6 @@ exports.getAllRoles = factory.getAll(
 );
 
 exports.getRole = factory.getOne(Role);
-exports.createRole = factory.createOne(Role);
-exports.updateRole = factory.updateOne(Role);
+exports.createRole = factory.createOne(Role, defaultField);
+exports.updateRole = factory.updateOne(Role, defaultField);
 exports.deleteRole = factory.deleteOne(Role);

@@ -1,6 +1,7 @@
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const APIFeatures = require('../utils/apiFeatures');
+const filterObj = require('../utils/filterObj');
 
 exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
@@ -16,18 +17,13 @@ exports.deleteOne = (Model) =>
     });
   });
 
-exports.updateOne = (Model) =>
+exports.updateOne = (Model, ...fields) =>
   catchAsync(async (req, res, next) => {
-    const doc = await Model.findByIdAndUpdate(
-      req.params.id,
-      {
-        description: req.body.fields.input.description,
-      },
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
+    const filteredBody = filterObj(req.body.fields.input, fields);
+    const doc = await Model.findByIdAndUpdate(req.params.id, filteredBody, {
+      new: true,
+      runValidators: true,
+    });
 
     if (!doc) {
       return next(new AppError('No document found with that ID', 404));
@@ -41,11 +37,10 @@ exports.updateOne = (Model) =>
     });
   });
 
-exports.createOne = (Model) =>
+exports.createOne = (Model, ...fields) =>
   catchAsync(async (req, res, next) => {
-    const doc = await Model.create({
-      description: req.body.fields.input.description,
-    });
+    const filteredBody = filterObj(req.body.fields.input, fields);
+    const doc = await Model.create(filteredBody);
 
     res.status(201).json({
       status: 'success',
@@ -58,7 +53,13 @@ exports.createOne = (Model) =>
 exports.getOne = (Model, populateOptions) =>
   catchAsync(async (req, res, next) => {
     let query = Model.findById(req.params.id);
-    if (populateOptions) query = query.populate(populateOptions);
+
+    if (populateOptions && populateOptions.length > 0) {
+      populateOptions.forEach((item, i) => {
+        query = query.populate({ path: item });
+      });
+    }
+
     const doc = await query;
 
     if (!doc) {
@@ -77,7 +78,7 @@ exports.getAll = (Model, defaultField, defaultPage, defaultLimit) =>
   catchAsync(async (req, res) => {
     // Execute query
     const features = new APIFeatures(
-      Model.find(),
+      Model.find(req.body.filter),
       req.body,
       defaultField,
       defaultPage,

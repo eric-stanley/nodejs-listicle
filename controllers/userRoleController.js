@@ -5,50 +5,21 @@ const catchAsync = require('../utils/catchAsync');
 const Role = require('../models/roleModel');
 const User = require('../models/userModel');
 const filterObj = require('../utils/filterObj');
+const factory = require('./handlerFactory');
 
-exports.getAllUserRoles = catchAsync(async (req, res) => {
-  const defaultField = 'role_id';
-  const defaultPage = 1;
-  const defaultLimit = 10;
+const defaultField = 'role_id';
+const defaultPage = 1;
+const defaultLimit = 10;
 
-  // Execute query
-  const features = new APIFeatures(
-    UserRole.find(),
-    req.body,
-    defaultField,
-    defaultPage,
-    defaultLimit
-  )
-    .filter()
-    .sort()
-    .select()
-    .paginate();
-  const userRoles = await features.query;
+exports.getAllUserRoles = factory.getAll(
+  UserRole,
+  defaultField,
+  defaultPage,
+  defaultLimit
+);
 
-  // Send response
-  res.status(200).json({
-    status: 'success',
-    results: userRoles.length,
-    data: {
-      userRoles,
-    },
-  });
-});
-
-exports.getUserRole = catchAsync(async (req, res, next) => {
-  const userRole = await UserRole.findById(req.params.id);
-
-  if (!userRole) {
-    return next(new AppError('No user role found with that ID', 404));
-  }
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      userRole,
-    },
-  });
-});
+exports.getUserRole = factory.getOne(UserRole);
+exports.deleteUserRole = factory.deleteOne(UserRole);
 
 exports.createUserRole = catchAsync(async (req, res, next) => {
   const { role_id, user_id } = req.body.fields.input;
@@ -142,18 +113,5 @@ exports.updateUserRole = catchAsync(async (req, res, next) => {
     data: {
       userRole,
     },
-  });
-});
-
-exports.deleteUserRole = catchAsync(async (req, res, next) => {
-  const userRole = await UserRole.findByIdAndDelete(req.params.id);
-
-  if (!userRole) {
-    return next(new AppError('No user role found with that ID', 404));
-  }
-
-  res.status(204).json({
-    status: 'success',
-    data: null,
   });
 });

@@ -13,6 +13,6 @@ exports.getAllRuns = factory.getAll(
 );
 
 exports.getRun = factory.getOne(Run);
-exports.createRun = factory.createOne(Run);
-exports.updateRun = factory.updateOne(Run);
+exports.createRun = factory.createOne(Run, defaultField);
+exports.updateRun = factory.updateOne(Run, defaultField);
 exports.deleteRun = factory.deleteOne(Run);

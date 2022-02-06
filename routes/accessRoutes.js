@@ -6,7 +6,11 @@ const router = express.Router();
 
 router
   .route('/')
-  .get(authController.protect, accessController.getAllAccesses)
+  .get(
+    authController.protect,
+    accessController.updateFilter,
+    accessController.getAllAccesses
+  )
   .post(
     authController.protect,
     accessController.isAuthorized,
@@ -15,7 +19,11 @@ router
 
 router
   .route('/:id')
-  .get(authController.protect, accessController.getAccess)
+  .get(
+    authController.protect,
+    accessController.updateFilter,
+    accessController.getAccess
+  )
   .patch(
     authController.protect,
     accessController.isAuthorized,

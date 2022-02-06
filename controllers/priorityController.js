@@ -13,6 +13,6 @@ exports.getAllPriorities = factory.getAll(
 );
 
 exports.getPriority = factory.getOne(Priority);
-exports.createPriority = factory.createOne(Priority);
-exports.updatePriority = factory.updateOne(Priority);
+exports.createPriority = factory.createOne(Priority, defaultField);
+exports.updatePriority = factory.updateOne(Priority, defaultField);
 exports.deletePriority = factory.deleteOne(Priority);
