@@ -18,7 +18,7 @@ exports.getAllUserRoles = factory.getAll(
   defaultLimit
 );
 
-exports.getUserRole = factory.getOne(UserRole);
+exports.getUserRole = factory.getOne(UserRole, ['users', 'roles']);
 exports.deleteUserRole = factory.deleteOne(UserRole);
 
 exports.createUserRole = catchAsync(async (req, res, next) => {

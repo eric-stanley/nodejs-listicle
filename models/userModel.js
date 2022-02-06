@@ -77,6 +77,7 @@ const userSchema = new mongoose.Schema(
         return ret;
       },
     },
+    toObject: { virtuals: true },
     timestamps: {
       createdAt: 'created_at',
       updatedAt: 'updated_at',
