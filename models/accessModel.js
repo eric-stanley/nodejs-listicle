@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { autoIncrementModelID } = require('./counterModel');
+const counterModel = require('./counterModel');
 
 if (process.env.NODE_ENV === 'development') {
   mongoose.set('debug', true);
@@ -63,12 +63,19 @@ accessSchema.virtual('projects', {
   localField: 'project_id',
 });
 
-accessSchema.pre('save', function (next) {
+accessSchema.pre('save', async function (next) {
   if (!this.isNew) {
     next();
     return;
   }
-  autoIncrementModelID('accesses', this, 'access_id', next);
+  await counterModel.autoSequenceModelID(
+    'accesses',
+    this,
+    'access_id',
+    1,
+    next
+  );
+  next();
 });
 
 accessSchema.post(/^find/, function (docs, next) {

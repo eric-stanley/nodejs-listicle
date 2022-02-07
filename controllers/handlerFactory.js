@@ -3,7 +3,8 @@ const catchAsync = require('../utils/catchAsync');
 const APIFeatures = require('../utils/apiFeatures');
 const filterObj = require('../utils/filterObj');
 const modelIds = require('../constants/modelIds');
-const { autoDecrementModelID } = require('../models/counterModel');
+const counterModel = require('../models/counterModel');
+const getModel = require('../utils/getModel');
 
 exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
@@ -16,12 +17,14 @@ exports.deleteOne = (Model) =>
     const keys = Object.keys(modelIds);
     const values = Object.values(modelIds);
 
-    keys.forEach((key, index) => {
+    keys.forEach(async (key, index) => {
       if (key === Model.collection.collectionName) {
-        autoDecrementModelID(
-          Model.collection.collectionName,
-          Model,
-          values[index]
+        await counterModel.autoSequenceModelID(
+          key,
+          getModel(key),
+          values[index],
+          -1,
+          next
         );
       }
     });
@@ -70,7 +73,7 @@ exports.getOne = (Model, populateOptions) =>
     let query = Model.findById(req.params.id);
 
     if (populateOptions && populateOptions.length > 0) {
-      populateOptions.forEach((item, i) => {
+      populateOptions.forEach((item) => {
         query = query.populate({ path: item });
       });
     }

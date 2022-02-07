@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const slugify = require('slugify');
 const bcrypt = require('bcryptjs');
-const { autoIncrementModelID } = require('./counterModel');
+const counterModel = require('./counterModel');
 
 if (process.env.NODE_ENV === 'development') {
   mongoose.set('debug', true);
@@ -109,12 +109,13 @@ userSchema.pre('save', function (next) {
   next();
 });
 
-userSchema.pre('save', function (next) {
+userSchema.pre('save', async function (next) {
   if (!this.isNew) {
     next();
     return;
   }
-  autoIncrementModelID('users', this, 'user_id', next);
+  await counterModel.autoSequenceModelID('users', this, 'user_id', 1, next);
+  next();
 });
 
 userSchema.pre(/^find/, function (next) {

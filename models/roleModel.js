@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { autoIncrementModelID } = require('./counterModel');
+const counterModel = require('./counterModel');
 
 if (process.env.NODE_ENV === 'development') {
   mongoose.set('debug', true);
@@ -23,12 +23,13 @@ roleSchema.pre(/^find/, function (next) {
   next();
 });
 
-roleSchema.pre('save', function (next) {
+roleSchema.pre('save', async function (next) {
   if (!this.isNew) {
     next();
     return;
   }
-  autoIncrementModelID('roles', this, 'role_id', next);
+  await counterModel.autoSequenceModelID('roles', this, 'role_id', 1, next);
+  next();
 });
 
 roleSchema.post(/^find/, function (docs, next) {

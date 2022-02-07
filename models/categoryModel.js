@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { autoIncrementModelID } = require('./counterModel');
+const counterModel = require('./counterModel');
 
 if (process.env.NODE_ENV === 'development') {
   mongoose.set('debug', true);
@@ -59,12 +59,19 @@ categorySchema.pre(/^find/, function (next) {
   next();
 });
 
-categorySchema.pre('save', function (next) {
+categorySchema.pre('save', async function (next) {
   if (!this.isNew) {
     next();
     return;
   }
-  autoIncrementModelID('categories', this, 'category_id', next);
+  await counterModel.autoSequenceModelID(
+    'categories',
+    this,
+    'category_id',
+    1,
+    next
+  );
+  next();
 });
 
 categorySchema.post(/^find/, function (docs, next) {

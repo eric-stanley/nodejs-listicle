@@ -1,5 +1,5 @@
 const AppError = require('../utils/appError');
-const { autoDecrementModelID } = require('../models/counterModel');
+const counterModel = require('../models/counterModel');
 const modelIds = require('../constants/modelIds');
 const getModel = require('../utils/getModel');
 
@@ -66,9 +66,15 @@ module.exports = (err, req, res, next) => {
       .split(' ')[0];
     const keys = Object.keys(modelIds);
     const values = Object.values(modelIds);
-    keys.forEach((key, index) => {
+    keys.forEach(async (key, index) => {
       if (key === collectionName) {
-        autoDecrementModelID(key, getModel(key), values[index]);
+        await counterModel.autoSequenceModelID(
+          key,
+          getModel(key),
+          values[index],
+          -1,
+          next
+        );
       }
     });
   }

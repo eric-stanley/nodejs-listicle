@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const AppError = require('../utils/appError');
 
 const { Schema } = mongoose;
 
@@ -11,33 +12,28 @@ counterSchema.index({ _id: 1, seq: 1 }, { unique: true });
 
 const counterModel = mongoose.model('counter', counterSchema);
 
-const autoIncrementModelID = function (modelName, doc, idFieldName, next) {
-  counterModel.findByIdAndUpdate(
-    // ** Method call begins **
-    modelName, // The ID to find for in counters model
-    { $inc: { seq: 1 } }, // The update
-    { new: true, upsert: true }, // The options
-    (error, counter) => {
-      // The callback
-      if (error) return next(error);
-      doc[idFieldName] = counter.seq;
-      next();
+exports.autoSequenceModelID = async (
+  modelName,
+  doc,
+  idFieldName,
+  seq,
+  next
+) => {
+  const counter = await counterModel.findByIdAndUpdate(
+    modelName,
+    { $inc: { seq } },
+    {
+      new: true,
+      upsert: true,
     }
-  ); // ** Method call ends **
-};
+  );
 
-const autoDecrementModelID = function (modelName, doc, idFieldName, next) {
-  counterModel.findByIdAndUpdate(
-    // ** Method call begins **
-    modelName, // The ID to find for in counters model
-    { $inc: { seq: -1 } }, // The update
-    { new: true, upsert: true }, // The options
-    (error, counter) => {
-      // The callback
-      if (error) return next(error);
-      doc[idFieldName] = counter.seq;
-    }
-  ); // ** Method call ends **
-};
+  if (!counter) {
+    return next(
+      new AppError(`No counter found with that name ${modelName}`, 404)
+    );
+  }
 
-module.exports = { autoIncrementModelID, autoDecrementModelID };
+  doc[idFieldName] = counter.seq;
+  if (seq === 1) next();
+};
