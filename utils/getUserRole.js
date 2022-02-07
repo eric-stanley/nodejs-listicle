@@ -1,6 +1,6 @@
 const UserRole = require('../models/userRoleModel');
 const Role = require('../models/roleModel');
-const AppError = require('../utils/appError');
+const AppError = require('./appError');
 
 module.exports = async (user_id, next) => {
   const userRole = await UserRole.findOne({

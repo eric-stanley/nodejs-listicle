@@ -2,7 +2,6 @@ const User = require('../models/userModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
-const createAndSendToken = require('../utils/createAndSendToken');
 const filterObj = require('../utils/filterObj');
 
 const defaultField = 'name';

@@ -1,5 +1,6 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+
+const { Schema } = mongoose;
 
 const counterSchema = new Schema({
   _id: { type: String, required: true },
@@ -16,7 +17,7 @@ const autoIncrementModelID = function (modelName, doc, idFieldName, next) {
     modelName, // The ID to find for in counters model
     { $inc: { seq: 1 } }, // The update
     { new: true, upsert: true }, // The options
-    function (error, counter) {
+    (error, counter) => {
       // The callback
       if (error) return next(error);
       doc[idFieldName] = counter.seq;
@@ -25,13 +26,13 @@ const autoIncrementModelID = function (modelName, doc, idFieldName, next) {
   ); // ** Method call ends **
 };
 
-const autoDecrementModelID = function (modelName, doc, idFieldName) {
+const autoDecrementModelID = function (modelName, doc, idFieldName, next) {
   counterModel.findByIdAndUpdate(
     // ** Method call begins **
     modelName, // The ID to find for in counters model
     { $inc: { seq: -1 } }, // The update
     { new: true, upsert: true }, // The options
-    function (error, counter) {
+    (error, counter) => {
       // The callback
       if (error) return next(error);
       doc[idFieldName] = counter.seq;

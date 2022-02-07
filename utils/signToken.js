@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
-module.exports = (id) => {
-  return jwt.sign(
+module.exports = (id) =>
+  jwt.sign(
     {
       id,
     },
@@ -10,4 +10,3 @@ module.exports = (id) => {
       expiresIn: process.env.JWT_EXPIRES_IN,
     }
   );
-};

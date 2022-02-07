@@ -1,10 +1,8 @@
 const UserRole = require('../models/userRoleModel');
-const APIFeatures = require('../utils/apiFeatures');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const Role = require('../models/roleModel');
 const User = require('../models/userModel');
-const filterObj = require('../utils/filterObj');
 const factory = require('./handlerFactory');
 
 const defaultField = 'role_id';
@@ -31,7 +29,7 @@ exports.checkUserRole = catchAsync(async (req, res, next) => {
     }
 
     // Check if user role combination exists and is active
-    let userRole = await UserRole.findOne({
+    const userRole = await UserRole.findOne({
       role_id,
       user_id,
     });
@@ -40,7 +38,8 @@ exports.checkUserRole = catchAsync(async (req, res, next) => {
       return next(
         new AppError('User role combination is already exists and active', 403)
       );
-    } else if (userRole) {
+    }
+    if (userRole) {
       return next(
         new AppError(
           'User role already exists. Please use update path to acivate/inactivate role',

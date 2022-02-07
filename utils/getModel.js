@@ -11,7 +11,7 @@ const statusModel = require('../models/statusModel');
 const userModel = require('../models/userModel');
 const userRoleModel = require('../models/userRoleModel');
 
-module.exports = (modelName) => {
+module.exports = function (modelName) {
   switch (modelName) {
     case 'accesses':
       return accessModel;
@@ -37,5 +37,7 @@ module.exports = (modelName) => {
       return userModel;
     case 'userroles':
       return userRoleModel;
+    default:
+      return null;
   }
 };

@@ -15,10 +15,9 @@ exports.deleteOne = (Model) =>
 
     const keys = Object.keys(modelIds);
     const values = Object.values(modelIds);
-    console.log(Model.collection.collectionName);
+
     keys.forEach((key, index) => {
       if (key === Model.collection.collectionName) {
-        console.log(Model.collection.collectionName, Model, values[index]);
         autoDecrementModelID(
           Model.collection.collectionName,
           Model,

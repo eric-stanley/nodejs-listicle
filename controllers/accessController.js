@@ -3,11 +3,10 @@ const Project = require('../models/projectModel');
 const User = require('../models/userModel');
 const Role = require('../models/roleModel');
 const UserRole = require('../models/userRoleModel');
-const APIFeatures = require('../utils/apiFeatures');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
-const filterObj = require('../utils/filterObj');
 const factory = require('./handlerFactory');
+
 const eligibleAccesses = [
   'admin',
   'portfolio manager',
@@ -26,7 +25,7 @@ exports.isAuthorized = catchAsync(async (req, res, next) => {
     }
 
     // Check if current user is assigned to the project
-    currentUserAccess = await Access.findOne({
+    const currentUserAccess = await Access.findOne({
       user_id: req.user.id,
       project_id: access.project_id,
       is_active: true,
@@ -90,7 +89,7 @@ exports.isAuthorized = catchAsync(async (req, res, next) => {
     // check if user has eligible access to create access
     if (access) {
       const currentUserRole = await Role.findById(access.role_id);
-      console.log(currentUserRole);
+
       if (!currentUserRole) {
         return next(new AppError('Invalid role assigned to you', 403));
       }
