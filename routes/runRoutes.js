@@ -11,19 +11,11 @@ router
     authController.restrictTo('admin'),
     runController.getAllRuns
   )
-  .post(
-    authController.protect,
-    authController.restrictTo('admin'),
-    runController.createRun
-  );
+  .post(authController.protect, runController.createRun);
 
 router
   .route('/:id')
-  .get(
-    authController.protect,
-    authController.restrictTo('admin'),
-    runController.getRun
-  )
+  .get(authController.protect, runController.getRun)
   .patch(
     authController.protect,
     authController.restrictTo('admin'),
