@@ -6,13 +6,34 @@ const router = express.Router();
 
 router
   .route('/')
-  .get(authController.protect, categoryController.getAllCategories)
-  .post(authController.protect, categoryController.createCategory);
+  .get(
+    authController.protect,
+    authController.updateFilter,
+    categoryController.getAllCategories
+  )
+  .post(
+    authController.protect,
+    categoryController.isAuthorized,
+    categoryController.updateOwner,
+    categoryController.createCategory
+  );
 
 router
   .route('/:id')
-  .get(authController.protect, categoryController.getCategory)
-  .patch(authController.protect, categoryController.updateCategory)
-  .delete(authController.protect, categoryController.deleteCategory);
+  .get(
+    authController.protect,
+    authController.updateFilter,
+    categoryController.getCategory
+  )
+  .patch(
+    authController.protect,
+    categoryController.isAuthorized,
+    categoryController.updateCategory
+  )
+  .delete(
+    authController.protect,
+    categoryController.isAuthorized,
+    categoryController.deleteCategory
+  );
 
 module.exports = router;

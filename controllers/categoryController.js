@@ -1,98 +1,132 @@
 const Category = require('../models/categoryModel');
-const APIFeatures = require('../utils/apiFeatures');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
+const factory = require('./handlerFactory');
+const Access = require('../models/accessModel');
+const Project = require('../models/projectModel');
+const Role = require('../models/roleModel');
 
-exports.getAllCategories = catchAsync(async (req, res) => {
-  const defaultField = 'name';
-  const defaultPage = 1;
-  const defaultLimit = 10;
+const eligibleAccesses = [
+  'admin',
+  'portfolio manager',
+  'program manager',
+  'project manager',
+];
 
-  // Execute query
-  const features = new APIFeatures(
-    Category.find(),
-    req.body,
-    defaultField,
-    defaultPage,
-    defaultLimit
-  )
-    .filter()
-    .sort()
-    .select()
-    .paginate();
-  const categories = await features.query;
+const defaultField = 'name';
+const defaultPage = 1;
+const defaultLimit = 10;
 
-  // Send response
-  res.status(200).json({
-    status: 'success',
-    results: categories.length,
-    data: {
-      categories,
-    },
-  });
-});
+exports.isAuthorized = catchAsync(async (req, res, next) => {
+  if (req.params.id) {
+    // Get, update and delete category
 
-exports.getCategory = catchAsync(async (req, res, next) => {
-  const category = await Category.findById(req.params.id);
+    const category = await Category.findById(req.params.id);
 
-  if (!category) {
-    return next(new AppError('No category found with that ID', 404));
-  }
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      category,
-    },
-  });
-});
-
-exports.createCategory = catchAsync(async (req, res, next) => {
-  const category = await Category.create({
-    name: req.body.fields.input.name,
-  });
-
-  res.status(201).json({
-    status: 'success',
-    data: {
-      category,
-    },
-  });
-});
-
-exports.updateCategory = catchAsync(async (req, res, next) => {
-  const category = await Category.findByIdAndUpdate(
-    req.params.id,
-    {
-      name: req.body.fields.input.name,
-    },
-    {
-      new: true,
-      runValidators: true,
+    if (!category) {
+      return next(new AppError('No application found with that ID', 404));
     }
-  );
 
-  if (!category) {
-    return next(new AppError('No category found with that ID', 404));
+    // Check if current user is assigned to the project
+    const currentUserAccess = await Access.findOne({
+      user_id: req.user.id,
+      project_id: category.project_id,
+      is_active: true,
+    });
+
+    if (!currentUserAccess && !req.user.is_admin) {
+      return next(
+        new AppError(
+          'User not assigned to the project or project is not active',
+          404
+        )
+      );
+    }
+
+    // Check if user role is eligible to make changes or user is admin
+    if (currentUserAccess) {
+      const userRole = await Role.findById(currentUserAccess.role_id);
+
+      if (
+        !req.user.is_admin &&
+        !eligibleAccesses.includes(userRole.description.toLowerCase())
+      ) {
+        return next(
+          new AppError('You do not have access to perform this action', 403)
+        );
+      }
+    }
+  } else {
+    // Create application
+
+    // Check if project is active
+    const project = await Project.findOne({
+      _id: req.body.fields.input.project_id,
+      is_active: true,
+    });
+
+    if (!project) {
+      return next(
+        new AppError('Requested project not found or is inactive', 403)
+      );
+    }
+
+    // Check if user is project owner
+    if (project.owner === req.user.id) {
+      req.user.is_project_admin = true;
+    }
+
+    // Check if user is has eligible access within the project
+    const access = await Access.findOne({
+      user_id: req.user.id,
+      project_id: req.body.fields.input.project_id,
+      is_active: true,
+    });
+
+    if (!access && !req.user.is_admin && !req.user.is_project_admin) {
+      return next(
+        new AppError('No access found for this user in this project', 403)
+      );
+    }
+
+    // check if user has eligible access to create access
+    if (access) {
+      const currentUserRole = await Role.findById(access.role_id);
+
+      if (!currentUserRole) {
+        return next(new AppError('Invalid role assigned to you', 403));
+      }
+
+      const userRoleDescription = currentUserRole.description;
+
+      if (!eligibleAccesses.includes(userRoleDescription.toLowerCase())) {
+        return next(
+          new AppError('You do not have access to perform this action', 403)
+        );
+      }
+    }
   }
 
-  res.status(200).json({
-    status: 'success',
-    data: {
-      category,
-    },
-  });
+  next();
 });
 
-exports.deleteCategory = catchAsync(async (req, res, next) => {
-  const category = await Category.findByIdAndDelete(req.params.id);
+exports.updateOwner = (req, res, next) => {
+  req.body.fields.input.owner = req.user.id;
+  next();
+};
 
-  if (!category) {
-    return next(new AppError('No category found with that ID', 404));
-  }
-
-  res.status(204).json({
-    status: 'success',
-    data: null,
-  });
-});
+exports.getAllCategories = factory.getAll(
+  Category,
+  defaultField,
+  defaultPage,
+  defaultLimit
+);
+exports.getCategory = factory.getOne(Category, ['users', 'projects']);
+exports.createCategory = factory.createOne(
+  Category,
+  'name',
+  'project_id',
+  'owner'
+);
+exports.updateCategory = factory.updateOne(Category, 'name');
+exports.deleteCategory = factory.deleteOne(Category);

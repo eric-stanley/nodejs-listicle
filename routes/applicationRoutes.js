@@ -6,13 +6,34 @@ const router = express.Router();
 
 router
   .route('/')
-  .get(authController.protect, applicationController.getAllApps)
-  .post(authController.protect, applicationController.createApp);
+  .get(
+    authController.protect,
+    authController.updateFilter,
+    applicationController.getAllApps
+  )
+  .post(
+    authController.protect,
+    applicationController.isAuthorized,
+    applicationController.updateOwner,
+    applicationController.createApp
+  );
 
 router
   .route('/:id')
-  .get(authController.protect, applicationController.getApp)
-  .patch(authController.protect, applicationController.updateApp)
-  .delete(authController.protect, applicationController.deleteApp);
+  .get(
+    authController.protect,
+    authController.updateFilter,
+    applicationController.getApp
+  )
+  .patch(
+    authController.protect,
+    applicationController.isAuthorized,
+    applicationController.updateApp
+  )
+  .delete(
+    authController.protect,
+    applicationController.isAuthorized,
+    applicationController.deleteApp
+  );
 
 module.exports = router;

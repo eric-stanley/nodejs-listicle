@@ -150,25 +150,6 @@ const defaultField = 'user_id';
 const defaultPage = 1;
 const defaultLimit = 10;
 
-exports.updateFilter = (req, res, next) => {
-  let filter = {};
-  // Retrieve all projects if admin
-  if (!req.user.is_admin) {
-    filter = {
-      user_id: req.user.id,
-    };
-  }
-
-  // Apply id filter
-  if (req.params.id) {
-    filter._id = req.params.id;
-  }
-
-  req.body.filter = filter;
-
-  next();
-};
-
 exports.getAllAccesses = factory.getAll(
   Access,
   defaultField,

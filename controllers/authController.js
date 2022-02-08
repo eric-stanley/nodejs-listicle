@@ -230,3 +230,22 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   // 4) Log user in, send JWT
   createAndSendToken(user, 200, res);
 });
+
+exports.updateFilter = (req, res, next) => {
+  let filter = {};
+  // Retrieve all projects if admin
+  if (!req.user.is_admin) {
+    filter = {
+      user_id: req.user.id,
+    };
+  }
+
+  // Apply id filter
+  if (req.params.id) {
+    filter._id = req.params.id;
+  }
+
+  req.body.filter = filter;
+
+  next();
+};
