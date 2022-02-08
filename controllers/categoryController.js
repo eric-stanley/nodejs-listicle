@@ -24,7 +24,7 @@ exports.isAuthorized = catchAsync(async (req, res, next) => {
     const category = await Category.findById(req.params.id);
 
     if (!category) {
-      return next(new AppError('No application found with that ID', 404));
+      return next(new AppError('No category found with that ID', 404));
     }
 
     // Check if current user is assigned to the project
