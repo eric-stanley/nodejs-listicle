@@ -8,7 +8,7 @@ router
   .route('/')
   .get(
     authController.protect,
-    authController.updateFilter,
+    authController.updateFilter('owner'),
     categoryController.getAllCategories
   )
   .post(
@@ -22,7 +22,7 @@ router
   .route('/:id')
   .get(
     authController.protect,
-    authController.updateFilter,
+    authController.updateFilter('owner'),
     categoryController.getCategory
   )
   .patch(

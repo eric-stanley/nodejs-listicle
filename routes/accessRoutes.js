@@ -8,7 +8,7 @@ router
   .route('/')
   .get(
     authController.protect,
-    authController.updateFilter,
+    authController.updateFilter('user_id'),
     accessController.getAllAccesses
   )
   .post(
@@ -21,7 +21,7 @@ router
   .route('/:id')
   .get(
     authController.protect,
-    authController.updateFilter,
+    authController.updateFilter('user_id'),
     accessController.getAccess
   )
   .patch(

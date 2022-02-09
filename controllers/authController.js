@@ -231,13 +231,11 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   createAndSendToken(user, 200, res);
 });
 
-exports.updateFilter = (req, res, next) => {
-  let filter = {};
+exports.updateFilter = (filterField) => (req, res, next) => {
+  const filter = {};
   // Retrieve all projects if admin
   if (!req.user.is_admin) {
-    filter = {
-      user_id: req.user.id,
-    };
+    filter[filterField] = req.user.id;
   }
 
   // Apply id filter
