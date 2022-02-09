@@ -1,0 +1,10 @@
+{
+  "resultDir": "reports/jest-stare/",
+  "reportTitle": "jest-stare!",
+  "additionalResultsProcessors": [],
+  "coverageLink": "../coverage/index.html",
+  "jestStareConfigJson": "jest-stare.json",
+  "jestGlobalConfigJson": "globalStuff.json",
+  "resultHtml": "index.html",
+  "resultJson": "jest-results.json"
+}

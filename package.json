@@ -3,11 +3,76 @@
   "version": "1.0.0",
   "description": "Minimal Test Report",
   "main": "app.js",
+  "files": [
+    "__test__",
+    "utils",
+    "routes",
+    "controllers",
+    "models"
+  ],
+  "jest": {
+    "verbose": true,
+    "collectCoverage": true,
+    "reporters": [
+      [
+        "jest-stare",
+        {
+          "resultDir": "reports/jest-stare",
+          "reportTitle": "jest-stare!",
+          "additionalResultsProcessors": [
+            "jest-junit"
+          ],
+          "coverageLink": "../coverage/index.html",
+          "jestStareConfigJson": "jest-stare.json",
+          "jestGlobalConfigJson": "globalStuff.json"
+        }
+      ],
+      [
+        "jest-html-reporters",
+        {
+          "publicPath": "./reports/jest-html-reporters",
+          "filename": "report.html",
+          "openReport": false
+        }
+      ]
+    ],
+    "roots": [
+      "./__tests__"
+    ],
+    "testMatch": [
+      "**/__tests__/**/*.+(spec|test).+(ts|tsx|js)"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "babel-jest"
+    },
+    "testSequencer": "<rootDir>/__tests__/jest-supertest/testSequencer.js",
+    "coverageDirectory": "<rootDir>/reports/coverage/",
+    "coverageReporters": [
+      "html",
+      "text"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    },
+    "setupFiles": [
+      "<rootDir>/__tests__/settings/envSetup.js"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/__tests__/testSetupFile.js"
+    ]
+  },
   "scripts": {
     "start": "nodemon server.js",
     "start:prod": "NODE_ENV=production nodemon server.js",
     "debug": "ndb server.js",
-    "debug:prod": "NODE_ENV=production ndb server.js"
+    "debug:prod": "NODE_ENV=production ndb server.js",
+    "test": "NODE_TLS_REJECT_UNAUTHORIZED=0 jest --env=jsdom --detectOpenHandles --runInBand --testTimeout=60000",
+    "test:watch": "jest --verbose --watchAll"
   },
   "keywords": [
     "report",
@@ -17,6 +82,7 @@
   "author": "Eric Stanley",
   "license": "ISC",
   "dependencies": {
+    "@jest/test-sequencer": "^27.5.1",
     "bcryptjs": "^2.4.3",
     "dotenv": "^10.0.0",
     "express": "^4.17.2",
@@ -27,12 +93,17 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.6",
     "morgan": "^1.10.0",
+    "n": "^8.0.2",
     "nodemailer": "^6.7.2",
     "slugify": "^1.6.5",
+    "stable": "^0.1.8",
     "validator": "^13.7.0",
     "xss-clean": "^0.1.1"
   },
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^27.5.1",
+    "chai": "^4.3.6",
     "eslint": "^8.6.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.3.0",
@@ -41,11 +112,51 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.28.0",
+    "jest": "^27.5.1",
+    "jest-html-reporters": "^3.0.5",
+    "jest-serial-runner": "^1.2.0",
+    "jest-stare": "^2.3.0",
     "ndb": "^1.1.5",
     "nodemon": "^2.0.15",
-    "prettier": "^2.5.1"
+    "prettier": "^2.5.1",
+    "sinon": "^13.0.1",
+    "sinon-chai": "^3.7.0",
+    "supertest": "^6.2.2",
+    "webpack": "^5.68.0"
   },
   "engines": {
     "node": ">=10.0.0"
+  },
+  "rules": {
+    "node/no-unpublished-require": [
+      "error",
+      {
+        "devDependencies": true
+      },
+      {
+        "allowModules": [],
+        "convertPath": [
+          {
+            "include": [
+              "*.js",
+              "constants/*.js",
+              "controllers/*.js",
+              "models/*.js",
+              "routes/*.js",
+              "utils/*.js"
+            ],
+            "exclude": [
+              "__test__/**/**/*.test.js",
+              "__test__/**/**/*.spec.js"
+            ]
+          }
+        ],
+        "tryExtensions": [
+          ".js",
+          ".json",
+          ".node"
+        ]
+      }
+    ]
   }
 }
