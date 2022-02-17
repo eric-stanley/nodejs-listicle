@@ -1,0 +1,12 @@
+{"_id":{"$oid":"620d1e09b1aa206691930567"},"user_role_id":1,"role_id":{"$oid":"620d1da3b1aa206691930553"},"user_id":{"$oid":"620d1cfb6f75d648c36307a2"},"is_active":true,"created_at":{"$date":"2020-12-25T11:00:00Z"},"updated_at":{"$date":"2020-12-25T11:00:00Z"}}
+{"_id":{"$oid":"620d221d6f75d648c36307e0"},"role_id":{"$oid":"620d1da3b1aa206691930554"},"user_id":{"$oid":"620d1c4e11e527e3c2a226e4"},"is_active":true,"user_role_id":2,"__v":0}
+{"_id":{"$oid":"620d222d6f75d648c36307eb"},"role_id":{"$oid":"620d1da3b1aa206691930556"},"user_id":{"$oid":"620d20cf6f75d648c36307a5"},"is_active":true,"user_role_id":3,"__v":0}
+{"_id":{"$oid":"620d223d6f75d648c36307f6"},"role_id":{"$oid":"620d1da3b1aa206691930555"},"user_id":{"$oid":"620d20ff6f75d648c36307ac"},"is_active":true,"user_role_id":4,"__v":0}
+{"_id":{"$oid":"620d224a6f75d648c3630801"},"role_id":{"$oid":"620d1da3b1aa206691930557"},"user_id":{"$oid":"620d210f6f75d648c36307af"},"is_active":true,"user_role_id":5,"__v":0}
+{"_id":{"$oid":"620d225a6f75d648c363080c"},"role_id":{"$oid":"620d1da3b1aa20669193055a"},"user_id":{"$oid":"620d21436f75d648c36307b2"},"is_active":true,"user_role_id":6,"__v":0}
+{"_id":{"$oid":"620d22826f75d648c363082b"},"role_id":{"$oid":"620d1da3b1aa206691930558"},"user_id":{"$oid":"620d21626f75d648c36307b8"},"is_active":true,"user_role_id":7,"__v":0}
+{"_id":{"$oid":"620d228f6f75d648c3630836"},"role_id":{"$oid":"620d1da3b1aa206691930557"},"user_id":{"$oid":"620d216f6f75d648c36307bb"},"is_active":true,"user_role_id":8,"__v":0}
+{"_id":{"$oid":"620d229e6f75d648c3630841"},"role_id":{"$oid":"620d1da3b1aa206691930556"},"user_id":{"$oid":"620d217c6f75d648c36307be"},"is_active":true,"user_role_id":9,"__v":0}
+{"_id":{"$oid":"620d22af6f75d648c363084c"},"role_id":{"$oid":"620d1da3b1aa206691930559"},"user_id":{"$oid":"620d218a6f75d648c36307c1"},"is_active":true,"user_role_id":10,"__v":0}
+{"_id":{"$oid":"620d22c76f75d648c3630861"},"role_id":{"$oid":"620d1da3b1aa206691930554"},"user_id":{"$oid":"620d219a6f75d648c36307c4"},"is_active":true,"user_role_id":11,"__v":0}
+{"_id":{"$oid":"620d258083b2f769f58e290f"},"role_id":{"$oid":"620d1da3b1aa206691930559"},"user_id":{"$oid":"620d21516f75d648c36307b5"},"is_active":true,"user_role_id":12,"__v":0}

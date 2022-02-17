@@ -10,10 +10,14 @@ const defaultLimit = 10;
 exports.checkUserRole = catchAsync(async (req, res, next) => {
   if (!req.params.id) {
     // Create path
-    checkAccess.checkUserRoleInput(req.body.fields.input, next);
+    await checkAccess.checkUserRoleInput(req.body.fields.input, next);
   } else {
     // Update path
-    checkAccess.checkUserRoleId(req.params.id, req.body.fields.input, next);
+    await checkAccess.checkUserRoleId(
+      req.params.id,
+      req.body.fields.input,
+      next
+    );
   }
 
   next();

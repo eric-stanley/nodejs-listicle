@@ -17,23 +17,26 @@ const defaultLimit = 10;
 exports.isAuthorized = catchAsync(async (req, res, next) => {
   if (req.params.id) {
     // Get, update and delete category
-    const category = checkAccess.checkIdExistance(
+    const category = await checkAccess.checkIdExistance(
       Category,
       req.params.id,
       next
     );
-    checkAccess.checkAccessForUpdate(
+    await checkAccess.checkAccessForUpdate(
       req,
       next,
       eligibleAccesses,
-      category,
       req.user.id,
       category.project_id
     );
   } else {
     // Create category
-    checkAccess.checkProjectAccess(req, req.body.fields.input.project_id, next);
-    checkAccess.checkEligibilityAccess(
+    await checkAccess.checkProjectAccess(
+      req,
+      req.body.fields.input.project_id,
+      next
+    );
+    await checkAccess.checkEligibilityAccess(
       req,
       next,
       eligibleAccesses,

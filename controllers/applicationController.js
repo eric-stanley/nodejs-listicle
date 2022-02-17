@@ -17,23 +17,26 @@ const defaultLimit = 10;
 exports.isAuthorized = catchAsync(async (req, res, next) => {
   if (req.params.id) {
     // Get, update and delete application
-    const application = checkAccess.checkIdExistance(
+    const application = await checkAccess.checkIdExistance(
       Application,
       req.params.id,
       next
     );
-    checkAccess.checkAccessForUpdate(
+    await checkAccess.checkAccessForUpdate(
       req,
       next,
       eligibleAccesses,
-      application,
       req.user.id,
       application.project_id
     );
   } else {
     // Create application
-    checkAccess.checkProjectAccess(req, req.body.fields.input.project_id, next);
-    checkAccess.checkEligibilityAccess(
+    await checkAccess.checkProjectAccess(
+      req,
+      req.body.fields.input.project_id,
+      next
+    );
+    await checkAccess.checkEligibilityAccess(
       req,
       next,
       eligibleAccesses,

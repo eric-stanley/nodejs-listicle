@@ -8,7 +8,7 @@ router
   .route('/')
   .get(
     authController.protect,
-    authController.updateFilter('user_id'),
+    authController.updateFilter('owner'),
     projectController.getAllProjects
   )
   .post(
@@ -28,7 +28,7 @@ router
   .get(
     authController.protect,
     projectController.isAuthorized,
-    authController.updateFilter('user_id'),
+    authController.updateFilter('owner'),
     projectController.getProject
   )
   .patch(

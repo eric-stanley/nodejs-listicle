@@ -16,7 +16,19 @@
     "camelcase": "off",
     "prefer-destructuring": ["error", { "object": true, "array": false }],
     "no-unused-vars": ["error", { "argsIgnorePattern": "req|res|next|val" }],
-    "no-undefined": ["error", { "argsIgnorePattern": "test" }]
+    "no-undefined": ["error"]
+  },
+  "overrides": [
+    {
+      "files": ["**/**/*.test.js", "app.test.js"],
+      "rules": {
+        "node/no-unpublished-require": 0,
+        "node/no-missing-require": 0
+      }
+    }
+  ],
+  "env": {
+    "jest/globals": true
   },
   "parserOptions": {
     "sourceType": "module"

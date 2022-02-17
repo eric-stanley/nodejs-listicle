@@ -70,7 +70,7 @@ exports.createOne = (Model, ...fields) =>
 
 exports.getOne = (Model, populateOptions) =>
   catchAsync(async (req, res, next) => {
-    let query = Model.findById(req.params.id);
+    let query = Model.findOne(req.body.filter);
 
     if (populateOptions && populateOptions.length > 0) {
       populateOptions.forEach((item) => {

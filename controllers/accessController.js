@@ -13,28 +13,39 @@ const eligibleAccesses = [
 exports.isAuthorized = catchAsync(async (req, res, next) => {
   if (req.params.id) {
     // Get, update and delete access
-    const access = checkAccess.checkIdExistance(Access, req.params.id, next);
-    checkAccess.checkAccessForUpdate(
+    const access = await checkAccess.checkIdExistance(
+      Access,
+      req.params.id,
+      next
+    );
+
+    await checkAccess.checkAccessForUpdate(
       req,
       next,
       eligibleAccesses,
-      access,
       req.user.id,
       access.project_id
     );
   } else {
     // Create access
-    checkAccess.checkProjectAccess(req, req.body.fields.input.project_id, next);
-    checkAccess.checkEligibilityAccess(
+
+    await checkAccess.checkProjectAccess(
+      req,
+      req.body.fields.input.project_id,
+      next
+    );
+
+    await checkAccess.checkEligibilityAccess(
       req,
       next,
       eligibleAccesses,
       req.user.id,
       req.body.fields.input.project_id
     );
-    checkAccess.checkUserAccess(req, req.body.fields.input.user_id, next);
-    checkAccess.checkExistingAccess(
-      req,
+
+    await checkAccess.checkUserAccess(req.body.fields.input.user_id, next);
+
+    await checkAccess.checkExistingAccess(
       next,
       req.body.fields.input.user_id,
       req.body.fields.input.project_id,

@@ -95,6 +95,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   // Grant access to protected route
   req.user = currentUser;
+
   next();
 });
 
@@ -240,7 +241,7 @@ exports.updateFilter = (filterField) => (req, res, next) => {
 
   // Apply id filter
   if (req.params.id) {
-    filter._id = req.params.id;
+    filter.id = req.params.id;
   }
 
   req.body.filter = filter;

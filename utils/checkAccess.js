@@ -4,61 +4,69 @@ const Role = require('../models/roleModel');
 const User = require('../models/userModel');
 const UserRole = require('../models/userRoleModel');
 const AppError = require('./appError');
-const catchAsync = require('./catchAsync');
 
-exports.checkIdExistance = catchAsync(async (Model, id, next) => {
+exports.checkIdExistance = async (Model, id, next) => {
   const model = await Model.findById(id).select('+is_active');
 
   if (!model) {
     return next(new AppError('No document found with that ID', 404));
   }
+
   return model;
-});
+};
 
-exports.checkAccessForUpdate = catchAsync(
-  async (req, next, eligibleAccesses, access, user_id, project_id) => {
-    // Check if current user is assigned to the project
-    const currentUserAccess = await Access.findOne({
-      user_id,
-      project_id,
-      is_active: true,
-    });
+exports.checkAccessForUpdate = async (
+  req,
+  next,
+  eligibleAccesses,
+  user_id,
+  project_id
+) => {
+  // Check if current user is assigned to the project
+  const currentUserAccess = await Access.findOne({
+    user_id,
+    project_id,
+    is_active: true,
+  });
 
-    if (!currentUserAccess && !req.user.is_admin) {
+  if (!currentUserAccess && !req.user.is_admin) {
+    return next(
+      new AppError(
+        'User not assigned to the project or project is not active',
+        404
+      )
+    );
+  }
+
+  // Check if user role is eligible to make changes or user is admin
+  if (currentUserAccess) {
+    const userRole = await Role.findById(currentUserAccess.role_id);
+
+    if (
+      !req.user.is_admin &&
+      !eligibleAccesses.includes(userRole.description.toLowerCase())
+    ) {
       return next(
-        new AppError(
-          'User not assigned to the project or project is not active',
-          404
-        )
+        new AppError('You do not have access to perform this action', 403)
       );
     }
-
-    // Check if user role is eligible to make changes or user is admin
-    if (currentUserAccess) {
-      const userRole = await Role.findById(currentUserAccess.role_id);
-
-      if (
-        !req.user.is_admin &&
-        !eligibleAccesses.includes(userRole.description.toLowerCase())
-      ) {
-        return next(
-          new AppError('You do not have access to perform this action', 403)
-        );
-      }
-    }
   }
-);
+};
 
-exports.checkProjectAccess = catchAsync(async (req, id, next) => {
-  const project = this.checkIdExistance(Project, id, next);
+exports.checkProjectAccess = async (req, id, next) => {
+  const project = await Project.findById(id).select('+is_active');
+
+  if (!project) {
+    return next(new AppError('No project found with that ID', 404));
+  }
 
   // Check if user is project owner
-  if (project.owner === req.user.id) {
+  if (project.owner.toString() === req.user.id) {
     req.user.is_project_admin = true;
   }
-});
+};
 
-exports.checkProjectOwner = catchAsync(async (req, project, next) => {
+exports.checkProjectOwner = async (req, project, next) => {
   const projectOwner = await User.findById(project.owner).select('+is_active');
 
   if (!projectOwner || !projectOwner.is_active) {
@@ -74,42 +82,46 @@ exports.checkProjectOwner = catchAsync(async (req, project, next) => {
       )
     );
   }
-});
+};
 
-exports.checkEligibilityAccess = catchAsync(
-  async (req, next, eligibleAccesses, user_id, project_id) => {
-    const access = await Access.findOne({
-      user_id,
-      project_id,
-      is_active: true,
-    });
+exports.checkEligibilityAccess = async (
+  req,
+  next,
+  eligibleAccesses,
+  user_id,
+  project_id
+) => {
+  const access = await Access.findOne({
+    user_id,
+    project_id,
+    is_active: true,
+  });
 
-    if (!access && !req.user.is_admin && !req.user.is_project_admin) {
+  if (!access && !req.user.is_admin && !req.user.is_project_admin) {
+    return next(
+      new AppError('No access found for this user in this project', 403)
+    );
+  }
+
+  // check if user has eligible access to create access
+  if (access) {
+    const currentUserRole = await Role.findById(access.role_id);
+
+    if (!currentUserRole) {
+      return next(new AppError('Invalid role assigned to you', 403));
+    }
+
+    const userRoleDescription = currentUserRole.description;
+
+    if (!eligibleAccesses.includes(userRoleDescription.toLowerCase())) {
       return next(
-        new AppError('No access found for this user in this project', 403)
+        new AppError('You do not have access to perform this action', 403)
       );
     }
-
-    // check if user has eligible access to create access
-    if (access) {
-      const currentUserRole = await Role.findById(access.role_id);
-
-      if (!currentUserRole) {
-        return next(new AppError('Invalid role assigned to you', 403));
-      }
-
-      const userRoleDescription = currentUserRole.description;
-
-      if (!eligibleAccesses.includes(userRoleDescription.toLowerCase())) {
-        return next(
-          new AppError('You do not have access to perform this action', 403)
-        );
-      }
-    }
   }
-);
+};
 
-exports.checkUserAccess = catchAsync(async (req, user_id, next) => {
+exports.checkUserAccess = async (user_id, next) => {
   const user = await User.findById(user_id).select('+is_active');
   if (!user || !user.is_active) {
     return next(new AppError('Requested user not found or inactive', 403));
@@ -128,29 +140,27 @@ exports.checkUserAccess = catchAsync(async (req, user_id, next) => {
       )
     );
   }
-});
+};
 
-exports.checkExistingAccess = catchAsync(
-  async (req, next, user_id, project_id, role_id) => {
-    const existingAccess = await Access.findOne({
-      user_id,
-      project_id,
-      role_id,
-      is_active: true,
-    });
+exports.checkExistingAccess = async (next, user_id, project_id, role_id) => {
+  const existingAccess = await Access.findOne({
+    user_id,
+    project_id,
+    role_id,
+    is_active: true,
+  });
 
-    if (existingAccess) {
-      return next(
-        new AppError(
-          'Requested user already has access to this project with the requested role',
-          403
-        )
-      );
-    }
+  if (existingAccess) {
+    return next(
+      new AppError(
+        'Requested user already has access to this project with the requested role',
+        403
+      )
+    );
   }
-);
+};
 
-exports.checkUserRoleInput = catchAsync(async (input, next) => {
+exports.checkUserRoleInput = async (input, next) => {
   const { role_id, user_id } = input;
 
   // Check if role exists
@@ -167,8 +177,19 @@ exports.checkUserRoleInput = catchAsync(async (input, next) => {
     return next(new AppError('No user found with that ID', 404));
   }
 
-  // Check if user role combination exists and is active
+  // Check if user is active in a different role
   const userRole = await UserRole.findOne({
+    user_id,
+  });
+
+  if (userRole && userRole.is_active) {
+    return next(
+      new AppError('User is already active in a different role', 403)
+    );
+  }
+
+  // Check if user role combination exists and is active
+  userRole = await UserRole.findOne({
     role_id,
     user_id,
   });
@@ -186,9 +207,9 @@ exports.checkUserRoleInput = catchAsync(async (input, next) => {
       )
     );
   }
-});
+};
 
-exports.checkUserRoleId = catchAsync(async (id, input, next) => {
+exports.checkUserRoleId = async (id, input, next) => {
   const userRole = await UserRole.findById(id);
 
   // Check if user role exists
@@ -206,4 +227,4 @@ exports.checkUserRoleId = catchAsync(async (id, input, next) => {
   ) {
     return next(new AppError('User role combination is already exists', 403));
   }
-});
+};

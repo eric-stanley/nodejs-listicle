@@ -5,6 +5,7 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+const dotenv = require('dotenv');
 
 const AppError = require('./utils/appError');
 const roleRouter = require('./routes/roleRoutes');
@@ -24,6 +25,10 @@ const accessRouter = require('./routes/accessRoutes');
 const errorController = require('./controllers/errorController');
 
 const app = express();
+
+dotenv.config({
+  path: './config.env',
+});
 
 app.use(helmet());
 

@@ -8,8 +8,8 @@ const defaultPage = 1;
 const defaultLimit = 10;
 
 exports.isAuthorized = catchAsync(async (req, res, next) => {
-  const project = Project.checkIdExistance(Project, req.params.id, next);
-  checkAccess.checkProjectOwner(req, project, next);
+  const project = await Project.checkIdExistance(Project, req.params.id, next);
+  await checkAccess.checkProjectOwner(req, project, next);
   next();
 });
 
