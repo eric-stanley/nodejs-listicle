@@ -16,8 +16,8 @@
     "start:prod": "NODE_ENV=production nodemon server.js",
     "debug": "NODE_ENV=development ndb server.js",
     "debug:prod": "NODE_ENV=production ndb server.js",
-    "test": "jest",
-    "test-w": "jest --watchAll"
+    "test": "jest --runInBand",
+    "test-w": "jest --watchAll --runInBand"
   },
   "keywords": [
     "report",
