@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const timeDistance = require('../utils/timeDistance');
-const counterModel = require('./counterModel');
+const { autoSequenceModelID } = require('./counterModel');
 
 if (process.env.NODE_ENV === 'development') {
   mongoose.set('debug', true);
@@ -45,14 +45,16 @@ runSchema.pre('save', async function (next) {
     next();
     return;
   }
-  await counterModel.autoSequenceModelID('runs', this, 'run_id', 1, next);
+  await autoSequenceModelID('runs', this, 'run_id', 1, next);
   next();
 });
 
-runSchema.post(/^find/, function (docs, next) {
-  console.log(`Query took ${Date.now() - this.start} milliseconds!`);
-  next();
-});
+if (process.env.NODE_ENV === 'development') {
+  runSchema.post(/^find/, function (docs, next) {
+    console.log(`Query took ${Date.now() - this.start} milliseconds!`);
+    next();
+  });
+}
 
 const Run = mongoose.model('Run', runSchema);
 

@@ -1,0 +1,27 @@
+[
+  {
+    "_id": "620fcb2c4fb6b015ecdcc32c",
+    "collection_id": "environments",
+    "__v": 0
+  },
+  {
+    "_id": "620fcb3c4fb6b015ecdcc32d",
+    "collection_id": "groups",
+    "__v": 0
+  },
+  {
+    "_id": "620fcb4b4fb6b015ecdcc32e",
+    "collection_id": "priorities",
+    "__v": 0
+  },
+  {
+    "_id": "620fcb654fb6b015ecdcc32f",
+    "collection_id": "roles",
+    "__v": 0
+  },
+  {
+    "_id": "620fcb754fb6b015ecdcc330",
+    "collection_id": "status",
+    "__v": 0
+  }
+]

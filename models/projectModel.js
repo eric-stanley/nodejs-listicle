@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const counterModel = require('./counterModel');
+const { autoSequenceModelID } = require('./counterModel');
 
 if (process.env.NODE_ENV === 'development') {
   mongoose.set('debug', true);
@@ -54,13 +54,7 @@ projectSchema.pre('save', async function (next) {
     next();
     return;
   }
-  await counterModel.autoSequenceModelID(
-    'projects',
-    this,
-    'project_id',
-    1,
-    next
-  );
+  await autoSequenceModelID('projects', this, 'project_id', 1, next);
   next();
 });
 

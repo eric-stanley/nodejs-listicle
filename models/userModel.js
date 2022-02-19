@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const slugify = require('slugify');
 const bcrypt = require('bcryptjs');
-const counterModel = require('./counterModel');
+const { autoSequenceModelID } = require('./counterModel');
 
 if (process.env.NODE_ENV === 'development') {
   mongoose.set('debug', true);
@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
     },
     username: {
       type: String,
-      required: [true, 'A user must have a name'],
+      required: [true, 'A user must have a username'],
       unique: true,
       trim: true,
       maxlength: [25, 'Username must have less than or equal to 25 characters'],
@@ -114,7 +114,7 @@ userSchema.pre('save', async function (next) {
     next();
     return;
   }
-  await counterModel.autoSequenceModelID('users', this, 'user_id', 1, next);
+  await autoSequenceModelID('users', this, 'user_id', 1, next);
   next();
 });
 
@@ -125,10 +125,12 @@ userSchema.pre(/^find/, function (next) {
   next();
 });
 
-userSchema.post(/^find/, function (docs, next) {
-  console.log(`Query took ${Date.now() - this.start} milliseconds!`);
-  next();
-});
+if (process.env.NODE_ENV === 'development') {
+  userSchema.post(/^find/, function (docs, next) {
+    console.log(`Query took ${Date.now() - this.start} milliseconds!`);
+    next();
+  });
+}
 
 userSchema.methods.correctPassword = async function (
   candidatePassword,

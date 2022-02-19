@@ -3,7 +3,7 @@ const catchAsync = require('../utils/catchAsync');
 const APIFeatures = require('../utils/apiFeatures');
 const filterObj = require('../utils/filterObj');
 const modelIds = require('../constants/modelIds');
-const counterModel = require('../models/counterModel');
+const { autoSequenceModelID } = require('../models/counterModel');
 const getModel = require('../utils/getModel');
 
 exports.deleteOne = (Model) =>
@@ -19,13 +19,7 @@ exports.deleteOne = (Model) =>
 
     keys.forEach(async (key, index) => {
       if (key === Model.collection.collectionName) {
-        await counterModel.autoSequenceModelID(
-          key,
-          getModel(key),
-          values[index],
-          -1,
-          next
-        );
+        await autoSequenceModelID(key, getModel(key), values[index], -1, next);
       }
     });
 

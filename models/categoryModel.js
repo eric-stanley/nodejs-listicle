@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const counterModel = require('./counterModel');
+const { autoSequenceModelID } = require('./counterModel');
 
 if (process.env.NODE_ENV === 'development') {
   mongoose.set('debug', true);
@@ -64,20 +64,16 @@ categorySchema.pre('save', async function (next) {
     next();
     return;
   }
-  await counterModel.autoSequenceModelID(
-    'categories',
-    this,
-    'category_id',
-    1,
-    next
-  );
+  await autoSequenceModelID('categories', this, 'category_id', 1, next);
   next();
 });
 
-categorySchema.post(/^find/, function (docs, next) {
-  console.log(`Query took ${Date.now() - this.start} milliseconds!`);
-  next();
-});
+if (process.env.NODE_ENV === 'development') {
+  categorySchema.post(/^find/, function (docs, next) {
+    console.log(`Query took ${Date.now() - this.start} milliseconds!`);
+    next();
+  });
+}
 
 const Category = mongoose.model('Category', categorySchema);
 

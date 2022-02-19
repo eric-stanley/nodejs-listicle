@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const counterModel = require('./counterModel');
+const { autoSequenceModelID } = require('./counterModel');
 
 if (process.env.NODE_ENV === 'development') {
   mongoose.set('debug', true);
@@ -28,14 +28,16 @@ groupSchema.pre('save', async function (next) {
     next();
     return;
   }
-  await counterModel.autoSequenceModelID('groups', this, 'group_id', 1, next);
+  await autoSequenceModelID('groups', this, 'group_id', 1, next);
   next();
 });
 
-groupSchema.post(/^find/, function (docs, next) {
-  console.log(`Query took ${Date.now() - this.start} milliseconds!`);
-  next();
-});
+if (process.env.NODE_ENV === 'development') {
+  groupSchema.post(/^find/, function (docs, next) {
+    console.log(`Query took ${Date.now() - this.start} milliseconds!`);
+    next();
+  });
+}
 
 const Group = mongoose.model('Group', groupSchema);
 

@@ -1,0 +1,22 @@
+[
+  {
+    "_id": "620d1f1fb1aa206691930589",
+    "status_id": 1,
+    "description": "passed"
+  },
+  {
+    "_id": "620d1f1fb1aa20669193058a",
+    "status_id": 2,
+    "description": "failed"
+  },
+  {
+    "_id": "620d1f1fb1aa20669193058b",
+    "status_id": 3,
+    "description": "not completed"
+  },
+  {
+    "_id": "620d1f1fb1aa20669193058c",
+    "status_id": 4,
+    "description": "no run"
+  }
+]

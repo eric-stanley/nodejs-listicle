@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const counterModel = require('./counterModel');
+const { autoSequenceModelID } = require('./counterModel');
 
 if (process.env.NODE_ENV === 'development') {
   mongoose.set('debug', true);
@@ -28,20 +28,16 @@ environmentSchema.pre('save', async function (next) {
     next();
     return;
   }
-  await counterModel.autoSequenceModelID(
-    'environments',
-    this,
-    'env_id',
-    1,
-    next
-  );
+  await autoSequenceModelID('environments', this, 'env_id', 1, next);
   next();
 });
 
-environmentSchema.post(/^find/, function (docs, next) {
-  console.log(`Query took ${Date.now() - this.start} milliseconds!`);
-  next();
-});
+if (process.env.NODE_ENV === 'development') {
+  environmentSchema.post(/^find/, function (docs, next) {
+    console.log(`Query took ${Date.now() - this.start} milliseconds!`);
+    next();
+  });
+}
 
 const Environment = mongoose.model('Environment', environmentSchema);
 

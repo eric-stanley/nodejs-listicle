@@ -4,23 +4,17 @@ const AppError = require('../utils/appError');
 const { Schema } = mongoose;
 
 const counterSchema = new Schema({
-  _id: { type: String, required: true },
+  collection_id: { type: String, required: true },
   seq: { type: Number, default: 0 },
 });
 
-counterSchema.index({ _id: 1, seq: 1 }, { unique: true });
+counterSchema.index({ collection_id: 1, seq: 1 }, { unique: true });
 
-const counterModel = mongoose.model('counter', counterSchema);
+const Counter = mongoose.model('Counter', counterSchema);
 
-exports.autoSequenceModelID = async (
-  modelName,
-  doc,
-  idFieldName,
-  seq,
-  next
-) => {
-  const counter = await counterModel.findByIdAndUpdate(
-    modelName,
+const autoSequenceModelID = async (modelName, doc, idFieldName, seq, next) => {
+  const counter = await Counter.findOneAndUpdate(
+    { collection_id: modelName },
     { $inc: { seq } },
     {
       new: true,
@@ -37,3 +31,5 @@ exports.autoSequenceModelID = async (
   doc[idFieldName] = counter.seq;
   if (seq === 1) next();
 };
+
+module.exports = { Counter, autoSequenceModelID };

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const counterModel = require('./counterModel');
+const { autoSequenceModelID } = require('./counterModel');
 
 if (process.env.NODE_ENV === 'development') {
   mongoose.set('debug', true);
@@ -64,20 +64,16 @@ applicationSchema.pre('save', async function (next) {
     next();
     return;
   }
-  await counterModel.autoSequenceModelID(
-    'applications',
-    this,
-    'app_id',
-    1,
-    next
-  );
+  await autoSequenceModelID('applications', this, 'app_id', 1, next);
   next();
 });
 
-applicationSchema.post(/^find/, function (docs, next) {
-  console.log(`Query took ${Date.now() - this.start} milliseconds!`);
-  next();
-});
+if (process.env.NODE_ENV === 'development') {
+  applicationSchema.post(/^find/, function (docs, next) {
+    console.log(`Query took ${Date.now() - this.start} milliseconds!`);
+    next();
+  });
+}
 
 const Application = mongoose.model('Application', applicationSchema);
 

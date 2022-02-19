@@ -1,0 +1,42 @@
+[
+  {
+    "_id": "620d1da3b1aa206691930553",
+    "role_id": 1,
+    "description": "admin"
+  },
+  {
+    "_id": "620d1da3b1aa206691930554",
+    "role_id": 2,
+    "description": "portfolio manager"
+  },
+  {
+    "_id": "620d1da3b1aa206691930555",
+    "role_id": 3,
+    "description": "program manager"
+  },
+  {
+    "_id": "620d1da3b1aa206691930556",
+    "role_id": 4,
+    "description": "project manager"
+  },
+  {
+    "_id": "620d1da3b1aa206691930557",
+    "role_id": 5,
+    "description": "test lead"
+  },
+  {
+    "_id": "620d1da3b1aa206691930558",
+    "role_id": 6,
+    "description": "team lead"
+  },
+  {
+    "_id": "620d1da3b1aa206691930559",
+    "role_id": 7,
+    "description": "team member"
+  },
+  {
+    "_id": "620d1da3b1aa20669193055a",
+    "role_id": 8,
+    "description": "guest"
+  }
+]

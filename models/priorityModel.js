@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const counterModel = require('./counterModel');
+const { autoSequenceModelID } = require('./counterModel');
 
 if (process.env.NODE_ENV === 'development') {
   mongoose.set('debug', true);
@@ -28,20 +28,16 @@ prioritySchema.pre('save', async function (next) {
     next();
     return;
   }
-  await counterModel.autoSequenceModelID(
-    'priorities',
-    this,
-    'priority_id',
-    1,
-    next
-  );
+  await autoSequenceModelID('priorities', this, 'priority_id', 1, next);
   next();
 });
 
-prioritySchema.post(/^find/, function (docs, next) {
-  console.log(`Query took ${Date.now() - this.start} milliseconds!`);
-  next();
-});
+if (process.env.NODE_ENV === 'development') {
+  prioritySchema.post(/^find/, function (docs, next) {
+    console.log(`Query took ${Date.now() - this.start} milliseconds!`);
+    next();
+  });
+}
 
 const Priority = mongoose.model('Priority', prioritySchema);
 

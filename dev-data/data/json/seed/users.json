@@ -1,0 +1,9 @@
+[
+  {
+    "_id": "620d1cfb6f75d648c36307a2",
+    "username": "admin",
+    "password": "password",
+    "password_confirm": "password",
+    "email": "admin@test.com"
+  }
+]

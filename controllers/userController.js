@@ -45,7 +45,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     );
   }
   // 2) Filter out unwanted fields that are not allowed to be updated
-  const filteredBody = filterObj(req.body.fields.input, 'username', 'email');
+  const filteredBody = filterObj(req.body.fields.input, ['username', 'email']);
 
   // 3) Update user document
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {

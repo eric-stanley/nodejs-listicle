@@ -2,12 +2,14 @@ const crypto = require('crypto');
 const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
+const UserRole = require('../models/userRoleModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const createAndSendToken = require('../utils/createAndSendToken');
 const sendEmail = require('../utils/email');
 const filterObj = require('../utils/filterObj');
 const getUserRole = require('../utils/getUserRole');
+const getDefaultRole = require('../utils/getDefaultRole');
 
 exports.signup = catchAsync(async (req, res, next) => {
   const filteredBody = filterObj(req.body.fields.input, [
@@ -18,6 +20,12 @@ exports.signup = catchAsync(async (req, res, next) => {
   ]);
 
   const user = await User.create(filteredBody);
+  const defaultRole = await getDefaultRole();
+
+  await UserRole.create({
+    role_id: defaultRole.id,
+    user_id: user.id,
+  });
 
   createAndSendToken(user, 201, res);
 });

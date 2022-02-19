@@ -11,8 +11,9 @@ module.exports = {
   resetMocks: true,
   restoreMocks: true,
   detectOpenHandles: true,
-  testTimeout: 3000,
-  collectCoverage: true,
+  testTimeout: 5000,
+  collectCoverage: false,
+  testPathIgnorePatterns: ['/node_modules/', '/reports/'],
   coverageThreshold: {
     global: {
       branches: 100,
@@ -23,8 +24,11 @@ module.exports = {
   },
   coverageDirectory: '<rootDir>/reports/coverage/',
   coverageReporters: ['html', 'text'],
+  transform: {
+    '^.+\\.(js|jsx)$': 'babel-jest',
+  },
   reporters: [
-    'default',
+    'jest-progress-bar-reporter',
     [
       'jest-stare',
       {
