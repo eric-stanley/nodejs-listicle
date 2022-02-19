@@ -28,7 +28,8 @@ module.exports = {
     '^.+\\.(js|jsx)$': 'babel-jest',
   },
   reporters: [
-    'jest-progress-bar-reporter',
+    'default',
+    // 'jest-progress-bar-reporter',
     [
       'jest-stare',
       {

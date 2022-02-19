@@ -11,26 +11,26 @@ const { Counter } = require('../models/counterModel');
 
 // Read json file
 const roles = JSON.parse(
-  fs.readFileSync(`${__dirname}/data/json/seed/roles.json`, 'utf-8')
+  fs.readFileSync(`${__dirname}/test/json/seed/roles.json`, 'utf-8')
 );
 
 const environments = JSON.parse(
-  fs.readFileSync(`${__dirname}/data/json/seed/environments.json`, 'utf-8')
+  fs.readFileSync(`${__dirname}/test/json/seed/environments.json`, 'utf-8')
 );
 const groups = JSON.parse(
-  fs.readFileSync(`${__dirname}/data/json/seed/groups.json`, 'utf-8')
+  fs.readFileSync(`${__dirname}/test/json/seed/groups.json`, 'utf-8')
 );
 const priorities = JSON.parse(
-  fs.readFileSync(`${__dirname}/data/json/seed/priorities.json`, 'utf-8')
+  fs.readFileSync(`${__dirname}/test/json/seed/priorities.json`, 'utf-8')
 );
 const statuses = JSON.parse(
-  fs.readFileSync(`${__dirname}/data/json/seed/status.json`, 'utf-8')
+  fs.readFileSync(`${__dirname}/test/json/seed/status.json`, 'utf-8')
 );
 const users = JSON.parse(
-  fs.readFileSync(`${__dirname}/data/json/seed/users.json`, 'utf-8')
+  fs.readFileSync(`${__dirname}/test/json/seed/users.json`, 'utf-8')
 );
 const userroles = JSON.parse(
-  fs.readFileSync(`${__dirname}/data/json/seed/userroles.json`, 'utf-8')
+  fs.readFileSync(`${__dirname}/test/json/seed/userroles.json`, 'utf-8')
 );
 
 // Import data to db

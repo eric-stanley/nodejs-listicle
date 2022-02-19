@@ -1,7 +1,7 @@
 const request = require('supertest');
 
 const db = require('../../db');
-const seed = require('../../dev-data/seed-initial-data');
+const seed = require('../../data/seed-initial-data');
 const app = require('../../app');
 const userData = require('../data/user.data');
 
