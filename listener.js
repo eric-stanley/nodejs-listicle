@@ -6,9 +6,19 @@ dotenv.config({
   path: './config.env',
 });
 
-let server;
+let server, port;
 
-const port = process.env.PORT || 4001;
+switch (process.env.NODE_ENV) {
+  case 'development':
+    port = process.env.DEV_PORT || 4001;
+    break;
+  case 'test':
+    port = process.env.TEST_PORT || 4011;
+    break;
+  case 'production':
+    port = process.env.PROD_PORT || 4021;
+    break;
+}
 
 exports.startServer = async () => {
   await db.connect();
