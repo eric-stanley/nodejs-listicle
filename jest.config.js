@@ -1,10 +1,17 @@
+const { defaults } = require('jest-config');
+
 module.exports = {
+  moduleFileExtensions: [
+    ...defaults.moduleFileExtensions,
+    'js',
+    'ts',
+    'tsx',
+    'json',
+    'node',
+  ],
   testSequencer: './__tests__/customSequencer.js',
   testEnvironment: 'node',
-  testMatch: [
-    '**/__tests__/**/*.+(ts|tsx|js)',
-    '**/?(*.)+(spec|test).+(ts|tsx|js)',
-  ],
+  testMatch: ['**/?(*.)+(spec|test).js'],
   verbose: true,
   forceExit: false,
   clearMocks: true,
@@ -13,7 +20,26 @@ module.exports = {
   detectOpenHandles: true,
   testTimeout: 5000,
   collectCoverage: false,
-  testPathIgnorePatterns: ['/node_modules/', '/reports/'],
+  modulePathIgnorePatterns: [
+    '<rootDir>/node_modules/',
+    '<rootDir>/reports/',
+    '<rootDir>/__tests__/api/tests/',
+  ],
+  watchPathIgnorePatterns: [
+    '<rootDir>/node_modules/',
+    '<rootDir>/reports/',
+    '<rootDir>/__tests__/api/tests/',
+  ],
+  testPathIgnorePatterns: [
+    '<rootDir>/node_modules/',
+    '<rootDir>/reports/',
+    '<rootDir>/__tests__/api/tests/',
+  ],
+  coveragePathIgnorePatterns: [
+    '<rootDir>/node_modules/',
+    '<rootDir>/reports/',
+    '<rootDir>/__tests__/api/tests/',
+  ],
   coverageThreshold: {
     global: {
       branches: 100,
@@ -54,14 +80,17 @@ module.exports = {
     {
       rootDir: '<rootDir>/__tests__/unit',
       displayName: 'unit',
+      testMatch: ['**/unit/*.test.js'],
     },
     {
       rootDir: '<rootDir>/__tests__/api',
       displayName: 'api',
+      testMatch: ['**/api/*.test.js'],
     },
     {
       rootDir: '<rootDir>/__tests__/e2e',
       displayName: 'e2e',
+      testMatch: ['**/e2e/*.test.js'],
     },
   ],
 };
