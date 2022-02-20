@@ -1,7 +1,7 @@
 const db = require('../../db');
 const seed = require('../../data/seed-initial-data');
 
-const { valid } = require('./tests/signup');
+const { valid, checkUserIdIncrement } = require('./tests/signup');
 const {
   deletedUsertRoleCheck,
   checkDeletedUserUpdate,
@@ -21,7 +21,10 @@ afterAll(async () => {
 
 describe('User specific test', () => {
   describe('POST /api/v1/auth/signup', () => {
-    describe('given the email and password', valid);
+    describe('given the email and password', () => {
+      valid();
+      checkUserIdIncrement();
+    });
   });
 
   describe('DELETE /api/v1/users/deleteMe', () => {

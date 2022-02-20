@@ -10,6 +10,7 @@ const sendEmail = require('../utils/email');
 const filterObj = require('../utils/filterObj');
 const getUserRole = require('../utils/getUserRole');
 const getDefaultRole = require('../utils/getDefaultRole');
+const errors = require('../constants/errors');
 
 exports.signup = catchAsync(async (req, res, next) => {
   const filteredBody = filterObj(req.body.fields.input, [
@@ -34,7 +35,12 @@ exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body.fields.input;
 
   if (!email || !password) {
-    return next(new AppError('Please provide email and password', 400));
+    return next(
+      new AppError(
+        errors.authErrors.undefinedEmailPassword.message,
+        errors.authErrors.undefinedEmailPassword.statusCode
+      )
+    );
   }
 
   const user = await User.findOne({
@@ -42,7 +48,12 @@ exports.login = catchAsync(async (req, res, next) => {
   }).select('+password +is_active');
 
   if (!user || !(await user.correctPassword(password, user.password))) {
-    return next(new AppError('Incorrect email or password', 401));
+    return next(
+      new AppError(
+        errors.authErrors.incorrectEmailPassword.message,
+        errors.authErrors.incorrectEmailPassword.statusCode
+      )
+    );
   }
 
   if (!user.is_active) {
@@ -77,7 +88,10 @@ exports.protect = catchAsync(async (req, res, next) => {
   const currentUser = await User.findById(decoded.id).select('+is_active');
   if (!currentUser) {
     return next(
-      new AppError('The user belonging to the token no longer exist.', 401)
+      new AppError(
+        errors.authErrors.inactiveUser.message,
+        errors.authErrors.inactiveUser.statusCode
+      )
     );
   }
 

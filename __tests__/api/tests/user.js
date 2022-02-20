@@ -104,7 +104,7 @@ exports.checkUnAuthenticatedUpdate = () => {
 };
 
 exports.checkAuthenticatedDelete = () => {
-  test('should respond with a status code of 204 if authenticated and response data is empty', async () => {
+  test('should respond with a status code of 204 if authenticated and empty response data', async () => {
     const response = await request(app)
       .delete('/api/v1/users/deleteMe')
       .set('Authorization', `Bearer ${process.env.JWT_TOKEN}`);

@@ -2,6 +2,7 @@ const AppError = require('../utils/appError');
 const { autoSequenceModelID } = require('../models/counterModel');
 const modelIds = require('../constants/modelIds');
 const getModel = require('../utils/getModel');
+const errors = require('../constants/errors');
 
 const handleCastErrorDB = (err) => {
   const message = `Invalid ${err.path}: ${err.value}`;
@@ -10,7 +11,7 @@ const handleCastErrorDB = (err) => {
 
 const handleDuplicateFieldsDB = (err) => {
   const message = `Duplicate field value: ${err.keyValue.name}. Please use another value!`;
-  return new AppError(message, 400);
+  return new AppError(message, errors.generalErrors.duplicateKey.statusCode);
 };
 
 const handleValidationErrorDB = (err) => {

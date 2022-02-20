@@ -37,7 +37,7 @@ describe('Authentication test', () => {
       tokenCheck();
     });
     describe('when the username and password is incorrect', unAuthorizedCheck);
-    describe('when the user is inactive', () => {
+    describe('when the user is active', () => {
       checkAuthenticatedDelete();
       inactiveUserCheck();
     });

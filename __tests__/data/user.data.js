@@ -19,4 +19,14 @@ exports.users = [
       },
     },
   },
+  {
+    fields: {
+      input: {
+        username: 'milka1baby',
+        password: 'DgfD3659+',
+        password_confirm: 'DgfD3659+',
+        email: 'milka1baby@test.com',
+      },
+    },
+  },
 ];
