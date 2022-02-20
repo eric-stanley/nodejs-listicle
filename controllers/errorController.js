@@ -61,7 +61,6 @@ module.exports = (err, req, res, next) => {
   if (err.code === 11000) {
     // Auto decrement the model
     const errorMessage = err.message || err._message;
-    console.log(errorMessage);
     const collectionName = errorMessage
       .split(':')[1]
       .split('.')[1]

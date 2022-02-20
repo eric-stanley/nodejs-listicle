@@ -19,6 +19,7 @@ module.exports = {
   restoreMocks: true,
   detectOpenHandles: true,
   testTimeout: 5000,
+  bail: true,
   collectCoverage: false,
   modulePathIgnorePatterns: [
     '<rootDir>/node_modules/',

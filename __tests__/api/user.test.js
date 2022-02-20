@@ -3,6 +3,9 @@ const seed = require('../../data/seed-initial-data');
 
 const { valid } = require('./tests/signup');
 const {
+  defaultRoleCheck,
+  checkAuthenticatedBadUpdate,
+  checkUnAuthenticatedBadUpdate,
   checkAuthenticatedUpdate,
   checkUnAuthenticatedUpdate,
   checkAuthenticatedDelete,
@@ -25,10 +28,19 @@ describe('User specific test', () => {
     describe('given the email and password', valid);
   });
 
+  describe('GET /api/v1/users/getRole', () => {
+    describe('when the user tries to get the default role', defaultRoleCheck);
+  });
+
   describe('PATCH /api/v1/users/updateMe', () => {
     describe('when the user with default role tries to update email or username', () => {
       checkAuthenticatedUpdate();
       checkUnAuthenticatedUpdate();
+    });
+
+    describe('when the user with default role tries to update password', () => {
+      checkAuthenticatedBadUpdate();
+      checkUnAuthenticatedBadUpdate();
     });
   });
 

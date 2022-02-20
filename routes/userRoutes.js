@@ -17,6 +17,8 @@ router
     userController.createUser
   );
 
+router.route('/getRole').get(authController.protect, userController.getRole);
+
 router
   .route('/updateMe')
   .patch(authController.protect, userController.updateMe);

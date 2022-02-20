@@ -32,7 +32,7 @@ exports.tokenCheck = () => {
   });
 };
 
-exports.unauthorizedCheck = () => {
+exports.badRequestCheck = () => {
   test('should respond with a status code of 400', async () => {
     const bodyData = [
       {
@@ -51,6 +51,52 @@ exports.unauthorizedCheck = () => {
       const response = await request(app).post('/api/v1/auth/login').send(body);
       expect(response.statusCode).toBe(400);
     }
+  });
+};
+
+exports.unAuthorizedCheck = () => {
+  test('should respond with a status code of 401', async () => {
+    const bodyData = [
+      {
+        fields: {
+          input: {
+            email: userData.users[0].fields.input.email,
+            password: userData.users[1].fields.input.password,
+          },
+        },
+      },
+      {
+        fields: {
+          input: {
+            email: userData.users[1].fields.input.email,
+            password: userData.users[0].fields.input.password,
+          },
+        },
+      },
+    ];
+    for (const body of bodyData) {
+      const response = await request(app).post('/api/v1/auth/login').send(body);
+      expect(response.statusCode).toBe(401);
+    }
+  });
+};
+
+exports.inactiveUserCheck = () => {
+  test('should respond with a status code of 401', async () => {
+    const bodyData = [
+      {
+        fields: {
+          input: {
+            email: userData.users[0].fields.input.email,
+            password: userData.users[1].fields.input.password,
+          },
+        },
+      },
+    ];
+    const response = await request(app)
+      .post('/api/v1/auth/login')
+      .send(bodyData[0]);
+    expect(response.statusCode).toBe(401);
   });
 };
 

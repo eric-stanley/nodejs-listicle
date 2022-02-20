@@ -3,6 +3,8 @@ const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
 const filterObj = require('../utils/filterObj');
+const UserRole = require('../models/userRoleModel');
+const Role = require('../models/roleModel');
 
 const defaultField = 'name';
 const defaultPage = 1;
@@ -69,5 +71,32 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
   res.status(204).json({
     status: 'success',
     data: null,
+  });
+});
+
+exports.getRole = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+
+  if (!user) {
+    new AppError('Not user found with that id or user not logged in', 401);
+  }
+
+  const userRole = await UserRole.findOne({
+    user_id: user.id,
+  });
+
+  if (!userRole) {
+    new AppError('Not role assigned to the user', 401);
+  }
+
+  const role = await Role.findById(userRole.role_id);
+
+  if (!role) {
+    new AppError('Invalid role assigned to the user', 400);
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: role,
   });
 });
