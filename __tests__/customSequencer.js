@@ -2,7 +2,7 @@ const Sequencer = require('@jest/test-sequencer').default;
 
 const isEndToEnd = (test) => {
   const contextConfig = test.context.config;
-  return contextConfig.displayName.name === 'end-to-end';
+  return contextConfig.displayName.name === 'e2e';
 };
 
 const isUnit = (test) => {
