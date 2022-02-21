@@ -29,4 +29,12 @@ exports.users = [
       },
     },
   },
+  {
+    fields: {
+      input: {
+        password: 'password',
+        email: 'admin@test.com',
+      },
+    },
+  },
 ];

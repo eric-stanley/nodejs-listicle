@@ -145,7 +145,10 @@ exports.restrictTo = (...roles) =>
 
     if (!roles.includes(userRole.description.toLowerCase())) {
       return next(
-        new AppError('You do not have permission to perform this action', 403)
+        new AppError(
+          errors.authErrors.restrictPermission.message,
+          errors.authErrors.restrictPermission.statusCode
+        )
       );
     }
 
@@ -158,7 +161,10 @@ exports.restrictFrom = (...roles) =>
 
     if (roles.includes(userRole.description.toLowerCase())) {
       return next(
-        new AppError('You do not have permission to perform this action', 403)
+        new AppError(
+          errors.authErrors.restrictPermission.message,
+          errors.authErrors.restrictPermission.statusCode
+        )
       );
     }
 

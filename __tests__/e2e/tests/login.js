@@ -3,7 +3,7 @@ const app = require('../../../app');
 const userData = require('../../data/user.data');
 const errors = require('../../../constants/errors');
 
-exports.inactiveUserLogin = () => {
+exports.inactiveUserLogin = (user_id) => {
   test(
     'should respond with a status code of ' +
       errors.authErrors.inactiveUser.statusCode +
@@ -13,7 +13,7 @@ exports.inactiveUserLogin = () => {
     async () => {
       const response = await request(app)
         .post('/api/v1/auth/login')
-        .send(userData.users[2]);
+        .send(userData.users[user_id]);
 
       expect(response.statusCode).toBe(
         errors.authErrors.inactiveUser.statusCode

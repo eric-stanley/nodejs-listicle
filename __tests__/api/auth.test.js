@@ -29,15 +29,19 @@ afterAll(async () => {
 
 describe('Authentication test', () => {
   describe('POST /api/v1/auth/signup', () => {
-    describe('given a new user signup fields', valid);
-    describe('given an existing user signup fields', invalid);
+    describe('given a new user signup fields', () => {
+      valid(0);
+    });
+    describe('given an existing user signup fields', () => {
+      invalid(0);
+    });
   });
 
   describe('POST /api/v1/auth/login', () => {
     describe('given the email and password', () => {
-      statusCodeCheck();
-      headerCheck();
-      tokenCheck();
+      statusCodeCheck(0);
+      headerCheck(0);
+      tokenCheck(0);
     });
     describe('given the username and password is incorrect', unAuthorizedCheck);
 

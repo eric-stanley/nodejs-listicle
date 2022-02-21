@@ -25,6 +25,10 @@ module.exports = {
         'This route is not for password update. Please use /updatePassword',
       statusCode: 400,
     },
+    restrictPermission: {
+      message: 'You do not have permission to perform this action',
+      statusCode: 403,
+    },
   },
   generalErrors: {
     duplicateKey: {

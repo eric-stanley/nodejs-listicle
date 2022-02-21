@@ -23,8 +23,8 @@ afterAll(async () => {
 describe('User specific test', () => {
   describe('POST /api/v1/auth/signup', () => {
     describe('given the email and password', () => {
-      valid();
-      checkUserIdIncrement();
+      valid(0);
+      checkUserIdIncrement(1, 2);
     });
   });
 
@@ -48,7 +48,7 @@ describe('User specific test', () => {
 
   describe('POST /api/v1/auth/login', () => {
     describe('when the user tries to login with inactive user credentials', () => {
-      inactiveUserLogin();
+      inactiveUserLogin(0);
     });
   });
 });

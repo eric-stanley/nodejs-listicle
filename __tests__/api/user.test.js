@@ -25,7 +25,9 @@ afterAll(async () => {
 
 describe('User specific test', () => {
   describe('POST /api/v1/auth/signup', () => {
-    describe('given the email and password', valid);
+    describe('given the email and password', () => {
+      valid(0);
+    });
   });
 
   describe('GET /api/v1/users/getRole', () => {

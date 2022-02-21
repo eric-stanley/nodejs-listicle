@@ -3,33 +3,36 @@ const app = require('../../../app');
 const userData = require('../../data/user.data');
 const errors = require('../../../constants/errors');
 
-exports.statusCodeCheck = () => {
+exports.statusCodeCheck = (user_id) => {
   test('should respond with a 200 status code', async () => {
     const response = await request(app)
       .post('/api/v1/auth/login')
-      .send(userData.users[0]);
+      .send(userData.users[user_id]);
     expect(response.statusCode).toBe(200);
+    process.env.CURRENT_USER_ID = response.body.data.user.id;
   });
 };
 
-exports.headerCheck = () => {
+exports.headerCheck = (user_id) => {
   test('should specify json in the content type header', async () => {
     const response = await request(app)
       .post('/api/v1/auth/login')
-      .send(userData.users[0]);
+      .send(userData.users[user_id]);
     expect(response.headers['content-type']).toEqual(
       expect.stringContaining('json')
     );
+    process.env.CURRENT_USER_ID = response.body.data.user.id;
   });
 };
 
-exports.tokenCheck = () => {
+exports.tokenCheck = (user_id) => {
   test('response has token', async () => {
     const response = await request(app)
       .post('/api/v1/auth/login')
-      .send(userData.users[0]);
+      .send(userData.users[user_id]);
     expect(response.body.token).toBeDefined();
     process.env.JWT_TOKEN = response.body.token;
+    process.env.CURRENT_USER_ID = response.body.data.user.id;
   });
 };
 
