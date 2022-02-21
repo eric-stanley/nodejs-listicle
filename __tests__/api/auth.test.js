@@ -6,12 +6,12 @@ const {
   statusCodeCheck,
   headerCheck,
   tokenCheck,
-  inactiveUserCheck,
+  inactiveTokenCheck,
   unAuthorizedCheck,
   badRequestCheck,
   serverErrorCheck,
 } = require('./tests/login');
-const { checkAuthenticatedDelete } = require('./tests/user');
+const { checkAuthenticatedDelete, undefinedTokenCheck } = require('./tests/user');
 
 beforeAll(async () => {
   await db.connect();
@@ -39,9 +39,10 @@ describe('Authentication test', () => {
     describe('when the username and password is incorrect', unAuthorizedCheck);
     describe('when the user is active', () => {
       checkAuthenticatedDelete();
-      inactiveUserCheck();
+      inactiveTokenCheck();
     });
     describe('when the username and password is missing', badRequestCheck);
+    describe('when the token is missing', undefinedTokenCheck);
     describe('when an empty json object is sent in request', serverErrorCheck);
   });
 });

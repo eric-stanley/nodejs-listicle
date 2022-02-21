@@ -1,6 +1,7 @@
 const request = require('supertest');
 const app = require('../../../app');
 const userData = require('../../data/user.data');
+const errors = require('../../../constants/errors');
 
 const defaultUserRole = 'guest';
 
@@ -127,4 +128,23 @@ exports.defaultRoleCheck = () => {
       .set('Authorization', `Bearer ${process.env.JWT_TOKEN}`);
     expect(response.body.data.description).toBe(defaultUserRole);
   });
+};
+
+exports.undefinedTokenCheck = () => {
+  test(
+    'should respond with a status code of ' +
+      errors.authErrors.undefinedToken.statusCode +
+      ' with error message as "' +
+      errors.authErrors.undefinedToken.message +
+      '"',
+    async () => {
+      const response = await request(app).get('/api/v1/users/getRole');
+      expect(response.statusCode).toBe(
+        errors.authErrors.undefinedToken.statusCode
+      );
+      expect(response.body.message).toBe(
+        errors.authErrors.undefinedToken.message
+      );
+    }
+  );
 };

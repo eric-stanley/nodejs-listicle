@@ -77,55 +77,41 @@ exports.unAuthorizedCheck = () => {
       errors.authErrors.incorrectEmailPassword.message +
       '"',
     async () => {
-      const bodyData = [
-        {
-          fields: {
-            input: {
-              email: userData.users[0].fields.input.email,
-              password: userData.users[1].fields.input.password,
-            },
+      const body = {
+        fields: {
+          input: {
+            email: userData.users[0].fields.input.email,
+            password: userData.users[1].fields.input.password,
           },
         },
-        {
-          fields: {
-            input: {
-              email: userData.users[1].fields.input.email,
-              password: userData.users[0].fields.input.password,
-            },
-          },
-        },
-      ];
-      for (const body of bodyData) {
-        const response = await request(app)
-          .post('/api/v1/auth/login')
-          .send(body);
-        expect(response.statusCode).toBe(
-          errors.authErrors.incorrectEmailPassword.statusCode
-        );
-        expect(response.body.message).toBe(
-          errors.authErrors.incorrectEmailPassword.message
-        );
-      }
+      };
+      const response = await request(app).post('/api/v1/auth/login').send(body);
+      expect(response.statusCode).toBe(
+        errors.authErrors.incorrectEmailPassword.statusCode
+      );
+      expect(response.body.message).toBe(
+        errors.authErrors.incorrectEmailPassword.message
+      );
     }
   );
 };
 
-exports.inactiveUserCheck = () => {
+exports.inactiveTokenCheck = () => {
   test(
     'should respond with a status code of ' +
-      errors.authErrors.inactiveUser.statusCode +
+      errors.authErrors.inactiveToken.statusCode +
       ' with error message as "' +
-      errors.authErrors.inactiveUser.message +
+      errors.authErrors.inactiveToken.message +
       '"',
     async () => {
       const response = await request(app)
         .get('/api/v1/users/getRole')
         .set('Authorization', `Bearer ${process.env.JWT_TOKEN}`);
       expect(response.statusCode).toBe(
-        errors.authErrors.inactiveUser.statusCode
+        errors.authErrors.inactiveToken.statusCode
       );
       expect(response.body.message).toBe(
-        errors.authErrors.inactiveUser.message
+        errors.authErrors.inactiveToken.message
       );
     }
   );

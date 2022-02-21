@@ -32,6 +32,8 @@ exports.signup = catchAsync(async (req, res, next) => {
 });
 
 exports.login = catchAsync(async (req, res, next) => {
+  let user;
+
   const { email, password } = req.body.fields.input;
 
   if (!email || !password) {
@@ -43,9 +45,22 @@ exports.login = catchAsync(async (req, res, next) => {
     );
   }
 
-  const user = await User.findOne({
+  user = await User.findOne({
     email,
-  }).select('+password +is_active');
+  }).select('+is_active');
+
+  if (!user) {
+    return next(
+      new AppError(
+        errors.authErrors.inactiveUser.message,
+        errors.authErrors.inactiveUser.statusCode
+      )
+    );
+  }
+
+  user = await User.findOne({
+    email,
+  }).select('+password');
 
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(
@@ -56,18 +71,13 @@ exports.login = catchAsync(async (req, res, next) => {
     );
   }
 
-  if (!user.is_active) {
-    return next(
-      new AppError('User is not active. Please contact administrator', 401)
-    );
-  }
-
   createAndSendToken(user, 200, res);
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
   // 1) Getting token and checking if its there
-  let token;
+  let token, currentUser;
+
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
@@ -77,7 +87,10 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   if (!token) {
     return next(
-      new AppError('You are not logged in! Please login to get access.', 401)
+      new AppError(
+        errors.authErrors.undefinedToken.message,
+        errors.authErrors.undefinedToken.statusCode
+      )
     );
   }
 
@@ -85,12 +98,12 @@ exports.protect = catchAsync(async (req, res, next) => {
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
   // 3) Check if user still exists
-  const currentUser = await User.findById(decoded.id).select('+is_active');
+  currentUser = await User.findById(decoded.id);
   if (!currentUser) {
     return next(
       new AppError(
-        errors.authErrors.inactiveUser.message,
-        errors.authErrors.inactiveUser.statusCode
+        errors.authErrors.inactiveToken.message,
+        errors.authErrors.inactiveToken.statusCode
       )
     );
   }
@@ -102,9 +115,13 @@ exports.protect = catchAsync(async (req, res, next) => {
     );
   }
 
+  currentUser = await User.findById(decoded.id).select('+is_active');
   if (!currentUser.is_active) {
     return next(
-      new AppError('User is not active. Please contact administrator.', 401)
+      new AppError(
+        errors.authErrors.inactiveUser.message,
+        errors.authErrors.inactiveUser.statusCode
+      )
     );
   }
 
