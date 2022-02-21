@@ -47,19 +47,6 @@ exports.login = catchAsync(async (req, res, next) => {
 
   user = await User.findOne({
     email,
-  }).select('+is_active');
-
-  if (!user) {
-    return next(
-      new AppError(
-        errors.authErrors.inactiveUser.message,
-        errors.authErrors.inactiveUser.statusCode
-      )
-    );
-  }
-
-  user = await User.findOne({
-    email,
   }).select('+password');
 
   if (!user || !(await user.correctPassword(password, user.password))) {
@@ -67,6 +54,19 @@ exports.login = catchAsync(async (req, res, next) => {
       new AppError(
         errors.authErrors.incorrectEmailPassword.message,
         errors.authErrors.incorrectEmailPassword.statusCode
+      )
+    );
+  }
+
+  user = await User.findOne({
+    email,
+  }).select('+is_active');
+
+  if (!user.is_active) {
+    return next(
+      new AppError(
+        errors.authErrors.inactiveUser.message,
+        errors.authErrors.inactiveUser.statusCode
       )
     );
   }
@@ -116,6 +116,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
 
   currentUser = await User.findById(decoded.id).select('+is_active');
+
   if (!currentUser.is_active) {
     return next(
       new AppError(

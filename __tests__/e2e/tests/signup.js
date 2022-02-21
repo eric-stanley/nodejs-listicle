@@ -30,7 +30,6 @@ exports.checkUserIdIncrement = () => {
       .send(userData.users[2]);
     expect(response.statusCode).toBe(201);
     expect(user_id + 1).toBe(response.body.data.user.user_id);
-
     process.env.JWT_TOKEN = response.body.token;
   });
 };

@@ -31,77 +31,113 @@ exports.checkAuthenticatedUpdate = () => {
 };
 
 exports.checkAuthenticatedBadUpdate = () => {
-  test('should respond with a status code of 400 if authenticated', async () => {
-    const bodyData = [
-      {
-        fields: {
-          input: { password: userData.users[1].fields.input.password },
-        },
-      },
-      {
-        fields: {
-          input: {
-            password_confirm: userData.users[1].fields.input.password_confirm,
+  test(
+    'should respond with a status code of ' +
+      errors.authErrors.passwordUpdate.statusCode +
+      ' with error message as "' +
+      errors.authErrors.passwordUpdate.message +
+      '"',
+    async () => {
+      const bodyData = [
+        {
+          fields: {
+            input: { password: userData.users[1].fields.input.password },
           },
         },
-      },
-    ];
-    for (const body of bodyData) {
-      const response = await request(app)
-        .patch('/api/v1/users/updateMe')
-        .set('Authorization', `Bearer ${process.env.JWT_TOKEN}`)
-        .send(body);
-      expect(response.statusCode).toBe(400);
+        {
+          fields: {
+            input: {
+              password_confirm: userData.users[1].fields.input.password_confirm,
+            },
+          },
+        },
+      ];
+      for (const body of bodyData) {
+        const response = await request(app)
+          .patch('/api/v1/users/updateMe')
+          .set('Authorization', `Bearer ${process.env.JWT_TOKEN}`)
+          .send(body);
+        expect(response.statusCode).toBe(
+          errors.authErrors.passwordUpdate.statusCode
+        );
+        expect(response.body.message).toBe(
+          errors.authErrors.passwordUpdate.message
+        );
+      }
     }
-  });
+  );
 };
 
 exports.checkUnAuthenticatedBadUpdate = () => {
-  test('should respond with a status code of 401 if unauthenticated', async () => {
-    const bodyData = [
-      {
-        fields: {
-          input: { password: userData.users[1].fields.input.password },
-        },
-      },
-      {
-        fields: {
-          input: {
-            password_confirm: userData.users[1].fields.input.password_confirm,
+  test(
+    'should respond with a status code of ' +
+      errors.authErrors.undefinedToken.statusCode +
+      ' with error message as "' +
+      errors.authErrors.undefinedToken.message +
+      '"',
+    async () => {
+      const bodyData = [
+        {
+          fields: {
+            input: { password: userData.users[1].fields.input.password },
           },
         },
-      },
-    ];
-    for (const body of bodyData) {
-      const response = await request(app)
-        .patch('/api/v1/users/updateMe')
-        .send(body);
-      expect(response.statusCode).toBe(401);
+        {
+          fields: {
+            input: {
+              password_confirm: userData.users[1].fields.input.password_confirm,
+            },
+          },
+        },
+      ];
+      for (const body of bodyData) {
+        const response = await request(app)
+          .patch('/api/v1/users/updateMe')
+          .send(body);
+        expect(response.statusCode).toBe(
+          errors.authErrors.undefinedToken.statusCode
+        );
+        expect(response.body.message).toBe(
+          errors.authErrors.undefinedToken.message
+        );
+      }
     }
-  });
+  );
 };
 
 exports.checkUnAuthenticatedUpdate = () => {
-  test('should respond with a status code of 401 if unauthenticated', async () => {
-    const bodyData = [
-      {
-        fields: {
-          input: { email: userData.users[1].fields.input.email },
+  test(
+    'should respond with a status code of ' +
+      errors.authErrors.undefinedToken.statusCode +
+      ' with error message as "' +
+      errors.authErrors.undefinedToken.message +
+      '"',
+    async () => {
+      const bodyData = [
+        {
+          fields: {
+            input: { email: userData.users[1].fields.input.email },
+          },
         },
-      },
-      {
-        fields: {
-          input: { username: userData.users[1].fields.input.username },
+        {
+          fields: {
+            input: { username: userData.users[1].fields.input.username },
+          },
         },
-      },
-    ];
-    for (const body of bodyData) {
-      const response = await request(app)
-        .patch('/api/v1/users/updateMe')
-        .send(body);
-      expect(response.statusCode).toBe(401);
+      ];
+      for (const body of bodyData) {
+        const response = await request(app)
+          .patch('/api/v1/users/updateMe')
+          .send(body);
+        expect(response.statusCode).toBe(
+          errors.authErrors.undefinedToken.statusCode
+        );
+        expect(response.body.message).toBe(
+          errors.authErrors.undefinedToken.message
+        );
+      }
     }
-  });
+  );
 };
 
 exports.checkAuthenticatedDelete = () => {
@@ -115,10 +151,22 @@ exports.checkAuthenticatedDelete = () => {
 };
 
 exports.checkUnAuthenticatedDelete = () => {
-  test('should respond with a status code of 401 if unauthenticated', async () => {
-    const response = await request(app).delete('/api/v1/users/deleteMe');
-    expect(response.statusCode).toBe(401);
-  });
+  test(
+    'should respond with a status code of ' +
+      errors.authErrors.undefinedToken.statusCode +
+      ' with error message as "' +
+      errors.authErrors.undefinedToken.message +
+      '"',
+    async () => {
+      const response = await request(app).delete('/api/v1/users/deleteMe');
+      expect(response.statusCode).toBe(
+        errors.authErrors.undefinedToken.statusCode
+      );
+      expect(response.body.message).toBe(
+        errors.authErrors.undefinedToken.message
+      );
+    }
+  );
 };
 
 exports.defaultRoleCheck = () => {

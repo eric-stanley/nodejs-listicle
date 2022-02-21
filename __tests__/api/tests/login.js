@@ -96,22 +96,22 @@ exports.unAuthorizedCheck = () => {
   );
 };
 
-exports.inactiveTokenCheck = () => {
+exports.inactiveUserCheck = () => {
   test(
     'should respond with a status code of ' +
-      errors.authErrors.inactiveToken.statusCode +
+      errors.authErrors.inactiveUser.statusCode +
       ' with error message as "' +
-      errors.authErrors.inactiveToken.message +
+      errors.authErrors.inactiveUser.message +
       '"',
     async () => {
       const response = await request(app)
         .get('/api/v1/users/getRole')
         .set('Authorization', `Bearer ${process.env.JWT_TOKEN}`);
       expect(response.statusCode).toBe(
-        errors.authErrors.inactiveToken.statusCode
+        errors.authErrors.inactiveUser.statusCode
       );
       expect(response.body.message).toBe(
-        errors.authErrors.inactiveToken.message
+        errors.authErrors.inactiveUser.message
       );
     }
   );

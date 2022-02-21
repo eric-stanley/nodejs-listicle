@@ -20,6 +20,11 @@ module.exports = {
       message: 'You are not logged in! Please login to get access.',
       statusCode: 401,
     },
+    passwordUpdate: {
+      message:
+        'This route is not for password update. Please use /updatePassword',
+      statusCode: 400,
+    },
   },
   generalErrors: {
     duplicateKey: {

@@ -120,7 +120,6 @@ userSchema.pre('save', async function (next) {
 
 userSchema.pre(/^find/, function (next) {
   // this point to the current query
-  this.find({ is_active: { $ne: false } });
   this.start = Date.now();
   next();
 });

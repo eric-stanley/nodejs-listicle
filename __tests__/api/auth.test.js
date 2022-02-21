@@ -6,12 +6,15 @@ const {
   statusCodeCheck,
   headerCheck,
   tokenCheck,
-  inactiveTokenCheck,
+  inactiveUserCheck,
   unAuthorizedCheck,
   badRequestCheck,
   serverErrorCheck,
 } = require('./tests/login');
-const { checkAuthenticatedDelete, undefinedTokenCheck } = require('./tests/user');
+const {
+  checkAuthenticatedDelete,
+  undefinedTokenCheck,
+} = require('./tests/user');
 
 beforeAll(async () => {
   await db.connect();
@@ -36,13 +39,23 @@ describe('Authentication test', () => {
       headerCheck();
       tokenCheck();
     });
-    describe('when the username and password is incorrect', unAuthorizedCheck);
-    describe('when the user is active', () => {
+    describe('given the username and password is incorrect', unAuthorizedCheck);
+
+    describe('given the username and password is missing', badRequestCheck);
+
+    describe('given an empty json object is sent in request', serverErrorCheck);
+  });
+
+  describe('DELETE /api/v1/users/deleteMe', () => {
+    describe('given the user is active', () => {
       checkAuthenticatedDelete();
-      inactiveTokenCheck();
     });
-    describe('when the username and password is missing', badRequestCheck);
-    describe('when the token is missing', undefinedTokenCheck);
-    describe('when an empty json object is sent in request', serverErrorCheck);
+  });
+
+  describe('GET /api/v1/users/getRole', () => {
+    describe('given the user is inactive', () => {
+      inactiveUserCheck();
+    });
+    describe('given the token is missing', undefinedTokenCheck);
   });
 });

@@ -5,6 +5,7 @@ const factory = require('./handlerFactory');
 const filterObj = require('../utils/filterObj');
 const UserRole = require('../models/userRoleModel');
 const Role = require('../models/roleModel');
+const errors = require('../constants/errors');
 
 const defaultField = 'name';
 const defaultPage = 1;
@@ -41,8 +42,8 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   ) {
     return next(
       new AppError(
-        'This route is not for password update. Please use /updatePassword',
-        400
+        errors.authErrors.passwordUpdate.message,
+        errors.authErrors.passwordUpdate.statusCode
       )
     );
   }

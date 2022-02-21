@@ -29,23 +29,23 @@ describe('User specific test', () => {
   });
 
   describe('GET /api/v1/users/getRole', () => {
-    describe('when the user tries to get the default role', defaultRoleCheck);
+    describe('given the user tries to get the default role', defaultRoleCheck);
   });
 
   describe('PATCH /api/v1/users/updateMe', () => {
-    describe('when the user with default role tries to update email or username', () => {
+    describe('given the user with default role tries to update email or username', () => {
       checkAuthenticatedUpdate();
       checkUnAuthenticatedUpdate();
     });
 
-    describe('when the user with default role tries to update password', () => {
+    describe('given the user with default role tries to update password', () => {
       checkAuthenticatedBadUpdate();
       checkUnAuthenticatedBadUpdate();
     });
   });
 
   describe('DELETE /api/v1/users/deleteMe', () => {
-    describe('when the user with default role tries to delete account', () => {
+    describe('given the user with default role tries to delete account', () => {
       checkAuthenticatedDelete();
       checkUnAuthenticatedDelete();
     });
