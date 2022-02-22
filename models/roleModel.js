@@ -18,6 +18,10 @@ const roleSchema = new mongoose.Schema({
   },
 });
 
+roleSchema.index({
+  role_id: 1,
+});
+
 roleSchema.pre(/^find/, function (next) {
   this.start = Date.now();
   next();

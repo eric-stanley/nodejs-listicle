@@ -85,6 +85,22 @@ const userSchema = new mongoose.Schema(
   }
 );
 
+userSchema.index({
+  user_id: 1,
+});
+
+userSchema.index({
+  username: 1,
+});
+
+userSchema.index({
+  email: 1,
+});
+
+userSchema.index({
+  slug: 1,
+});
+
 userSchema.pre('save', async function (next) {
   // Only run this function if password was actually modified
   if (!this.isModified('password')) return next();

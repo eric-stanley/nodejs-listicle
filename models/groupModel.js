@@ -18,6 +18,10 @@ const groupSchema = new mongoose.Schema({
   },
 });
 
+groupSchema.index({
+  group_id: 1,
+});
+
 groupSchema.pre(/^find/, function (next) {
   this.start = Date.now();
   next();

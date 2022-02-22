@@ -38,6 +38,15 @@ const userRoleSchema = new mongoose.Schema(
   }
 );
 
+userRoleSchema.index({
+  user_role_id: 1,
+});
+
+userRoleSchema.index({
+  role_id: 1,
+  user_id: 1,
+});
+
 userRoleSchema.virtual('roles', {
   ref: 'Role',
   foreignField: '_id',

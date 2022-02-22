@@ -38,6 +38,11 @@ const projectSchema = new mongoose.Schema(
   }
 );
 
+projectSchema.index({
+  project_id: 1,
+  owner: 1,
+});
+
 projectSchema.virtual('users', {
   ref: 'User',
   foreignField: '_id',

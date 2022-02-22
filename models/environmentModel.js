@@ -18,6 +18,10 @@ const environmentSchema = new mongoose.Schema({
   },
 });
 
+environmentSchema.index({
+  env_id: 1,
+});
+
 environmentSchema.pre(/^find/, function (next) {
   this.start = Date.now();
   next();

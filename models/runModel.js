@@ -31,6 +31,10 @@ const runSchema = new mongoose.Schema(
   }
 );
 
+runSchema.index({
+  run_id: 1,
+});
+
 runSchema.virtual('duration').get(function () {
   return timeDistance(this._doc.updated_at, this._doc.created_at);
 });

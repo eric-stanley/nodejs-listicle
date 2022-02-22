@@ -42,6 +42,15 @@ const categorySchema = new mongoose.Schema(
   }
 );
 
+categorySchema.index({
+  category_id: 1,
+});
+
+categorySchema.index({
+  project_id: 1,
+  owner: 1,
+});
+
 categorySchema.virtual('users', {
   ref: 'User',
   foreignField: '_id',

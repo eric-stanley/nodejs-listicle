@@ -42,6 +42,15 @@ const applicationSchema = new mongoose.Schema(
   }
 );
 
+applicationSchema.index({
+  app_id: 1,
+});
+
+applicationSchema.index({
+  project_id: 1,
+  owner: 1,
+});
+
 applicationSchema.virtual('users', {
   ref: 'User',
   foreignField: '_id',

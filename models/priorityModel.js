@@ -18,6 +18,10 @@ const prioritySchema = new mongoose.Schema({
   },
 });
 
+prioritySchema.index({
+  priority_id: 1,
+});
+
 prioritySchema.pre(/^find/, function (next) {
   this.start = Date.now();
   next();

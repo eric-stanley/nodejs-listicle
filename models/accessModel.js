@@ -40,6 +40,16 @@ const accessSchema = new mongoose.Schema(
   }
 );
 
+accessSchema.index({
+  access_id: 1,
+});
+
+accessSchema.index({
+  user_id: 1,
+  role_id: 1,
+  project_id: 1,
+});
+
 accessSchema.pre(/^find/, function (next) {
   this.start = Date.now();
   next();

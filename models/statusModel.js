@@ -23,6 +23,10 @@ statusSchema.pre(/^find/, function (next) {
   next();
 });
 
+statusSchema.index({
+  status_id: 1,
+});
+
 statusSchema.pre('save', async function (next) {
   if (!this.isNew) {
     next();
