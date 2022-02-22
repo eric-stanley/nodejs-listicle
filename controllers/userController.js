@@ -51,10 +51,13 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   const filteredBody = filterObj(req.body.fields.input, ['username', 'email']);
 
   // 3) Update user document
-  const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
+  let updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
     runValidators: true,
-  });
+  }).select('-__v -created_at -updated_at');
+
+  updatedUser = updatedUser.toObject();
+  updatedUser._id = updatedUser.id = undefined;
 
   res.status(200).json({
     status: 'success',
@@ -90,7 +93,7 @@ exports.getRole = catchAsync(async (req, res, next) => {
     new AppError('Not role assigned to the user', 401);
   }
 
-  const role = await Role.findById(userRole.role_id);
+  const role = await Role.findById(userRole.role_id).select('-_id -__v');
 
   if (!role) {
     new AppError('Invalid role assigned to the user', 400);

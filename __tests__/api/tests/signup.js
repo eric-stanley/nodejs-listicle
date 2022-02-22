@@ -14,7 +14,6 @@ exports.valid = (user_id) => {
     );
     expect(response.body.token).toBeDefined();
     process.env.JWT_TOKEN = response.body.token;
-    process.env.CURRENT_USER_ID = response.body.data.user.id;
   });
 };
 

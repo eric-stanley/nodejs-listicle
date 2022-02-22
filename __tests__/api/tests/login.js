@@ -9,7 +9,6 @@ exports.statusCodeCheck = (user_id) => {
       .post('/api/v1/auth/login')
       .send(userData.users[user_id]);
     expect(response.statusCode).toBe(200);
-    process.env.CURRENT_USER_ID = response.body.data.user.id;
   });
 };
 
@@ -21,7 +20,6 @@ exports.headerCheck = (user_id) => {
     expect(response.headers['content-type']).toEqual(
       expect.stringContaining('json')
     );
-    process.env.CURRENT_USER_ID = response.body.data.user.id;
   });
 };
 
@@ -32,7 +30,6 @@ exports.tokenCheck = (user_id) => {
       .send(userData.users[user_id]);
     expect(response.body.token).toBeDefined();
     process.env.JWT_TOKEN = response.body.token;
-    process.env.CURRENT_USER_ID = response.body.data.user.id;
   });
 };
 
