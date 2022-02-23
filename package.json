@@ -66,6 +66,7 @@
     "prettier": "^2.5.1",
     "supertest": "^6.2.2",
     "ts-node": "^10.5.0",
+    "unique-username-generator": "^1.0.1",
     "webpack": "^5.68.0"
   },
   "engines": {

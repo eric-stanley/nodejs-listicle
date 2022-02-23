@@ -18,29 +18,13 @@ module.exports = {
   resetMocks: true,
   restoreMocks: true,
   detectOpenHandles: true,
-  testTimeout: 5000,
+  testTimeout: 4000,
   bail: true,
   collectCoverage: false,
-  modulePathIgnorePatterns: [
-    '<rootDir>/node_modules/',
-    '<rootDir>/reports/',
-    '<rootDir>/__tests__/api/tests/',
-  ],
-  watchPathIgnorePatterns: [
-    '<rootDir>/node_modules/',
-    '<rootDir>/reports/',
-    '<rootDir>/__tests__/api/tests/',
-  ],
-  testPathIgnorePatterns: [
-    '<rootDir>/node_modules/',
-    '<rootDir>/reports/',
-    '<rootDir>/__tests__/api/tests/',
-  ],
-  coveragePathIgnorePatterns: [
-    '<rootDir>/node_modules/',
-    '<rootDir>/reports/',
-    '<rootDir>/__tests__/api/tests/',
-  ],
+  modulePathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/reports/'],
+  watchPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/reports/', ,],
+  testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/reports/'],
+  coveragePathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/reports/'],
   coverageThreshold: {
     global: {
       branches: 100,
@@ -92,6 +76,11 @@ module.exports = {
       rootDir: '<rootDir>/__tests__/e2e',
       displayName: 'e2e',
       testMatch: ['**/e2e/*.test.js'],
+    },
+    {
+      rootDir: '<rootDir>/__tests__/load',
+      displayName: 'load',
+      testMatch: ['**/load/*.test.js'],
     },
   ],
 };

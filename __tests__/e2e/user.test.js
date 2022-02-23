@@ -1,7 +1,11 @@
 const db = require('../../db');
 const seed = require('../../data/seed-initial-data');
 
-const { valid, checkUserIdIncrement } = require('./tests/signup');
+const {
+  valid,
+  checkUserIdIncrement,
+  multipleSignups,
+} = require('./tests/signup');
 const {
   deletedUsertRoleCheck,
   checkDeletedUserUpdate,
