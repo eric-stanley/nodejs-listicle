@@ -1,30 +1,13 @@
 const request = require('supertest');
-const genUsername = require('unique-username-generator');
 const app = require('../../../app');
-const random = require('../../../utils/random');
+const userData = require('../../data/user.data');
+
+let users = [];
 
 exports.multipleSignups = (numOfSignups) => {
-  const users = [];
-  let i = 0;
-  do {
-    i += 1;
-    const username = genUsername.generateUsername();
-    const password = random.randomString(10);
-    const user = {
-      fields: {
-        input: {
-          username: username,
-          password: password,
-          password_confirm: password,
-          email: username + '@test.com',
-        },
-      },
-    };
-    users.push(user);
-  } while (i < numOfSignups);
-
   i = 0;
   let current_user_id;
+  users = userData.getRandomUsers(numOfSignups);
 
   jest.retryTimes(4);
   test.each(users)(
@@ -39,6 +22,21 @@ exports.multipleSignups = (numOfSignups) => {
       if (i >= 1) {
         expect(previous_user_id).toBe(current_user_id - 1);
       }
+      expect(response.body.token).toBeDefined();
+      i += 1;
+    }
+  );
+};
+
+exports.multipleLogins = (numOfLogins) => {
+  i = 0;
+
+  jest.retryTimes(4);
+  test.each(users)(
+    'should respond with a 200 status code with token',
+    async (fields) => {
+      let response = await request(app).post('/api/v1/auth/login').send(fields);
+      expect(response.statusCode).toBe(200);
       expect(response.body.token).toBeDefined();
       i += 1;
     }

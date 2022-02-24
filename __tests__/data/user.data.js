@@ -1,3 +1,6 @@
+const genUsername = require('unique-username-generator');
+const random = require('../../utils/random');
+
 exports.users = [
   {
     fields: {
@@ -38,3 +41,25 @@ exports.users = [
     },
   },
 ];
+
+exports.getRandomUsers = (numOfSignups) => {
+  const users = [];
+  let i = 0;
+  do {
+    i += 1;
+    const username = genUsername.generateUsername();
+    const password = random.randomString(10);
+    const user = {
+      fields: {
+        input: {
+          username: username,
+          password: password,
+          password_confirm: password,
+          email: username + '@test.com',
+        },
+      },
+    };
+    users.push(user);
+  } while (i < numOfSignups);
+  return users;
+};
