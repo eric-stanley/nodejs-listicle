@@ -2,6 +2,7 @@ const db = require('../../db');
 const seed = require('../../data/seed-initial-data');
 
 const { valid, invalid } = require('./tests/signup');
+const { chechUndefinedId } = require('./tests/common');
 const {
   statusCodeCheck,
   headerCheck,
@@ -31,6 +32,7 @@ describe('Authentication test', () => {
   describe('POST /api/v1/auth/signup', () => {
     describe('given a new user signup fields', () => {
       valid(0);
+      chechUndefinedId(1, '/api/v1/auth/signup', 201);
     });
     describe('given an existing user signup fields', () => {
       invalid(0);
@@ -42,6 +44,7 @@ describe('Authentication test', () => {
       statusCodeCheck(0);
       headerCheck(0);
       tokenCheck(0);
+      chechUndefinedId(1, '/api/v1/auth/login', 200);
     });
     describe('given the username and password is incorrect', unAuthorizedCheck);
 
