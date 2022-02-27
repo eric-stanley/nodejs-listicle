@@ -16,21 +16,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        arch: [x86_64, arm64]
+        os: [ubuntu-latest]
+        arch: [arm64]
         node-version: [14.x, 16.x]
         mongodb-version: ['4.2', '4.4']
         python-version:
           ['2.7', '3.7', '3.8', '3.9', '3.10', 'pypy-2.7', 'pypy-3.8']
-        exclude:
-          - os: macos-latest
-            python-version: '3.8'
-          - os: windows-latest
-            python-version: '3.6'
 
     steps:
       - name: Update depot_tools fetch config
         run: cd deps/depot_tools && git config --unset-all remote.origin.fetch; git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
+        shell: bash
+      - name: Add depot_tools to PATH
+        run: echo "$PWD/deps/depot_tools" >> $GITHUB_PATH
         shell: bash
       - name: Install g++-aarch64-linux-gnu
         if: matrix.os == 'ubuntu-latest' && matrix.arch == 'arm64'
