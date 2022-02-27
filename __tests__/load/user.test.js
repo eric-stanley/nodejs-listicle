@@ -2,8 +2,8 @@ const db = require('../../db');
 const seed = require('../../data/seed-initial-data');
 
 const { multipleSignups, multipleLogins } = require('./tests/auth');
-const numberOfSignupRequests = 20;
-const numberOfLoginRequests = 20;
+const numberOfSignupRequests = 10;
+const numberOfLoginRequests = 10;
 
 beforeAll(async () => {
   await db.connect();
