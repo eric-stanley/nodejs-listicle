@@ -31,7 +31,8 @@ jobs:
       - name: Build V8 linux
         if: matrix.platform == 'ubuntu-latest'
         run: cd deps && ./build.py --no-clang --arch ${{ matrix.arch }}
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
         with:
           submodules: true
           fetch-depth: 1
