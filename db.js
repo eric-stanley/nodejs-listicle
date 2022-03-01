@@ -7,8 +7,6 @@ dotenv.config({
 
 let connectionString, conn;
 
-console.log(process.env.NODE_ENV);
-
 switch (process.env.NODE_ENV) {
   case 'production':
     connectionString =
@@ -21,7 +19,6 @@ switch (process.env.NODE_ENV) {
   case 'test':
     connectionString =
       process.env.MONGO_LOCAL_CON_STR + process.env.MONGO_ATLAS_DB_TEST;
-    console.log(connectionString);
     break;
 }
 
