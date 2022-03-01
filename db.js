@@ -21,6 +21,7 @@ switch (process.env.NODE_ENV) {
   case 'test':
     connectionString =
       process.env.MONGO_LOCAL_CON_STR + process.env.MONGO_ATLAS_DB_TEST;
+    console.log(connectionString);
     break;
 }
 
