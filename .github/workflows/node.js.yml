@@ -50,7 +50,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           architecture: x64
-      - name: Set up Environment variables
+      - name: Set up Environment variables and test
         env:
           JWT_COOKIE_EXPIRES_IN: ${{ secrets.JWT_COOKIE_EXPIRES_IN }}
           JWT_EXPIRES_IN: ${{ secrets.JWT_EXPIRES_IN }}
@@ -71,7 +71,5 @@ jobs:
           RATE_LIMIT_MAX: ${{ secrets.RATE_LIMIT_MAX }}
           RATE_LIMIT_MINS: ${{ secrets.RATE_LIMIT_MINS }}
           TEST_PORT: ${{ secrets.TEST_PORT }}
-      - run: npm ci
-      - run: npm test
-        env:
-          test: true
+        run: npm ci
+          npm test
