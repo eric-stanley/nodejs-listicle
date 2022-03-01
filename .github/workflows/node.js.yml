@@ -36,9 +36,6 @@ jobs:
       - name: Install g++-aarch64-linux-gnu
         if: matrix.os == 'ubuntu-latest' && matrix.arch == 'arm64'
         run: sudo apt update && sudo apt install g++-aarch64-linux-gnu -y
-      - name: Build V8 linux
-        if: matrix.platform == 'ubuntu-latest'
-        run: cd deps && ./build.py --no-clang --arch ${{ matrix.arch }}
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3.0.0
         with:
