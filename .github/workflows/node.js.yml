@@ -3,27 +3,6 @@
 
 name: Node.js CI
 
-env:
-  JWT_COOKIE_EXPIRES_IN: ${{ secrets.JWT_COOKIE_EXPIRES_IN }}
-  JWT_EXPIRES_IN: ${{ secrets.JWT_EXPIRES_IN }}
-  JWT_SECRET: ${{ secrets.JWT_SECRET }}
-  MONGO_ATLAS_DB_TEST: ${{ secrets.MONGO_ATLAS_DB_TEST }}
-  MONGO_ATLAS_PW: ${{ secrets.MONGO_ATLAS_PW }}
-  MONGO_ATLAS_QUERY_PARAMS: ${{ secrets.MONGO_ATLAS_QUERY_PARAMS }}
-  MONGO_ATLAS_SERVER: ${{ secrets.MONGO_ATLAS_SERVER }}
-  MONGO_ATLAS_USER: ${{ secrets.MONGO_ATLAS_USER }}
-  MONGO_LOCAL_CON_STR: ${{ secrets.MONGO_LOCAL_CON_STR }}
-  MONGO_SESSION_KEY: ${{ secrets.MONGO_SESSION_KEY }}
-  NODEMAILER_DEFAULT_FROM_ADDRESS: ${{ secrets.NODEMAILER_DEFAULT_FROM_ADDRESS }}
-  NODEMAILER_EMAIL_HOST: ${{ secrets.NODEMAILER_EMAIL_HOST }}
-  NODEMAILER_EMAIL_PASSWORD: ${{ secrets.NODEMAILER_EMAIL_PASSWORD }}
-  NODEMAILER_EMAIL_PORT: ${{ secrets.NODEMAILER_EMAIL_PORT }}
-  NODEMAILER_EMAIL_USERNAME: ${{ secrets.NODEMAILER_EMAIL_USERNAME }}
-  NODE_ENV: ${{ secrets.NODE_ENV }}
-  RATE_LIMIT_MAX: ${{ secrets.RATE_LIMIT_MAX }}
-  RATE_LIMIT_MINS: ${{ secrets.RATE_LIMIT_MINS }}
-  TEST_PORT: ${{ secrets.TEST_PORT }}
-
 on:
   push:
     branches: [main]
@@ -32,6 +11,7 @@ on:
 
 jobs:
   build:
+    environment: test
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -70,6 +50,27 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           architecture: x64
+      - name: Set up Environment variables
+        env:
+          JWT_COOKIE_EXPIRES_IN: ${{ secrets.JWT_COOKIE_EXPIRES_IN }}
+          JWT_EXPIRES_IN: ${{ secrets.JWT_EXPIRES_IN }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          MONGO_ATLAS_DB_TEST: ${{ secrets.MONGO_ATLAS_DB_TEST }}
+          MONGO_ATLAS_PW: ${{ secrets.MONGO_ATLAS_PW }}
+          MONGO_ATLAS_QUERY_PARAMS: ${{ secrets.MONGO_ATLAS_QUERY_PARAMS }}
+          MONGO_ATLAS_SERVER: ${{ secrets.MONGO_ATLAS_SERVER }}
+          MONGO_ATLAS_USER: ${{ secrets.MONGO_ATLAS_USER }}
+          MONGO_LOCAL_CON_STR: ${{ secrets.MONGO_LOCAL_CON_STR }}
+          MONGO_SESSION_KEY: ${{ secrets.MONGO_SESSION_KEY }}
+          NODEMAILER_DEFAULT_FROM_ADDRESS: ${{ secrets.NODEMAILER_DEFAULT_FROM_ADDRESS }}
+          NODEMAILER_EMAIL_HOST: ${{ secrets.NODEMAILER_EMAIL_HOST }}
+          NODEMAILER_EMAIL_PASSWORD: ${{ secrets.NODEMAILER_EMAIL_PASSWORD }}
+          NODEMAILER_EMAIL_PORT: ${{ secrets.NODEMAILER_EMAIL_PORT }}
+          NODEMAILER_EMAIL_USERNAME: ${{ secrets.NODEMAILER_EMAIL_USERNAME }}
+          NODE_ENV: ${{ secrets.NODE_ENV }}
+          RATE_LIMIT_MAX: ${{ secrets.RATE_LIMIT_MAX }}
+          RATE_LIMIT_MINS: ${{ secrets.RATE_LIMIT_MINS }}
+          TEST_PORT: ${{ secrets.TEST_PORT }}
       - run: npm ci
       - run: npm test
         env:
