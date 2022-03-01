@@ -1,5 +1,7 @@
 # NodeJS backend for listicle report
 
+![example workflow](https://github.com/eric-stanley/listicle/actions/workflows/node.js.yml/badge.svg)
+
 ## Start server
 
 `npm start` - Start node server in dev mode
