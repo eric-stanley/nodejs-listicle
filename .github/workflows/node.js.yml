@@ -71,5 +71,6 @@ jobs:
           RATE_LIMIT_MAX: ${{ secrets.RATE_LIMIT_MAX }}
           RATE_LIMIT_MINS: ${{ secrets.RATE_LIMIT_MINS }}
           TEST_PORT: ${{ secrets.TEST_PORT }}
-        run: npm ci
+        run: |
+          npm ci
           npm test
