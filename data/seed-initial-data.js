@@ -1,4 +1,5 @@
 const fs = require('fs');
+const mongoose = require('mongoose');
 
 const Role = require('../models/roleModel');
 const Environment = require('../models/environmentModel');
@@ -36,7 +37,6 @@ const userroles = JSON.parse(
 // Import data to db
 exports.importData = async () => {
   try {
-    await Counter.deleteMany();
     await Role.create(roles);
     await Environment.create(environments);
     await Group.create(groups);
@@ -62,5 +62,12 @@ exports.deleteData = async () => {
     await Counter.deleteMany();
   } catch (err) {
     console.log(err);
+  }
+};
+
+exports.removeCollections = async () => {
+  const collections = await mongoose.connection.db.collections();
+  for (let collection of collections) {
+    await collection.drop();
   }
 };

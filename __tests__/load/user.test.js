@@ -7,12 +7,12 @@ const numberOfLoginRequests = 10;
 
 beforeAll(async () => {
   await db.connect();
-  await seed.deleteData();
+  await seed.removeCollections();
   await seed.importData();
 });
 
 afterAll(async () => {
-  await seed.deleteData();
+  await seed.removeCollections();
   await db.disconnect();
 });
 
