@@ -1,5 +1,6 @@
-const db = require('../../db');
-const seed = require('../../data/seed-initial-data');
+const { setupDB } = require('../test-setup');
+
+setupDB();
 
 const { valid } = require('./tests/signup');
 const {
@@ -11,17 +12,6 @@ const {
   checkAuthenticatedDelete,
   checkUnAuthenticatedDelete,
 } = require('./tests/user');
-
-beforeAll(async () => {
-  await db.connect();
-  await seed.deleteData();
-  await seed.importData();
-});
-
-afterAll(async () => {
-  await seed.deleteData();
-  await db.disconnect();
-});
 
 describe('User specific test', () => {
   describe('POST /api/v1/auth/signup', () => {

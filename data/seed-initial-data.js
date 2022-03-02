@@ -1,5 +1,4 @@
 const fs = require('fs');
-const mongoose = require('mongoose');
 
 const Role = require('../models/roleModel');
 const Environment = require('../models/environmentModel');
@@ -8,7 +7,6 @@ const Priority = require('../models/priorityModel');
 const Status = require('../models/statusModel');
 const User = require('../models/userModel');
 const UserRole = require('../models/userRoleModel');
-const { Counter } = require('../models/counterModel');
 
 // Read json file
 const roles = JSON.parse(
@@ -46,28 +44,5 @@ exports.importData = async () => {
     await UserRole.create(userroles);
   } catch (err) {
     console.log(err);
-  }
-};
-
-// Delete all data from collection
-exports.deleteData = async () => {
-  try {
-    await Role.deleteMany();
-    await Environment.deleteMany();
-    await Group.deleteMany();
-    await Priority.deleteMany();
-    await Status.deleteMany();
-    await User.deleteMany();
-    await UserRole.deleteMany();
-    await Counter.deleteMany();
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-exports.removeCollections = async () => {
-  const collections = await mongoose.connection.db.collections();
-  for (let collection of collections) {
-    await collection.drop();
   }
 };
