@@ -1,10 +1,10 @@
 const { setupDB } = require('../testSetup');
 
-setupDB();
-
 const { multipleSignups, multipleLogins } = require('./tests/auth');
 const numberOfSignupRequests = 10;
 const numberOfLoginRequests = 10;
+
+setupDB();
 
 describe('User specific test', () => {
   describe('POST /api/v1/auth/signup', () => {

@@ -1,7 +1,5 @@
 const { setupDB } = require('../testSetup');
 
-setupDB();
-
 const { valid, invalid } = require('./tests/signup');
 const { chechUndefinedId } = require('./tests/common');
 const {
@@ -17,6 +15,8 @@ const {
   checkAuthenticatedDelete,
   undefinedTokenCheck,
 } = require('./tests/user');
+
+setupDB();
 
 describe('Authentication test', () => {
   describe('POST /api/v1/auth/signup', () => {

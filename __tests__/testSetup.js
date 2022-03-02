@@ -48,7 +48,13 @@ module.exports = {
       await seed.importData();
     });
 
+    beforeEach(() => {
+      // ensure there's at least one assertion run for every test
+      expect.hasAssertions();
+    });
+
     afterEach(async () => {
+      // flush all pending promises before each test
       await flushPromises();
     });
 

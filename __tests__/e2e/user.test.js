@@ -1,7 +1,5 @@
 const { setupDB } = require('../testSetup');
 
-setupDB();
-
 const { valid, checkUserIdIncrement } = require('./tests/signup');
 const {
   deletedUsertRoleCheck,
@@ -9,6 +7,8 @@ const {
   checkAuthenticatedDelete,
 } = require('./tests/user');
 const { inactiveUserLogin } = require('./tests/login');
+
+setupDB();
 
 describe('User specific test', () => {
   describe('POST /api/v1/auth/signup', () => {
