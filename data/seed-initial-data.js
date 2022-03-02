@@ -46,6 +46,10 @@ exports.importData = async () => {
     await UserRole.create(userroles);
   } catch (err) {
     console.log(err);
+    if (err.code === 11000) {
+      await deleteData();
+      await importData();
+    }
   }
 };
 
