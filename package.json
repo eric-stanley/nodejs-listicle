@@ -17,6 +17,9 @@
     "debug": "NODE_ENV=development ndb server.js",
     "debug:prod": "NODE_ENV=production ndb server.js",
     "test": "jest --runInBand",
+    "test:api": "jest --runInBand __tests__/api/",
+    "test:e2e": "jest --runInBand __tests__/e2e/",
+    "test:load": "jest --runInBand __tests__/load/",
     "test-w": "jest --watchAll --runInBand --silent"
   },
   "keywords": [
