@@ -1,6 +1,8 @@
 # NodeJS backend for listicle report
 
-![example workflow](https://github.com/eric-stanley/listicle/actions/workflows/node.js.yml/badge.svg)
+![api test](https://github.com/eric-stanley/listicle/actions/workflows/test-api.yml/badge.svg)
+![e2e test](https://github.com/eric-stanley/listicle/actions/workflows/test-e2e.yml/badge.svg)
+![load test](https://github.com/eric-stanley/listicle/actions/workflows/test-load.yml/badge.svg)
 
 ## Start server
 
