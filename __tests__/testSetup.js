@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const flushPromises = require('flush-promises');
+
 const db = require('../db');
 const seed = require('../data/seed-initial-data');
 
@@ -44,6 +46,10 @@ module.exports = {
       await db.connect();
       await dropAllCollections();
       await seed.importData();
+    });
+
+    afterEach(async () => {
+      await flushPromises();
     });
 
     // Disconnect Mongoose

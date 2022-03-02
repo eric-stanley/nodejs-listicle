@@ -1,4 +1,4 @@
-const { setupDB } = require('../test-setup');
+const { setupDB } = require('../testSetup');
 
 setupDB();
 
