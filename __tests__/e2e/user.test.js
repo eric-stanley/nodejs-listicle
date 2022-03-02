@@ -15,12 +15,12 @@ const { inactiveUserLogin } = require('./tests/login');
 
 beforeAll(async () => {
   await db.connect();
-  await seed.removeCollections();
+  await seed.deleteData();
   await seed.importData();
 });
 
 afterAll(async () => {
-  await seed.removeCollections();
+  await seed.deleteData();
   await db.disconnect();
 });
 
