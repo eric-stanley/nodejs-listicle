@@ -4,7 +4,7 @@
 ![e2e test](https://github.com/eric-stanley/listicle/actions/workflows/test-e2e.yml/badge.svg)
 ![load test](https://github.com/eric-stanley/listicle/actions/workflows/test-load.yml/badge.svg)
 
-![API Test](https://img.shields.io/github/workflow/status/eric-stanley/listicle/test-api.yml?style=for-the-badge&logo=github)
+![API Test](https://img.shields.io/github/workflow/status/eric-stanley/listicle/api-test?style=for-the-badge&logo=github)
 
 <br />
 
