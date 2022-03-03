@@ -10,7 +10,7 @@
 ![Twitter Follow](https://img.shields.io/twitter/follow/ericstanley84?logo=twitter&style=for-the-badge)
 ![GitHub branch checks state](https://img.shields.io/github/checks-status/eric-stanley/listicle/main?logo=github&style=for-the-badge)
 ![Depfu](https://img.shields.io/depfu/dependencies/github/eric-stanley/listicle?logo=github&style=for-the-badge)
-![GitHub](https://img.shields.io/github/license/eric-stanley/listicle?style=for-the-badge)
+![GitHub](https://img.shields.io/github/license/eric-stanley/listicle?logo=github&style=for-the-badge)
 
 <br />
 
