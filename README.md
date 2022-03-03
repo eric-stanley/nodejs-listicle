@@ -1,8 +1,8 @@
 # NodeJS backend for listicle report
 
-![API Test](https://img.shields.io/github/workflow/status/eric-stanley/listicle/api-test?style=for-the-badge&logo=github)
-![E2E Test](https://img.shields.io/github/workflow/status/eric-stanley/listicle/e2e-test?style=for-the-badge&logo=github)
-![Load Test](https://img.shields.io/github/workflow/status/eric-stanley/listicle/load-test?style=for-the-badge&logo=github)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/eric-stanley/listicle/api-test?style=for-the-badge&logo=github)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/eric-stanley/listicle/e2e-test?style=for-the-badge&logo=github)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/eric-stanley/listicle/load-test?style=for-the-badge&logo=github)
 
 <br />
 
