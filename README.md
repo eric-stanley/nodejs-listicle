@@ -4,6 +4,15 @@
 ![e2e test](https://github.com/eric-stanley/listicle/actions/workflows/test-e2e.yml/badge.svg)
 ![load test](https://github.com/eric-stanley/listicle/actions/workflows/test-load.yml/badge.svg)
 
+<br />
+
+![GitHub repo size](https://img.shields.io/github/repo-size/eric-stanley/listicle?logo=github&style=for-the-badge)
+![Twitter Follow](https://img.shields.io/twitter/follow/ericstanley84?logo=twitter&style=for-the-badge)
+![GitHub branch checks state](https://img.shields.io/github/checks-status/eric-stanley/listicle/main?logo=github&style=for-the-badge)
+![Depfu](https://img.shields.io/depfu/dependencies/github/eric-stanley/listicle?logo=github&style=for-the-badge)
+
+<br />
+
 ## Start server
 
 `npm start` - Start node server in dev mode
