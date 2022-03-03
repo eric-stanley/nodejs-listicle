@@ -6,35 +6,52 @@ const seed = require('../data/seed-initial-data');
 
 mongoose.promise = global.Promise;
 
-async function removeAllCollections() {
+async function clearCollections() {
   const collections = Object.keys(mongoose.connection.collections);
+
   for (const collectionName of collections) {
     const collection = mongoose.connection.collections[collectionName];
-    await collection.deleteMany();
+    while (true) {
+      await collection.deleteMany({});
+      const count = await collection.countDocuments({});
+      if (count === 0) {
+        break;
+      }
+    }
   }
 }
 
-async function removeCollections() {
-  const collections = await mongoose.connection.db.collections();
-  for (let collection of collections) {
-    await collection.drop();
-  }
+async function dropDatabase() {
+  await mongoose.connection.db.dropDatabase();
 }
 
-async function dropAllCollections() {
-  const collections = Object.keys(mongoose.connection.collections);
-  for (const collectionName of collections) {
-    const collection = mongoose.connection.collections[collectionName];
-    try {
-      await collection.drop();
-    } catch (error) {
-      // Sometimes this error happens, but you can safely ignore it
-      if (error.message === 'ns not found') return;
-      // This error occurs when you use it.todo. You can
-      // safely ignore this error too
-      if (error.message.includes('a background operation is currently running'))
-        return;
-      console.log(error.message);
+async function dropAllCollectionsAndIndexes() {
+  let collections;
+  collections = Object.keys(mongoose.connection.collections);
+
+  while (true) {
+    for (const collectionName of collections) {
+      const collection = mongoose.connection.collections[collectionName];
+      try {
+        await collection.dropIndexes();
+        await collection.drop();
+      } catch (error) {
+        // Sometimes this error happens, but you can safely ignore it
+        if (error.message.includes('ns not found')) return;
+        // This error occurs when you use it.todo. You can
+        // safely ignore this error too
+        if (
+          error.message.includes('a background operation is currently running')
+        )
+          return;
+        console.log(error.message);
+      }
+    }
+    collections = Object.keys(mongoose.connection.collections);
+    console.log(collections.length);
+    if (collections.length === 0) {
+      console.log('all collections dropped');
+      break;
     }
   }
 }
@@ -44,7 +61,7 @@ module.exports = {
     // Connect to Mongoose
     beforeAll(async () => {
       await db.connect();
-      await dropAllCollections();
+      await clearCollections();
       await seed.importData();
     });
 
@@ -60,7 +77,7 @@ module.exports = {
 
     // Disconnect Mongoose
     afterAll(async () => {
-      await dropAllCollections();
+      await clearCollections();
       await mongoose.connection.close();
     });
   },
