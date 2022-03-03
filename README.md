@@ -1,8 +1,8 @@
 # NodeJS backend for listicle report
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/eric-stanley/listicle/api-test?style=for-the-badge&logo=github)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/eric-stanley/listicle/e2e-test?style=for-the-badge&logo=github)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/eric-stanley/listicle/load-test?style=for-the-badge&logo=github)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/eric-stanley/listicle/api-test?label=api-test&logo=github&style=for-the-badge)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/eric-stanley/listicle/e2e-test?label=e2e-test&logo=github&style=for-the-badge)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/eric-stanley/listicle/load-test?label=load-test&logo=github&style=for-the-badge)
 
 <br />
 
@@ -10,6 +10,7 @@
 ![Twitter Follow](https://img.shields.io/twitter/follow/ericstanley84?logo=twitter&style=for-the-badge)
 ![GitHub branch checks state](https://img.shields.io/github/checks-status/eric-stanley/listicle/main?logo=github&style=for-the-badge)
 ![Depfu](https://img.shields.io/depfu/dependencies/github/eric-stanley/listicle?logo=github&style=for-the-badge)
+![GitHub](https://img.shields.io/github/license/eric-stanley/listicle?style=for-the-badge)
 
 <br />
 
