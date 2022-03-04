@@ -1,8 +1,8 @@
 const { setupDB } = require('../testSetup');
 
 const { multipleSignups, multipleLogins } = require('./tests/auth');
-const numberOfSignupRequests = 10;
-const numberOfLoginRequests = 10;
+const numberOfSignupRequests = 5;
+const numberOfLoginRequests = 5;
 
 setupDB();
 
