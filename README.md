@@ -14,6 +14,7 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/eric-stanley/listicle?logo=github&style=for-the-badge)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/eric-stanley/listicle?logo=github&style=for-the-badge)
 ![GitHub Release Date](https://img.shields.io/github/release-date/eric-stanley/listicle?logo=github&style=for-the-badge)
+![GitHub all releases](https://img.shields.io/github/downloads/eric-stanley/listicle/total?logo=github&style=for-the-badge)
 
 <br />
 
