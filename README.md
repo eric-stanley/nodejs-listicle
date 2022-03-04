@@ -11,6 +11,9 @@
 ![GitHub branch checks state](https://img.shields.io/github/checks-status/eric-stanley/listicle/main?logo=github&style=for-the-badge)
 ![Depfu](https://img.shields.io/depfu/dependencies/github/eric-stanley/listicle?logo=github&style=for-the-badge)
 ![GitHub](https://img.shields.io/github/license/eric-stanley/listicle?logo=github&style=for-the-badge)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/eric-stanley/listicle?logo=github&style=for-the-badge)
+![GitHub last commit](https://img.shields.io/github/last-commit/eric-stanley/listicle?logo=github&style=for-the-badge)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/eric-stanley/listicle?logo=github&style=for-the-badge)
 
 <br />
 
