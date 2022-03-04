@@ -20,7 +20,7 @@ jobs:
         os: [ubuntu-latest]
         arch: [arm64]
         node-version: [14.x, 16.x]
-        mongodb-version: ['4.2', '4.4', '5.0']
+        mongodb-version: ['4.4', '5.0']
         python-version: ['3.7', '3.8', '3.9', '3.10']
 
     steps:
