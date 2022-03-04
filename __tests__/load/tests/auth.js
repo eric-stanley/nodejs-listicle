@@ -5,7 +5,7 @@ const userData = require('../../data/user.data');
 let users = [];
 
 exports.multipleSignups = (numOfSignups) => {
-  i = 0;
+  let i = 0;
   let current_user_id;
   users = userData.getRandomUsers(numOfSignups);
 
@@ -29,7 +29,7 @@ exports.multipleSignups = (numOfSignups) => {
 };
 
 exports.multipleLogins = (numOfLogins) => {
-  i = 0;
+  let i = 0;
 
   jest.retryTimes(4);
   test.each(users)(

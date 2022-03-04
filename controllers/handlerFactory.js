@@ -8,14 +8,22 @@ const getModel = require('../utils/getModel');
 
 exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    const doc = await Model.findByIdAndDelete(req.params.id);
+    const keys = Object.keys(modelIds);
+    const values = Object.values(modelIds);
+
+    let filter = {};
+
+    keys.forEach(async (key, index) => {
+      if (key === Model.collection.collectionName) {
+        filter[values[index]] = req.params.id;
+      }
+    });
+
+    const doc = await Model.findOneAndDelete(filter);
 
     if (!doc) {
       return next(new AppError('No document found with that ID', 404));
     }
-
-    const keys = Object.keys(modelIds);
-    const values = Object.values(modelIds);
 
     keys.forEach(async (key, index) => {
       if (key === Model.collection.collectionName) {
@@ -31,11 +39,22 @@ exports.deleteOne = (Model) =>
 
 exports.updateOne = (Model, ...fields) =>
   catchAsync(async (req, res, next) => {
+    const keys = Object.keys(modelIds);
+    const values = Object.values(modelIds);
+    let filter = {};
+
+    keys.forEach(async (key, index) => {
+      if (key === Model.collection.collectionName) {
+        filter[values[index]] = req.params.id;
+      }
+    });
+
     const filteredBody = filterObj(req.body.fields.input, fields);
-    const doc = await Model.findByIdAndUpdate(req.params.id, filteredBody, {
+
+    const doc = await Model.findOneAndUpdate(filter, filteredBody, {
       new: true,
       runValidators: true,
-    });
+    }).select('-_id');
 
     if (!doc) {
       return next(new AppError('No document found with that ID', 404));
@@ -54,17 +73,31 @@ exports.createOne = (Model, ...fields) =>
     const filteredBody = filterObj(req.body.fields.input, fields);
     const doc = await Model.create(filteredBody);
 
+    const returnDoc = doc.toObject();
+
+    returnDoc._id = returnDoc.id = returnDoc.__v = undefined;
+
     res.status(201).json({
       status: 'success',
       data: {
-        data: doc,
+        data: returnDoc,
       },
     });
   });
 
 exports.getOne = (Model, populateOptions) =>
   catchAsync(async (req, res, next) => {
-    let query = Model.findOne(req.body.filter);
+    const keys = Object.keys(modelIds);
+    const values = Object.values(modelIds);
+    let filter = {};
+
+    keys.forEach(async (key, index) => {
+      if (key === Model.collection.collectionName) {
+        filter[values[index]] = req.params.id;
+      }
+    });
+
+    let query = Model.findOne(filter, { _id: 0, __v: 0 });
 
     if (populateOptions && populateOptions.length > 0) {
       populateOptions.forEach((item) => {
@@ -90,7 +123,7 @@ exports.getAll = (Model, defaultField, defaultPage, defaultLimit) =>
   catchAsync(async (req, res) => {
     // Execute query
     const features = new APIFeatures(
-      Model.find(req.body.filter),
+      Model.find(req.body.filter, { _id: 0, __v: 0 }),
       req.body,
       defaultField,
       defaultPage,

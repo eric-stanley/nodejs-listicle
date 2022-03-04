@@ -16,7 +16,7 @@ class APIFeatures {
   }
 
   sort() {
-    if (this.options.sort) {
+    if (this.options && this.options.sort) {
       const sortBy = this.options.sort.split(',').join(' ');
       this.query = this.query.sort(sortBy);
     } else {
@@ -36,8 +36,14 @@ class APIFeatures {
   }
 
   paginate() {
-    const page = this.options.page || this.defaultPage;
-    const limit = this.options.limit || this.defaultLimit;
+    let page = this.defaultPage;
+    let limit = this.defaultLimit;
+
+    if (this.options) {
+      page = this.options.page;
+      limit = this.options.limit;
+    }
+
     const skip = (page - 1) * limit;
 
     this.query = this.query.skip(skip).limit(limit);
