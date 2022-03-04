@@ -280,7 +280,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
 exports.updateFilter = (filterField) => (req, res, next) => {
   const filter = {};
-  // Retrieve all projects if admin
+  // Retrieve all docs if admin
   if (!req.user.is_admin) {
     filter[filterField] = req.user.id;
   }
