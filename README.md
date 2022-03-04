@@ -2,7 +2,6 @@
 
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/eric-stanley/listicle/api-test?label=api-test&logo=github&style=for-the-badge)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/eric-stanley/listicle/e2e-test?label=e2e-test&logo=github&style=for-the-badge)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/eric-stanley/listicle/load-test?label=load-test&logo=github&style=for-the-badge)
 
 <br />
 
