@@ -64,7 +64,7 @@
     "flush-promises": "^1.0.2",
     "jest": "^27.5.1",
     "jest-config": "^27.5.1",
-    "jest-html-reporters": "^3.0.5",
+    "jest-html-reporters": "^3.0.6",
     "jest-progress-bar-reporter": "^1.0.21",
     "jest-stare": "^2.3.0",
     "ndb": "^1.1.5",
