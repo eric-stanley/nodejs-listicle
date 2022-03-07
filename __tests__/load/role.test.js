@@ -1,8 +1,11 @@
 const { setupDB } = require('../testSetup');
 
-const { createMultipleRolesCheck } = require('./tests/role');
+const {
+  createMultipleRolesCheck,
+  updateMultipleRolesCheck,
+} = require('./tests/role');
 const { tokenCheck } = require('./tests/login');
-const numberOfRolesToAdd = 15;
+const numberOfRolesToAdd = (numberOfRolesToUpdate = 15);
 
 setupDB();
 
@@ -14,5 +17,14 @@ describe('Role specific test', () => {
     describe('given ' + numberOfRolesToAdd + ' role creation requests', () => {
       createMultipleRolesCheck(numberOfRolesToAdd);
     });
+  });
+
+  describe('PATCH /api/v1/roles', () => {
+    describe(
+      'given ' + numberOfRolesToUpdate + ' role updation requests',
+      () => {
+        updateMultipleRolesCheck();
+      }
+    );
   });
 });

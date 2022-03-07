@@ -5,6 +5,7 @@ module.exports = (user, statusCode, res) => {
 
   const returnUser = user.toObject();
 
+  // Remove unwanted fields before sending the response
   returnUser._id =
     returnUser.id =
     returnUser.__v =
@@ -23,9 +24,6 @@ module.exports = (user, statusCode, res) => {
   if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
 
   res.cookie('jwt', token, cookieOptions);
-
-  // Remove password before sending the response
-  user.password = undefined;
 
   res.status(statusCode).json({
     status: 'success',

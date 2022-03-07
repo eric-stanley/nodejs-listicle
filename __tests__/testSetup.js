@@ -48,7 +48,7 @@ async function dropAllCollectionsAndIndexes() {
       }
     }
     collections = Object.keys(mongoose.connection.collections);
-    console.log(collections.length);
+
     if (collections.length === 0) {
       console.log('all collections dropped');
       break;

@@ -1,5 +1,6 @@
 const { setupDB } = require('../testSetup');
 
+const { valid } = require('./tests/signup');
 const { tokenCheck } = require('./tests/login');
 const {
   getAllRolesCheck,
@@ -16,13 +17,18 @@ describe('Role test', () => {
     });
 
     describe('given the admin user tries to access roles routes', () => {
-      getAllRolesCheck();
+      getAllRolesCheck(200);
       getOneRoleCheck(2, 'portfolio manager');
       getOneRoleCheck(5, 'test lead');
     });
 
     describe('given the admin user tries to access roles routes with empty body', () => {
       getAllRolesServerError();
+    });
+
+    describe('given the non-admin user tries to access roles routes', () => {
+      valid(0);
+      getAllRolesCheck(403);
     });
   });
 });

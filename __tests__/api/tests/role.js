@@ -1,8 +1,9 @@
 const request = require('supertest');
 const app = require('../../../app');
+const errors = require('../../../constants/errors');
 
-exports.getAllRolesCheck = () => {
-  test('should respond with a 200 status code with all 8 roles', async () => {
+exports.getAllRolesCheck = (statusCode) => {
+  test('should respond with a ' + statusCode + ' status code', async () => {
     const bodyData = [
       {
         fields: {
@@ -19,8 +20,14 @@ exports.getAllRolesCheck = () => {
         .get('/api/v1/roles')
         .set('Authorization', `Bearer ${process.env.JWT_TOKEN}`)
         .send(body);
-      expect(response.statusCode).toBe(200);
-      expect(response.body.results).toBe(8);
+      expect(response.statusCode).toBe(statusCode);
+      if (statusCode === 200) {
+        expect(response.body.results).toBe(8);
+      } else if (statusCode === 403) {
+        expect(response.body.message).toBe(
+          errors.authErrors.restrictPermission.message
+        );
+      }
     }
   });
 };
