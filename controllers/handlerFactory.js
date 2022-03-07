@@ -49,16 +49,18 @@ exports.updateOne = (Model, ...fields) =>
       }
     });
 
-    const filteredBody = filterObj(req.body.fields.input, fields);
+    const model = await Model.findOne(filter);
 
-    const doc = await Model.findOneAndUpdate(filter, filteredBody, {
-      new: true,
-      runValidators: true,
-    }).select('-_id');
-
-    if (!doc) {
+    if (!model) {
       return next(new AppError('No document found with that ID', 404));
     }
+
+    const filteredBody = filterObj(req.body.fields.input, fields);
+
+    const doc = await Model.findByIdAndUpdate(model.id, filteredBody, {
+      new: true,
+      runValidators: true,
+    }).select('-_id -__v');
 
     res.status(200).json({
       status: 'success',

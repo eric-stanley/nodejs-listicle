@@ -62,10 +62,7 @@ module.exports = (err, req, res, next) => {
   if (err.code === 11000) {
     // Auto decrement the model
     const errorMessage = err.message || err._message;
-    const collectionName = errorMessage
-      .split(':')[1]
-      .split('.')[1]
-      .split(' ')[0];
+    const collectionName = errorMessage.split('.')[1].split(' ')[0];
     const keys = Object.keys(modelIds);
     const values = Object.values(modelIds);
     keys.forEach(async (key, index) => {
