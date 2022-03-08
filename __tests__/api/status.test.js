@@ -19,7 +19,9 @@ describe('Status test', () => {
     describe('given the admin user tries to access status routes', () => {
       getAllStatusesCheck(200);
       getOneStatusCheck(1, 'passed');
+      getOneStatusCheck(2, 'failed');
       getOneStatusCheck(3, 'not completed');
+      getOneStatusCheck(4, 'no run');
     });
 
     describe('given the admin user tries to access status routes with empty body', () => {

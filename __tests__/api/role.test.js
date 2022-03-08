@@ -18,8 +18,14 @@ describe('Role test', () => {
 
     describe('given the admin user tries to access roles routes', () => {
       getAllRolesCheck(200);
+      getOneRoleCheck(1, 'admin');
       getOneRoleCheck(2, 'portfolio manager');
+      getOneRoleCheck(3, 'program manager');
+      getOneRoleCheck(4, 'project manager');
       getOneRoleCheck(5, 'test lead');
+      getOneRoleCheck(6, 'team lead');
+      getOneRoleCheck(7, 'team member');
+      getOneRoleCheck(8, 'guest');
     });
 
     describe('given the admin user tries to access roles routes with empty body', () => {

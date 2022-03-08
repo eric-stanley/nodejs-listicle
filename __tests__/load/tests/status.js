@@ -38,7 +38,7 @@ exports.createMultipleStatusesCheck = (numOfStatuses) => {
 exports.updateMultipleStatusesCheck = () => {
   jest.retryTimes(4);
   test.each(statuses)(
-    'should respond with a 200 status code with the new status that is updated',
+    'should respond with a 200 status code with the status that is updated',
     async (fields) => {
       const current_status = randomData.getRandomString(1, 'description', 5)[0];
       const response = await request(app)

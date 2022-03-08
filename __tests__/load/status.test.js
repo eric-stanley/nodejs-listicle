@@ -15,7 +15,7 @@ describe('Status specific test', () => {
       tokenCheck(3);
     });
     describe(
-      'given ' + numberOfStatusesToAdd + ' role creation requests',
+      'given ' + numberOfStatusesToAdd + ' status creation requests',
       () => {
         createMultipleStatusesCheck(numberOfStatusesToAdd);
       }
@@ -24,7 +24,7 @@ describe('Status specific test', () => {
 
   describe('PATCH /api/v1/status', () => {
     describe(
-      'given ' + numberOfStatusesToUpdate + ' role updation requests',
+      'given ' + numberOfStatusesToUpdate + ' status updation requests',
       () => {
         updateMultipleStatusesCheck();
       }
