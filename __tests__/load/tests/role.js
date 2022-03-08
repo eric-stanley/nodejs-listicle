@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../../../app');
-const roleData = require('../../data/role.data');
+const randomData = require('../../data/random.data');
 
 let roles = [];
 
@@ -8,7 +8,7 @@ exports.createMultipleRolesCheck = (numOfRoles) => {
   let i = 0;
   let current_role_id;
 
-  roles = roleData.getRandomRoles(numOfRoles);
+  roles = randomData.getRandomString(numOfRoles, 'description', 5);
 
   jest.retryTimes(4);
   test.each(roles)(
@@ -40,7 +40,7 @@ exports.updateMultipleRolesCheck = () => {
   test.each(roles)(
     'should respond with a 200 status code with the new role that is updated',
     async (fields) => {
-      const current_role = roleData.getRandomRoles(1)[0];
+      const current_role = randomData.getRandomString(1, 'description', 5)[0];
       const response = await request(app)
         .patch('/api/v1/roles/' + fields.fields.input.id)
         .set('Authorization', `Bearer ${process.env.JWT_TOKEN}`)
