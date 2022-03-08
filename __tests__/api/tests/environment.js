@@ -2,7 +2,7 @@ const request = require('supertest');
 const app = require('../../../app');
 const errors = require('../../../constants/errors');
 
-exports.getAllStatusesCheck = (statusCode) => {
+exports.getAllEnvironmentsCheck = (statusCode) => {
   test('should respond with a ' + statusCode + ' status code', async () => {
     const bodyData = [
       {
@@ -17,7 +17,7 @@ exports.getAllStatusesCheck = (statusCode) => {
 
     for (const body of bodyData) {
       const response = await request(app)
-        .get('/api/v1/status')
+        .get('/api/v1/environments')
         .set('Authorization', `Bearer ${process.env.JWT_TOKEN}`)
         .send(body);
       expect(response.statusCode).toBe(statusCode);
@@ -32,13 +32,13 @@ exports.getAllStatusesCheck = (statusCode) => {
   });
 };
 
-exports.getAllStatusesServerError = () => {
+exports.getAllEnvironmentsServerError = () => {
   test('should respond with a 500 status code', async () => {
     const bodyData = [{}];
 
     for (const body of bodyData) {
       const response = await request(app)
-        .get('/api/v1/status')
+        .get('/api/v1/environments')
         .set('Authorization', `Bearer ${process.env.JWT_TOKEN}`)
         .send(body);
       expect(response.statusCode).toBe(500);
@@ -46,15 +46,15 @@ exports.getAllStatusesServerError = () => {
   });
 };
 
-exports.getOneStatusCheck = (status_id, description) => {
+exports.getOneEnvironmentCheck = (environment_id, description) => {
   test(
-    'should respond with a 200 status code with the status id ' +
-      status_id +
+    'should respond with a 200 status code with the environment id ' +
+      environment_id +
       ' and description as ' +
       description,
     async () => {
       const response = await request(app)
-        .get('/api/v1/status/' + status_id)
+        .get('/api/v1/environments/' + environment_id)
         .set('Authorization', `Bearer ${process.env.JWT_TOKEN}`);
       expect(response.statusCode).toBe(200);
       expect(response.body.data.data.description).toEqual(description);
