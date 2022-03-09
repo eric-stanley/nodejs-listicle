@@ -82,7 +82,7 @@ exports.getRole = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.user.id);
 
   if (!user) {
-    new AppError('Not user found with that id or user not logged in', 401);
+    new AppError('No user found with that id', 401);
   }
 
   const userRole = await UserRole.findOne({

@@ -12,7 +12,7 @@ const runSchema = new mongoose.Schema(
       type: Number,
       unique: true,
     },
-    name: {
+    run_name: {
       type: String,
       required: [true, 'A run must have a name'],
       unique: true,
