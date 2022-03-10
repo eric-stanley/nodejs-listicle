@@ -12,7 +12,7 @@ const runSchema = new mongoose.Schema(
       type: Number,
       unique: true,
     },
-    run_name: {
+    name: {
       type: String,
       required: [true, 'A run must have a name'],
       unique: true,
@@ -20,14 +20,12 @@ const runSchema = new mongoose.Schema(
     },
   },
   {
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true },
-  },
-  {
     timestamps: {
       createdAt: 'created_at',
       updatedAt: 'updated_at',
     },
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 );
 

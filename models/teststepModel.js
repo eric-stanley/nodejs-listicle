@@ -52,14 +52,12 @@ const teststepSchema = new mongoose.Schema(
     },
   },
   {
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true },
-  },
-  {
     timestamps: {
       createdAt: 'created_at',
       updatedAt: 'updated_at',
     },
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 );
 

@@ -8,14 +8,23 @@ router
   .route('/')
   .get(
     authController.protect,
-    authController.restrictTo('admin'),
+    authController.restrictFrom('guest'),
     runController.getAllRuns
   )
-  .post(authController.protect, runController.createRun);
+  .post(
+    authController.protect,
+    authController.restrictFrom('guest'),
+    runController.generateRun,
+    runController.createRun
+  );
 
 router
   .route('/:id')
-  .get(authController.protect, runController.getRun)
+  .get(
+    authController.protect,
+    authController.restrictFrom('guest'),
+    runController.getRun
+  )
   .patch(
     authController.protect,
     authController.restrictTo('admin'),

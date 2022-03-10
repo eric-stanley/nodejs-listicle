@@ -60,7 +60,7 @@ exports.updateOne = (Model, ...fields) =>
     const doc = await Model.findByIdAndUpdate(model.id, filteredBody, {
       new: true,
       runValidators: true,
-    }).select('-_id -__v');
+    }).select('-_id -id -__v');
 
     res.status(200).json({
       status: 'success',
@@ -99,11 +99,14 @@ exports.getOne = (Model, populateOptions) =>
       }
     });
 
-    let query = Model.findOne(filter, { _id: 0, __v: 0 });
+    let query = Model.findOne(filter, { _id: 0, id: 0, __v: 0 });
 
     if (populateOptions && populateOptions.length > 0) {
       populateOptions.forEach((item) => {
-        query = query.populate({ path: item });
+        query = query.populate({
+          path: item,
+          select: { _id: 0, id: 0, __v: 0 },
+        });
       });
     }
 
@@ -113,10 +116,13 @@ exports.getOne = (Model, populateOptions) =>
       return next(new AppError('No document found with that ID', 404));
     }
 
+    const returnDoc = doc.toObject();
+    delete returnDoc.id;
+
     res.status(200).json({
       status: 'success',
       data: {
-        data: doc,
+        data: returnDoc,
       },
     });
   });
@@ -125,7 +131,7 @@ exports.getAll = (Model, defaultField, defaultPage, defaultLimit) =>
   catchAsync(async (req, res) => {
     // Execute query
     const features = new APIFeatures(
-      Model.find(req.body.filter, { _id: 0, __v: 0 }),
+      Model.find(req.body.filter, { _id: 0, __v: 0, id: 0 }),
       req.body,
       defaultField,
       defaultPage,
@@ -137,12 +143,16 @@ exports.getAll = (Model, defaultField, defaultPage, defaultLimit) =>
       .paginate();
     const docs = await features.query;
 
+    const returnDocs = docs
+      .map(({ id, $__, $isNew, ...rest }) => rest)
+      .map((returnDoc) => Object.assign(returnDoc._doc));
+
     // Send response
     res.status(200).json({
       status: 'success',
-      results: docs.length,
+      results: returnDocs.length,
       data: {
-        data: docs,
+        data: returnDocs,
       },
     });
   });

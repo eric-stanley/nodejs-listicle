@@ -7,7 +7,7 @@ const UserRole = require('../models/userRoleModel');
 const Role = require('../models/roleModel');
 const errors = require('../constants/errors');
 
-const defaultField = 'name';
+const defaultField = 'username';
 const defaultPage = 1;
 const defaultLimit = 10;
 
