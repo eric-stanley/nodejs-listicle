@@ -69,7 +69,7 @@
     "jest-stare": "^2.3.0",
     "ndb": "^1.1.5",
     "nodemon": "^2.0.15",
-    "prettier": "^2.5.1",
+    "prettier": "^2.6.0",
     "supertest": "^6.2.2",
     "ts-node": "^10.7.0",
     "unique-username-generator": "^1.0.1",
