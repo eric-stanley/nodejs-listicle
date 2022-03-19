@@ -40,7 +40,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.4",
     "morgan": "^1.10.0",
-    "n": "^8.0.2",
+    "n": "^8.1.0",
     "nodemailer": "^6.7.2",
     "slugify": "^1.6.5",
     "stable": "^0.1.8",
