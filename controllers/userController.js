@@ -82,7 +82,10 @@ exports.getRole = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.user.id);
 
   if (!user) {
-    new AppError('No user found with that id', 401);
+    new AppError(
+      errors.userErrors.noUserFound.message,
+      errors.userErrors.noUserFound.statusCode
+    );
   }
 
   const userRole = await UserRole.findOne({
@@ -90,13 +93,19 @@ exports.getRole = catchAsync(async (req, res, next) => {
   });
 
   if (!userRole) {
-    new AppError('Not role assigned to the user', 401);
+    new AppError(
+      errors.userErrors.noRoleAssigned.message,
+      errors.userErrors.noRoleAssigned.statusCode
+    );
   }
 
   const role = await Role.findById(userRole.role_id).select('-_id -__v');
 
   if (!role) {
-    new AppError('Invalid role assigned to the user', 400);
+    new AppError(
+      errors.userErrors.invalidRole.message,
+      errors.userErrors.invalidRole.statusCode
+    );
   }
 
   res.status(200).json({

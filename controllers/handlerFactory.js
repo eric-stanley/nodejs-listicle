@@ -5,6 +5,7 @@ const filterObj = require('../utils/filterObj');
 const modelIds = require('../constants/modelIds');
 const { autoSequenceModelID } = require('../models/counterModel');
 const getModel = require('../utils/getModel');
+const errors = require('../constants/errors');
 
 exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
@@ -22,7 +23,12 @@ exports.deleteOne = (Model) =>
     const doc = await Model.findOneAndDelete(filter);
 
     if (!doc) {
-      return next(new AppError('No document found with that ID', 404));
+      return next(
+        new AppError(
+          errors.generalErrors.noDocumentFound.message,
+          errors.generalErrors.noDocumentFound.statusCode
+        )
+      );
     }
 
     keys.forEach(async (key, index) => {
@@ -52,7 +58,12 @@ exports.updateOne = (Model, ...fields) =>
     const model = await Model.findOne(filter);
 
     if (!model) {
-      return next(new AppError('No document found with that ID', 404));
+      return next(
+        new AppError(
+          errors.generalErrors.noDocumentFound.message,
+          errors.generalErrors.noDocumentFound.statusCode
+        )
+      );
     }
 
     const filteredBody = filterObj(req.body.fields.input, fields);
@@ -105,7 +116,7 @@ exports.getOne = (Model, populateOptions) =>
       populateOptions.forEach((item) => {
         query = query.populate({
           path: item,
-          select: { _id: 0, id: 0, __v: 0 },
+          options: { select: { id: 0, __v: 0 } },
         });
       });
     }
@@ -113,7 +124,12 @@ exports.getOne = (Model, populateOptions) =>
     const doc = await query;
 
     if (!doc) {
-      return next(new AppError('No document found with that ID', 404));
+      return next(
+        new AppError(
+          errors.generalErrors.noDocumentFound.message,
+          errors.generalErrors.noDocumentFound.statusCode
+        )
+      );
     }
 
     const returnDoc = doc.toObject();
@@ -145,7 +161,7 @@ exports.getAll = (Model, defaultField, defaultPage, defaultLimit) =>
 
     const returnDocs = docs
       .map(({ id, $__, $isNew, ...rest }) => rest)
-      .map((returnDoc) => Object.assign(returnDoc._doc));
+      .map((obj) => Object.assign(obj._doc));
 
     // Send response
     res.status(200).json({

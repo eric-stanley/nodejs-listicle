@@ -111,7 +111,10 @@ exports.protect = catchAsync(async (req, res, next) => {
   // 4) Check if the user changed password after token was issued
   if (currentUser.isPasswordChanged(decoded.iat)) {
     return next(
-      new AppError('User recently changed password! Please login again.', 401)
+      new AppError(
+        errors.authErrors.passwordRecentlyChanged.message,
+        errors.authErrors.passwordRecentlyChanged.statusCode
+      )
     );
   }
 
@@ -178,7 +181,12 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   });
 
   if (!user) {
-    return next(new AppError('No user found with that email', 404));
+    return next(
+      new AppError(
+        errors.authErrors.noUserFound.message,
+        errors.authErrors.noUserFound.statusCode
+      )
+    );
   }
 
   // 2) Generate random token
@@ -214,8 +222,8 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
     return next(
       new AppError(
-        'There was an error while sending the email. Try again later!',
-        500
+        errors.authErrors.emailSendingError.message,
+        errors.authErrors.emailSendingError.statusCode
       )
     );
   }
@@ -237,7 +245,12 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
   // 2) Set new password if token is not expired and user exists
   if (!user) {
-    return next(new AppError('Token is invalid or expired', 400));
+    return next(
+      new AppError(
+        errors.authErrors.tokenInvalidOrExpired.message,
+        errors.authErrors.tokenInvalidOrExpired.statusCode
+      )
+    );
   }
 
   user.password = req.body.fields.input.password;
@@ -265,7 +278,12 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
       user.password
     ))
   ) {
-    return next(new AppError('Your current password is wrong', 401));
+    return next(
+      new AppError(
+        errors.authErrors.incorrectCurrentPassword.message,
+        errors.authErrors.incorrectCurrentPassword.statusCode
+      )
+    );
   }
 
   // 3) Update password

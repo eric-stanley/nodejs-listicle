@@ -3,7 +3,7 @@ const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
 const checkAccess = require('../utils/checkAccess');
 
-const defaultField = 'role_id';
+const defaultField = 'user_role_id';
 const defaultPage = 1;
 const defaultLimit = 10;
 
