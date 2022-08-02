@@ -4,12 +4,18 @@ const Role = require('../models/roleModel');
 const User = require('../models/userModel');
 const UserRole = require('../models/userRoleModel');
 const AppError = require('./appError');
+const errors = require('../constants/errors');
 
 exports.checkIdExistance = async (Model, id, next) => {
   const model = await Model.findById(id).select('+is_active');
 
   if (!model) {
-    return next(new AppError('No document found with that ID', 404));
+    return next(
+      new AppError(
+        errors.generalErrors.noDocumentFound.message,
+        errors.generalErrors.noDocumentFound.statusCode
+      )
+    );
   }
 
   return model;
@@ -32,8 +38,8 @@ exports.checkAccessForUpdate = async (
   if (!currentUserAccess && !req.user.is_admin) {
     return next(
       new AppError(
-        'User not assigned to the project or project is not active',
-        404
+        errors.projectErrors.userNotActiveOrInactiveProject.message,
+        errors.projectErrors.userNotActiveOrInactiveProject.statusCode
       )
     );
   }
@@ -47,7 +53,10 @@ exports.checkAccessForUpdate = async (
       !eligibleAccesses.includes(userRole.description.toLowerCase())
     ) {
       return next(
-        new AppError('You do not have access to perform this action', 403)
+        new AppError(
+          errors.authErrors.restrictPermission.message,
+          errors.authErrors.restrictPermission.statusCode
+        )
       );
     }
   }
@@ -57,7 +66,12 @@ exports.checkProjectAccess = async (req, id, next) => {
   const project = await Project.findById(id).select('+is_active');
 
   if (!project) {
-    return next(new AppError('No project found with that ID', 404));
+    return next(
+      new AppError(
+        errors.projectErrors.projectNotFound.message,
+        errors.projectErrors.projectNotFound.statusCode
+      )
+    );
   }
 
   // Check if user is project owner
@@ -70,15 +84,20 @@ exports.checkProjectOwner = async (req, project, next) => {
   const projectOwner = await User.findById(project.owner).select('+is_active');
 
   if (!projectOwner || !projectOwner.is_active) {
-    return next(new AppError('Owner not active for this project', 403));
+    return next(
+      new AppError(
+        errors.projectErrors.inactiveOwner.message,
+        errors.projectErrors.inactiveOwner.statusCode
+      )
+    );
   }
 
   // Check if user is owner or admin
   if (!req.user.is_admin && req.user.id !== projectOwner.id) {
     return next(
       new AppError(
-        'You have to be either owner or admin to perform this action',
-        403
+        errors.projectErrors.accessDenied.message,
+        errors.projectErrors.accessDenied.statusCode
       )
     );
   }
@@ -99,7 +118,10 @@ exports.checkEligibilityAccess = async (
 
   if (!access && !req.user.is_admin && !req.user.is_project_admin) {
     return next(
-      new AppError('No access found for this user in this project', 403)
+      new AppError(
+        errors.projectErrors.noAccessForUser.message,
+        errors.projectErrors.noAccessForUser.statusCode
+      )
     );
   }
 
@@ -115,7 +137,10 @@ exports.checkEligibilityAccess = async (
 
     if (!eligibleAccesses.includes(userRoleDescription.toLowerCase())) {
       return next(
-        new AppError('You do not have access to perform this action', 403)
+        new AppError(
+          errors.authErrors.restrictPermission.message,
+          errors.authErrors.restrictPermission.statusCode
+        )
       );
     }
   }
@@ -124,7 +149,12 @@ exports.checkEligibilityAccess = async (
 exports.checkUserAccess = async (user_id, next) => {
   const user = await User.findById(user_id).select('+is_active');
   if (!user || !user.is_active) {
-    return next(new AppError('Requested user not found or inactive', 403));
+    return next(
+      new AppError(
+        errors.userErrors.userNotFoundOrInactive.message,
+        errors.userErrors.userNotFoundOrInactive.statusCode
+      )
+    );
   }
 
   // Check if user has an active role
@@ -174,7 +204,12 @@ exports.checkUserRoleInput = async (input, next) => {
   const user = await User.findById(user_id);
 
   if (!user) {
-    return next(new AppError('No user found with that ID', 404));
+    return next(
+      new AppError(
+        errors.userErrors.noUserFound.message,
+        errors.userErrors.noUserFound.statusCode
+      )
+    );
   }
 
   // Check if user is active in a different role

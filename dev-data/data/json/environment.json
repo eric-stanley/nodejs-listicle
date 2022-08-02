@@ -1,0 +1,14 @@
+[
+  {
+    "description": "QA"
+  },
+  {
+    "description": "DEV"
+  },
+  {
+    "description": "UAT"
+  },
+  {
+    "description": "PROD"
+  }
+]

@@ -70,7 +70,7 @@ module.exports = {
   },
   userErrors: {
     noUserFound: {
-      message: 'No user found with that id',
+      message: 'No user found with that ID',
       statusCode: 401,
     },
     noRoleAssigned: {
@@ -80,6 +80,32 @@ module.exports = {
     invalidRole: {
       message: 'Invalid role assigned to the user',
       statusCode: 400,
+    },
+    userNotFoundOrInactive: {
+      message: 'Requested user not found or inactive',
+      statusCode: 403,
+    },
+  },
+  projectErrors: {
+    userNotActiveOrInactiveProject: {
+      message: 'User not assigned to the project or project is not active',
+      statusCode: 404,
+    },
+    projectNotFound: {
+      message: 'No project found with that ID',
+      statusCode: 404,
+    },
+    inactiveOwner: {
+      message: 'Owner not active for this project',
+      statusCode: 403,
+    },
+    accessDenied: {
+      message: 'You have to be either owner or admin to perform this action',
+      statusCode: 403,
+    },
+    noAccessForUser: {
+      message: 'No access found for this user in this project',
+      statusCode: 403,
     },
   },
 };

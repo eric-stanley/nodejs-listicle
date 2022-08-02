@@ -1,0 +1,332 @@
+[
+  {
+    "username": "admin",
+    "password": "password",
+    "password_confirm": "password",
+    "email": "admin@test.com",
+    "slug": "admin",
+    "is_active": "TRUE",
+    "created_at": "05/12/2021 07:38 PM",
+    "updated_at": "09/25/2021 02:38 PM"
+  },
+  {
+    "username": "bandalls",
+    "password": "VqaO9452*",
+    "password_confirm": "VqaO9452*",
+    "email": "bandalls@test.com",
+    "slug": "bandalls",
+    "is_active": "TRUE",
+    "created_at": "02/16/2020 03:46 PM",
+    "updated_at": "03/19/2020 11:55 AM"
+  },
+  {
+    "username": "wattlexp",
+    "password": "UcsK3830+",
+    "password_confirm": "UcsK3830+",
+    "email": "wattlexp@test.com",
+    "slug": "wattlexp",
+    "is_active": "TRUE",
+    "created_at": "12/01/2020 10:30 AM",
+    "updated_at": "12/01/2020 10:30 AM"
+  },
+  {
+    "username": "sweetiele",
+    "password": "WzoD9227+",
+    "password_confirm": "WzoD9227+",
+    "email": "sweetiele@test.com",
+    "slug": "sweetiele",
+    "is_active": "TRUE",
+    "created_at": "05/07/2021 10:15 AM",
+    "updated_at": "05/07/2021 10:15 AM"
+  },
+  {
+    "username": "hyperyaufarer",
+    "password": "BocE4079*",
+    "password_confirm": "BocE4079*",
+    "email": "hyperyaufarer@test.com",
+    "slug": "hyperyaufarer",
+    "is_active": "TRUE",
+    "created_at": "05/22/2021 03:02 PM",
+    "updated_at": "06/19/2021 12:40 AM"
+  },
+  {
+    "username": "editussion",
+    "password": "FriT2312*",
+    "password_confirm": "FriT2312*",
+    "email": "editussion@test.com",
+    "slug": "editussion",
+    "is_active": "TRUE",
+    "created_at": "07/19/2020 09:40 AM",
+    "updated_at": "07/19/2020 09:40 AM"
+  },
+  {
+    "username": "experthead",
+    "password": "DfrU6835*",
+    "password_confirm": "DfrU6835*",
+    "email": "experthead@test.com",
+    "slug": "experthead",
+    "is_active": "FALSE",
+    "created_at": "09/25/2021 02:38 PM",
+    "updated_at": "09/25/2021 02:38 PM"
+  },
+  {
+    "username": "flamesbria",
+    "password": "YxrJ2257*",
+    "password_confirm": "YxrJ2257*",
+    "email": "flamesbria@test.com",
+    "slug": "flamesbria",
+    "is_active": "TRUE",
+    "created_at": "12/20/2021 09:00 AM",
+    "updated_at": "12/20/2021 09:00 AM"
+  },
+  {
+    "username": "heroanhart",
+    "password": "SbuJ5828*",
+    "password_confirm": "SbuJ5828*",
+    "email": "heroanhart@test.com",
+    "slug": "heroanhart",
+    "is_active": "TRUE",
+    "created_at": "08/24/2021 02:07 PM",
+    "updated_at": "08/24/2021 02:07 PM"
+  },
+  {
+    "username": "liveltekah",
+    "password": "WeiW1328*",
+    "password_confirm": "WeiW1328*",
+    "email": "liveltekah@test.com",
+    "slug": "liveltekah",
+    "is_active": "FALSE",
+    "created_at": "01/15/2020 12:46 PM",
+    "updated_at": "01/15/2020 12:46 PM"
+  },
+  {
+    "username": "linguss",
+    "password": "EhxA9557+",
+    "password_confirm": "EhxA9557+",
+    "email": "linguss@test.com",
+    "slug": "linguss",
+    "is_active": "TRUE",
+    "created_at": "01/14/2021 10:59 AM",
+    "updated_at": "01/14/2021 10:59 AM"
+  },
+  {
+    "username": "interestec",
+    "password": "BckR6754*",
+    "password_confirm": "BckR6754*",
+    "email": "interestec@test.com",
+    "slug": "interestec",
+    "is_active": "TRUE",
+    "created_at": "06/11/2021 01:22 PM",
+    "updated_at": "06/11/2021 01:22 PM"
+  },
+  {
+    "username": "fuzzyspuffy",
+    "password": "EnoB6533+",
+    "password_confirm": "EnoB6533+",
+    "email": "fuzzyspuffy@test.com",
+    "slug": "fuzzyspuffy",
+    "is_active": "TRUE",
+    "created_at": "06/09/2021 09:53 AM",
+    "updated_at": "06/09/2021 09:53 AM"
+  },
+  {
+    "username": "monsterup",
+    "password": "JhvG6821*",
+    "password_confirm": "JhvG6821*",
+    "email": "monsterup@test.com",
+    "slug": "monsterup",
+    "is_active": "TRUE",
+    "created_at": "02/07/2020 08:11 AM",
+    "updated_at": "02/07/2020 08:11 AM"
+  },
+  {
+    "username": "milka1baby",
+    "password": "DgfD3659+",
+    "password_confirm": "DgfD3659+",
+    "email": "milka1baby@test.com",
+    "slug": "milka1baby",
+    "is_active": "FALSE",
+    "created_at": "05/24/2020 02:32 PM",
+    "updated_at": "05/24/2020 02:32 PM"
+  },
+  {
+    "username": "lovesboost",
+    "password": "JevU7732*",
+    "password_confirm": "JevU7732*",
+    "email": "lovesboost@test.com",
+    "slug": "lovesboost",
+    "is_active": "TRUE",
+    "created_at": "02/27/2020 02:11 PM",
+    "updated_at": "03/31/2020 10:50 AM"
+  },
+  {
+    "username": "edgymnerch",
+    "password": "YjgD6062+",
+    "password_confirm": "YjgD6062+",
+    "email": "edgymnerch@test.com",
+    "slug": "edgymnerch",
+    "is_active": "TRUE",
+    "created_at": "12/04/2020 11:47 AM",
+    "updated_at": "12/04/2020 11:47 AM"
+  },
+  {
+    "username": "ortspoon",
+    "password": "LazQ3611*",
+    "password_confirm": "LazQ3611*",
+    "email": "ortspoon@test.com",
+    "slug": "ortspoon",
+    "is_active": "TRUE",
+    "created_at": "07/16/2021 09:31 AM",
+    "updated_at": "07/16/2021 09:31 AM"
+  },
+  {
+    "username": "oranolio",
+    "password": "XjgN6565+",
+    "password_confirm": "XjgN6565+",
+    "email": "oranolio@test.com",
+    "slug": "oranolio",
+    "is_active": "TRUE",
+    "created_at": "05/20/2020 02:26 PM",
+    "updated_at": "05/20/2020 02:26 PM"
+  },
+  {
+    "username": "onemama",
+    "password": "LwoC5542*",
+    "password_confirm": "LwoC5542*",
+    "email": "onemama@test.com",
+    "slug": "onemama",
+    "is_active": "TRUE",
+    "created_at": "12/14/2021 03:31 PM",
+    "updated_at": "01/17/2022 05:27 PM"
+  },
+  {
+    "username": "dravenfact",
+    "password": "NouC5145*",
+    "password_confirm": "NouC5145*",
+    "email": "dravenfact@test.com",
+    "slug": "dravenfact",
+    "is_active": "TRUE",
+    "created_at": "04/26/2020 11:22 AM",
+    "updated_at": "04/26/2020 11:22 AM"
+  },
+  {
+    "username": "reallychel",
+    "password": "HnkV3316+",
+    "password_confirm": "HnkV3316+",
+    "email": "reallychel@test.com",
+    "slug": "reallychel",
+    "is_active": "TRUE",
+    "created_at": "05/06/2021 08:44 AM",
+    "updated_at": "05/06/2021 08:44 AM"
+  },
+  {
+    "username": "reakefit",
+    "password": "FpdU2789+",
+    "password_confirm": "FpdU2789+",
+    "email": "reakefit@test.com",
+    "slug": "reakefit",
+    "is_active": "TRUE",
+    "created_at": "12/31/2021 09:30 AM",
+    "updated_at": "12/31/2021 09:30 AM"
+  },
+  {
+    "username": "popularkiya",
+    "password": "DxoC9655*",
+    "password_confirm": "DxoC9655*",
+    "email": "popularkiya@test.com",
+    "slug": "popularkiya",
+    "is_active": "FALSE",
+    "created_at": "10/02/2020 02:43 PM",
+    "updated_at": "10/02/2020 02:43 PM"
+  },
+  {
+    "username": "breacche",
+    "password": "NvlH2902*",
+    "password_confirm": "NvlH2902*",
+    "email": "breacche@test.com",
+    "slug": "breacche",
+    "is_active": "TRUE",
+    "created_at": "10/09/2021 04:53 PM",
+    "updated_at": "10/09/2021 04:53 PM"
+  },
+  {
+    "username": "blikimore",
+    "password": "JxaR2529+",
+    "password_confirm": "JxaR2529+",
+    "email": "blikimore@test.com",
+    "slug": "blikimore",
+    "is_active": "TRUE",
+    "created_at": "06/14/2020 02:48 PM",
+    "updated_at": "07/17/2020 06:39 AM"
+  },
+  {
+    "username": "stonewellforever",
+    "password": "XqyH9826*",
+    "password_confirm": "XqyH9826*",
+    "email": "stonewellforever@test.com",
+    "slug": "stonewellforever",
+    "is_active": "TRUE",
+    "created_at": "02/18/2020 04:24 PM",
+    "updated_at": "02/18/2020 04:24 PM"
+  },
+  {
+    "username": "simmson",
+    "password": "NxlL4002*",
+    "password_confirm": "NxlL4002*",
+    "email": "simmson@test.com",
+    "slug": "simmson",
+    "is_active": "TRUE",
+    "created_at": "07/17/2020 03:45 PM",
+    "updated_at": "07/17/2020 03:45 PM"
+  },
+  {
+    "username": "brighthulk",
+    "password": "UjhY9494+",
+    "password_confirm": "UjhY9494+",
+    "email": "brighthulk@test.com",
+    "slug": "brighthulk",
+    "is_active": "TRUE",
+    "created_at": "10/03/2020 12:54 PM",
+    "updated_at": "10/03/2020 12:54 PM"
+  },
+  {
+    "username": "bootecia",
+    "password": "GftD5133+",
+    "password_confirm": "GftD5133+",
+    "email": "bootecia@test.com",
+    "slug": "bootecia",
+    "is_active": "FALSE",
+    "created_at": "03/30/2020 03:01 PM",
+    "updated_at": "04/28/2020 04:18 AM"
+  },
+  {
+    "username": "spuffyffet",
+    "password": "CmlF6924+",
+    "password_confirm": "CmlF6924+",
+    "email": "spuffyffet@test.com",
+    "slug": "spuffyffet",
+    "is_active": "TRUE",
+    "created_at": "04/30/2021 10:29 AM",
+    "updated_at": "04/30/2021 10:29 AM"
+  },
+  {
+    "username": "rozalthiric",
+    "password": "ApzT7771+",
+    "password_confirm": "ApzT7771+",
+    "email": "rozalthiric@test.com",
+    "slug": "rozalthiric",
+    "is_active": "TRUE",
+    "created_at": "05/07/2020 03:08 PM",
+    "updated_at": "05/07/2020 03:08 PM"
+  },
+  {
+    "username": "bookman",
+    "password": "XoqI7577*",
+    "password_confirm": "XoqI7577*",
+    "email": "bookman@test.com",
+    "slug": "bookman",
+    "is_active": "TRUE",
+    "created_at": "10/02/2020 09:41 AM",
+    "updated_at": "10/02/2020 09:41 AM"
+  }
+]

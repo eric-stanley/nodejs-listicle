@@ -1,0 +1,14 @@
+[
+  {
+    "description": "Passed"
+  },
+  {
+    "description": "Failed"
+  },
+  {
+    "description": "Not Completed"
+  },
+  {
+    "description": "No Run"
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "description": "Regression"
+  },
+  {
+    "description": "Smoke"
+  },
+  {
+    "description": "UAT"
+  },
+  {
+    "description": "Functional"
+  },
+  {
+    "description": "System"
+  }
+]
