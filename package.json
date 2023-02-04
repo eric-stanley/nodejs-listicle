@@ -66,7 +66,7 @@
     "jest-config": "^27.5.1",
     "jest-html-reporters": "^3.0.6",
     "jest-progress-bar-reporter": "^1.0.21",
-    "jest-stare": "^2.3.0",
+    "jest-stare": "^2.5.0",
     "ndb": "^1.1.5",
     "nodemon": "^2.0.15",
     "prettier": "^2.6.1",
