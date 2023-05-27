@@ -48,9 +48,9 @@
     "xss-clean": "^0.1.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.8",
+    "@babel/core": "^7.22.1",
     "@babel/eslint-parser": "^7.17.0",
-    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-env": "^7.22.1",
     "@babel/preset-react": "^7.16.7",
     "babel-jest": "^27.5.1",
     "eslint": "^8.11.0",
